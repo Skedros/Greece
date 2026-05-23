@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Greece 2026 trip planner. Athens, Chios, Crete. June 5 to 21.">
+  <title>Greece 2026</title>
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- Styles -->
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="layout">
+      <div class="brand">
+        <h1 class="brand__title">Greece 2026</h1>
+        <p class="brand__sub">Loading...</p>
+      </div>
+      <nav class="nav">
+        <button class="nav__btn is-active" data-target="section-overview">Overview</button>
+        <button class="nav__btn" data-target="section-stays">Stays</button>
+        <button class="nav__btn" data-target="section-logistics">Logistics</button>
+        <button class="nav__btn" data-target="section-athens1">Athens 1</button>
+        <button class="nav__btn" data-target="section-chios">Chios</button>
+        <button class="nav__btn" data-target="section-crete">Crete</button>
+        <button class="nav__btn" data-target="section-athens2">Athens 2</button>
+        <button class="nav__btn" data-target="section-restaurants">Restaurants</button>
+        <button class="nav__btn" data-target="section-sites">Sites + beaches</button>
+        <button class="nav__btn" data-target="section-budget">Budget + more</button>
+        <button class="nav__btn" data-target="section-form">Contact</button>
+      </nav>
+    </div>
+  </header>
+
+  <main class="layout">
+    <section id="section-overview" class="section is-active"></section>
+    <section id="section-stays" class="section"></section>
+    <section id="section-logistics" class="section"></section>
+    <section id="section-athens1" class="section"></section>
+    <section id="section-chios" class="section"></section>
+    <section id="section-crete" class="section"></section>
+    <section id="section-athens2" class="section"></section>
+    <section id="section-restaurants" class="section"></section>
+    <section id="section-sites" class="section"></section>
+    <section id="section-budget" class="section"></section>
+    <section id="section-form" class="section"></section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="layout">Built for the Skedros family . Greece 2026</div>
+  </footer>
+
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+
+</body>
+</html>
