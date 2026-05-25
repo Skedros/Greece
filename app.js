@@ -165,11 +165,10 @@
       { label: 'Itinerary, Chios', target: 'section-chios' },
       { label: 'Itinerary, Crete', target: 'section-crete' },
       { label: 'Itinerary, Athens (departure)', target: 'section-athens2' },
-      { label: 'Stays + emergency', target: 'section-stays' },
       { label: 'Logistics', target: 'section-logistics' },
       { label: 'Restaurants', target: 'section-restaurants' },
       { label: 'Sites + beaches', target: 'section-sites' },
-      { label: 'Budget + packing + culture', target: 'section-budget' },
+      { label: 'Practical', target: 'section-budget' },
       { label: 'Contact form', target: 'section-form' }
     ].forEach(function (link) {
       quickLinks.appendChild(el('button', {
@@ -263,41 +262,22 @@
     section.innerHTML = '';
 
     section.appendChild(el('h2', { class: 'section__title', text: 'Logistics' }));
-    section.appendChild(el('p', { class: 'section__lede', text: 'Inter-city transfers, airport ground transport, car rentals, and driving tips. All links go to official booking sites.' }));
+    section.appendChild(el('p', { class: 'section__lede', text: 'Ferries between islands, car rentals, and driving tips. Travel arrangements (flights, hotels) are handled separately.' }));
 
-    /* Inter-city */
-    section.appendChild(el('h3', { class: 'subsection__title', text: 'Between cities' }));
-    D.logistics.interCity.forEach(function (leg) {
+    /* Ferries */
+    section.appendChild(el('h3', { class: 'subsection__title', text: 'Ferries' }));
+    (D.logistics.ferries || []).forEach(function (leg) {
       const card = el('div', { class: 'logistics-card' });
       card.appendChild(el('div', { class: 'logistics-card__head' }, [
         el('div', { class: 'logistics-card__leg', text: leg.leg }),
         el('div', { class: 'logistics-card__date', text: leg.date })
       ]));
-      leg.modes.forEach(function (m) {
-        const mode = el('div', { class: 'logistics-mode' });
-        mode.appendChild(el('div', { class: 'logistics-mode__name', text: m.mode }));
-        mode.appendChild(el('div', { class: 'logistics-mode__meta', text: m.duration + ' . ' + m.cost }));
-        mode.appendChild(el('p', { class: 'logistics-mode__notes', text: m.notes }));
-        if (m.site) mode.appendChild(linkBtn('Book / info', m.site));
-        card.appendChild(mode);
-      });
-      section.appendChild(card);
-    });
-
-    /* Airports */
-    section.appendChild(el('h3', { class: 'subsection__title', text: 'Airport ground transport' }));
-    D.logistics.airports.forEach(function (ap) {
-      const card = el('div', { class: 'logistics-card' });
-      const head = el('div', { class: 'logistics-card__head' });
-      head.appendChild(el('div', { class: 'logistics-card__leg', text: ap.name }));
-      if (ap.site) head.appendChild(linkBtn('Airport site', ap.site));
-      card.appendChild(head);
-      ap.items.forEach(function (i) {
-        const item = el('div', { class: 'logistics-mode' });
-        item.appendChild(el('div', { class: 'logistics-mode__name', text: i.mode }));
-        item.appendChild(el('p', { class: 'logistics-mode__notes', text: i.detail }));
-        card.appendChild(item);
-      });
+      const mode = el('div', { class: 'logistics-mode' });
+      mode.appendChild(el('div', { class: 'logistics-mode__name', text: leg.operator }));
+      mode.appendChild(el('div', { class: 'logistics-mode__meta', text: leg.duration + ' . ' + leg.cost }));
+      mode.appendChild(el('p', { class: 'logistics-mode__notes', text: leg.notes }));
+      if (leg.site) mode.appendChild(linkBtn('Operator site', leg.site));
+      card.appendChild(mode);
       section.appendChild(card);
     });
 
@@ -584,11 +564,11 @@
     section.innerHTML = '';
 
     section.appendChild(el('h2', { class: 'section__title', text: 'Sites and beaches' }));
-    section.appendChild(el('p', { class: 'section__lede', text: 'Archaeological sites, museums, and beaches. Every entry has hours, cost, and direct links to the official site, ticket page, and Google Maps.' }));
+    section.appendChild(el('p', { class: 'section__lede', text: 'Archaeological sites, museums, and beaches, grouped by city. Every entry has hours, cost, and direct links to the official site, ticket page, and Google Maps.' }));
 
-    /* Sites subsection */
-    section.appendChild(el('h3', { class: 'subsection__title', text: 'Sites and museums' }));
-    D.sites.forEach(function (s) {
+    const CITY_ORDER = ['Athens', 'Chios', 'Crete'];
+
+    function renderSiteCard(s) {
       const id = 'site-' + slugify(s.name);
       const card = el('article', { class: 'entry-card', 'data-city': s.city, id: id });
 
@@ -628,12 +608,10 @@
       if (mb) links.appendChild(mb);
       if (links.children.length) card.appendChild(links);
 
-      section.appendChild(card);
-    });
+      return card;
+    }
 
-    /* Beaches subsection */
-    section.appendChild(el('h3', { class: 'subsection__title', text: 'Beaches' }));
-    D.beaches.forEach(function (b) {
+    function renderBeachCard(b) {
       const id = 'beach-' + slugify(b.name);
       const card = el('article', { class: 'entry-card', 'data-city': b.city, id: id });
 
@@ -669,7 +647,29 @@
       if (mb) links.appendChild(mb);
       if (links.children.length) card.appendChild(links);
 
-      section.appendChild(card);
+      return card;
+    }
+
+    /* Sites subsection, grouped by city */
+    section.appendChild(el('h3', { class: 'subsection__title', text: 'Sites and museums' }));
+    CITY_ORDER.forEach(function (city) {
+      const matches = D.sites.filter(function (s) { return s.city === city; });
+      if (!matches.length) return;
+      section.appendChild(el('h4', { class: 'city-group__title', text: city }));
+      const grid = el('div', { class: 'city-group' });
+      matches.forEach(function (s) { grid.appendChild(renderSiteCard(s)); });
+      section.appendChild(grid);
+    });
+
+    /* Beaches subsection, grouped by city */
+    section.appendChild(el('h3', { class: 'subsection__title', text: 'Beaches' }));
+    CITY_ORDER.forEach(function (city) {
+      const matches = D.beaches.filter(function (b) { return b.city === city; });
+      if (!matches.length) return;
+      section.appendChild(el('h4', { class: 'city-group__title', text: city }));
+      const grid = el('div', { class: 'city-group' });
+      matches.forEach(function (b) { grid.appendChild(renderBeachCard(b)); });
+      section.appendChild(grid);
     });
   }
 
@@ -682,47 +682,24 @@
 
   /* ---------------- budget + packing + culture ---------------- */
 
-  function renderBudget() {
+  function renderPractical() {
     const section = $('#section-budget');
     if (!section) return;
     section.innerHTML = '';
 
-    section.appendChild(el('h2', { class: 'section__title', text: 'Budget' }));
-    section.appendChild(el('p', { class: 'section__lede', text: D.budget.notes }));
+    section.appendChild(el('h2', { class: 'section__title', text: 'Practical' }));
+    section.appendChild(el('p', { class: 'section__lede', text: 'Emergency numbers, packing checklist, useful Greek, and etiquette notes for the trip.' }));
 
-    const table = el('table', { class: 'budget-table' });
-    const head = el('thead');
-    head.appendChild(el('tr', null, [
-      el('th', { text: 'Category' }),
-      el('th', { text: 'Estimate (EUR)' }),
-      el('th', { text: 'Actual (EUR)' })
-    ]));
-    table.appendChild(head);
-
-    const body = el('tbody');
-    D.budget.categories.forEach(function (c, i) {
-      const row = el('tr');
-      row.appendChild(el('td', { text: c.category }));
-      row.appendChild(el('td', null, [
-        editable(String(getStoreVal('budget.est.' + i, c.est)), 'budget.est.' + i)
-      ]));
-      row.appendChild(el('td', null, [
-        editable(String(getStoreVal('budget.actual.' + i, c.actual)), 'budget.actual.' + i)
-      ]));
-      body.appendChild(row);
+    /* Emergency contacts */
+    section.appendChild(el('h3', { class: 'subsection__title', text: 'Emergency contacts' }));
+    const eGrid = el('div', { class: 'emergency-grid' });
+    (D.emergency || []).forEach(function (item) {
+      const cell = el('div', { class: 'emergency-cell' });
+      cell.appendChild(el('div', { class: 'emergency-cell__label', text: item.label }));
+      cell.appendChild(el('div', { class: 'emergency-cell__value', text: item.value }));
+      eGrid.appendChild(cell);
     });
-
-    /* Totals row */
-    const totEst = D.budget.categories.reduce(function (a, c, i) { return a + Number(getStoreVal('budget.est.' + i, c.est) || 0); }, 0);
-    const totAct = D.budget.categories.reduce(function (a, c, i) { return a + Number(getStoreVal('budget.actual.' + i, c.actual) || 0); }, 0);
-    const totalsRow = el('tr', { class: 'budget-table__totals' });
-    totalsRow.appendChild(el('td', { text: 'TOTAL' }));
-    totalsRow.appendChild(el('td', { text: 'EUR ' + totEst.toLocaleString() }));
-    totalsRow.appendChild(el('td', { text: 'EUR ' + totAct.toLocaleString() }));
-    body.appendChild(totalsRow);
-
-    table.appendChild(body);
-    section.appendChild(table);
+    section.appendChild(eGrid);
 
     /* Packing */
     section.appendChild(el('h2', { class: 'section__title', text: 'Packing' }));
@@ -946,15 +923,14 @@
     bindNav();
     renderOverview();
     renderCountdown();
-    renderStays();
     renderLogistics();
-    renderDaysByPrefix('section-athens1', 'athens-', 'Athens, arrival leg', 'Jun 5 to Jun 7. Land, see the Acropolis, ferry or fly to Chios.');
+    renderDaysByPrefix('section-athens1', 'athens-', 'Athens, arrival leg', 'Jun 5 to Jun 7. Land, see the Acropolis, transit to Chios.');
     renderDaysByPrefix('section-chios', 'chios-', 'Chios', 'Jun 7 to Jun 14. Seven days exploring the mastic villages, mountain monastery, and the empty Aegean beaches.');
-    renderDaysByPrefix('section-crete', 'crete-', 'Crete', 'Jun 14 to Jun 19. Villa Dioni base, Chania Old Town, Balos and Elafonisi, and the Samaria Gorge.');
-    renderDaysByPrefix('section-athens2', 'athens2-', 'Athens, departure leg', 'Jun 19 to Jun 21. Cape Sounion at sunset, last meals, fly home.');
+    renderDaysByPrefix('section-crete', 'crete-', 'Crete', 'Jun 14 to Jun 19. Chania base, Old Town and Venetian harbor, Balos and Elafonisi, and the Samaria Gorge.');
+    renderDaysByPrefix('section-athens2', 'athens2-', 'Athens, departure leg', 'Jun 19 to Jun 21. Cape Sounion at sunset, last meals, head home.');
     renderRestaurants();
     renderSitesAndBeaches();
-    renderBudget();
+    renderPractical();
     renderForm();
     activateSection('section-overview');
   }
