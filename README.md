@@ -1,101 +1,69 @@
-# Greece 2026
+# Greece 2026 trip site (v3)
 
-A static planning site for the Skedros family trip to Athens, Chios, and Crete, June 5 to 21, 2026.
+Static site for the Skedros family Greece trip, June 5 to 21, 2026. Deployed to GitHub Pages.
 
-This is the v2 deep build: 19 day-by-day itineraries with vetted morning/midday/lunch/afternoon/sunset/dinner slots, 40+ restaurants, 25+ sites, 19 beaches, every entry linked to its official site and Google Maps, plus a contact form that emails responses to athan.skedros@gmail.com.
+**Live URL**: https://skedros.github.io/Greece/
 
-## What's in here
+## What the site has
 
-- `index.html`, `styles.css`, `app.js`, `data.js`: the site
-- `README.md`: this file
-- `.nojekyll`: tells GitHub Pages to serve files as-is
+- **Overview** with countdown and quick links
+- **Logistics**: ferries (Athens-Chios, Crete-Athens), car rentals, driving tips. Flights and hotels are handled separately, not on this site.
+- **Itinerary**: 19 day cards across 4 sections (Athens arrival, Chios, Crete, Athens departure). Each day has timed slots with a primary plan and 2-4 alternatives, restaurants, driving distances, what to bring.
+- **Restaurants**: 46 entries with descriptions, signatures, hours, phone, address, Google Maps + website links
+- **Sites + beaches**: 28 sites and 21 beaches, grouped by city (Athens, Chios, Crete)
+- **Practical**: emergency contacts, packing checklist (with editable check-off), Useful Greek phrases, etiquette notes
+- **Contact form** posting to Formspree, going to athan.skedros@gmail.com
 
-All trip content lives in `data.js`. Edit that one file to add a restaurant, change a day, update a phone number. No coding required, just match the existing structure.
+## Setting up the contact form (Formspree)
 
-## Hosting
+The form will not work until the Formspree endpoint is configured. Three steps:
 
-The site is a static SPA. Push to GitHub, turn on Pages, done. See step-by-step instructions in chat or the GitHub Pages docs at https://pages.github.com.
+1. **Sign up** at https://formspree.io with `athan.skedros@gmail.com`. Free plan is fine for this volume.
+2. **Create a form** in the Formspree dashboard. Name it "Greece 2026 RSVP". Copy the endpoint URL, which looks like `https://formspree.io/f/abcd1234`.
+3. **Paste the endpoint** into `data.js`. Find the line:
 
-## Setting up the contact form
-
-The form on the Contact tab will only work after you configure a Formspree endpoint. This takes 2 minutes.
-
-1. Go to https://formspree.io and sign up with athan.skedros@gmail.com. Free tier covers 50 submissions per month, plenty for a trip-planning form.
-2. In your Formspree dashboard, click "+ New Form."
-3. Name it "Greece 2026 Trip Form" (or whatever).
-4. Confirm the email destination is athan.skedros@gmail.com.
-5. Copy the form endpoint URL. It will look like `https://formspree.io/f/abcdefgh` (with your actual unique ID).
-6. Open `data.js`. Near the top, find:
    ```js
    formEndpoint: "https://formspree.io/f/YOUR_FORM_ID",
    ```
-7. Replace `YOUR_FORM_ID` with your unique ID (the part after `/f/` in your Formspree URL). Save.
-8. Commit and push. The form is live.
-9. The FIRST submission triggers a Formspree confirmation email to athan.skedros@gmail.com. Click the link in that email to verify. After that, every submission lands in your inbox directly.
 
-If the endpoint is not configured, the form shows a warning banner at the top, and submission attempts will display the error message but not actually send.
+   Replace `YOUR_FORM_ID` with your form ID. Commit and push.
 
-## What's editable on the site
+4. **Verify the first submission**. Submit the form once yourself. Formspree will email you to confirm. Click the link. After that, real submissions go straight to your inbox.
 
-The site is mostly read-only for v2 to keep the master plan stable. Only a few things are editable, and edits save to the viewer's browser only (each person sees their own state):
+## File structure
 
-- Each day has a "Your notes" block at the bottom, for personal annotations during the trip
-- Accommodation address, phone, and confirmation fields (so Athan can fill in details as bookings finalize)
-- Budget table estimate and actual columns
-- Packing checklist checkboxes (each person tracks their own packing)
-
-Edits do NOT sync between people. They are stored only in the local browser's `localStorage`. To share information, use the contact form or send a message.
-
-## Sections
-
-- Overview: dates, travelers, countdown, intro, quick links to all sections
-- Stays: accommodations with editable booking fields, plus emergency phone numbers
-- Logistics: inter-city ferries and flights, airport ground transport, car rentals, driving tips
-- Athens 1, Chios, Crete, Athens 2: day-by-day itineraries
-- Restaurants: 40+ vetted entries with descriptions, signature dishes, phone, hours, website, Google Maps. Filter by city.
-- Sites and beaches: 25+ sites and 19 beaches with tickets, hours, links
-- Budget + more: budget table (editable), packing checklist (editable), Greek phrases, etiquette tips
-- Contact: form that emails responses to Athan via Formspree
-
-## Editing trip data
-
-Open `data.js` in any text editor. The structure is:
-
-```js
-window.TRIP_DATA = {
-  meta: { ... },
-  accommodations: { athens1: {...}, chios: {...}, crete: {...}, athens2: {...} },
-  emergency: [ ... ],
-  logistics: { interCity: [], airports: [], carRentals: [], driving: [] },
-  days: [ ... 18 day objects ... ],
-  restaurants: [ ... ],
-  sites: [ ... ],
-  beaches: [ ... ],
-  budget: { categories: [], notes: '' },
-  packing: [ ... ],
-  phrases: [ ... ],
-  etiquette: [ ... ],
-  form: { fields: [...], successMessage: '', errorMessage: '' }
-};
+```
+greece-2026/
+  index.html      # shell + nav
+  styles.css      # editorial Mediterranean styling
+  app.js          # rendering logic, form handler, localStorage for packing checkboxes
+  data.js         # all trip data (meta, emergency, logistics, days, restaurants, sites, beaches, packing, phrases, etiquette, form config)
+  .nojekyll       # disables Jekyll on GitHub Pages
+  README.md       # this file
 ```
 
-To add a restaurant: copy any existing entry in the `restaurants` array, change the fields, save. The Google Maps link is generated automatically from name + address.
+## Editing content
 
-To add a day option: edit the relevant day's `slots` array. Each slot has `time`, `headline`, `description`, and optionally `options[]`, `alternatives[]`, `mealOptions[]`, and `links[]`.
+Almost all content lives in `data.js`. To change a restaurant, edit its entry. To add a site, append to the `sites` array. The renderer reads the data on page load.
 
-To change form fields: edit the `form.fields` array. Field types supported: `text`, `email`, `tel`, `textarea`, `select`, `checkbox`, `radio`.
+The only persisted-per-user state is the packing checkbox state (saved to localStorage under key `greece2026.v2`). Each family member's browser has their own state.
 
-## Mobile
+## Deploying
 
-The site works on phones. The nav scrolls horizontally if needed. Day cards stack cleanly. Forms use full-width inputs.
+```bash
+git add .
+git commit -m "Update trip site"
+git push origin main
+```
 
-## Troubleshooting
+GitHub Pages will rebuild within 1-2 minutes.
 
-- Form submit fails: check that you replaced `YOUR_FORM_ID` in `data.js` with your actual Formspree ID. Confirm the first email from Formspree (sent to athan.skedros@gmail.com) was clicked to verify the account.
-- Pages 404 after push: wait 1 to 2 minutes for GitHub to build. Refresh.
-- Edits to budget/packing/notes vanished: those are stored per-browser, so clearing cookies clears them. They don't sync between devices.
-- Restaurant link goes to wrong place on Google Maps: the link is auto-generated from name + address in `data.js`. Edit the address field to make it more specific (include city and country if needed).
+## Sharing with family
+
+> Made a site for the Greece trip in June. Day-by-day itinerary for Athens, Chios, and Crete, plus vetted restaurants, beaches, sites, packing list, useful Greek phrases, and a contact form. Travel arrangements (flights, hotels) are coordinated separately.
+>
+> https://skedros.github.io/Greece/
 
 ## Credits
 
-Built by Athan Skedros for the Skedros family trip, May 2026.
+Maria's Chania recommendations integrated throughout (restaurants, beaches, the Manousakis Nostos winery, the Halepa neighborhood, the cave chapel on the Elafonisi drive, the Samaria WWII history).
