@@ -845,19 +845,52 @@ button {
 .entry-card {
   background: var(--paper-card);
   border-radius: 10px;
-  padding: 24px 28px;
-  margin-bottom: 18px;
+  margin-bottom: 12px;
   box-shadow: var(--shadow);
   border-left: 3px solid var(--terracotta);
   scroll-margin-top: 120px;
+  overflow: hidden;
 }
+
+.entry-card__summary {
+  list-style: none;
+  cursor: pointer;
+  padding: 18px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: background-color 0.15s ease;
+}
+.entry-card__summary::-webkit-details-marker { display: none; }
+.entry-card__summary:hover { background: rgba(184, 84, 50, 0.05); }
+
+.entry-card__sum-inner { flex: 1; min-width: 0; }
+
+.entry-card__chevron {
+  flex-shrink: 0;
+  font-family: var(--font-display), serif;
+  font-size: 22px;
+  font-weight: 300;
+  color: var(--terracotta);
+  line-height: 1;
+  transition: transform 0.2s ease;
+  user-select: none;
+}
+.entry-card[open] .entry-card__chevron { transform: rotate(45deg); }
+
+.entry-card__body {
+  padding: 4px 24px 22px 24px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+.entry-card[open] .entry-card__body { padding-top: 18px; }
 
 .entry-card__head {
   margin-bottom: 12px;
 }
 
 .entry-card__name {
-  font-size: 22px;
+  font-size: 19px;
   font-weight: 600;
   color: var(--aegean-deep);
   margin: 0 0 8px 0;
@@ -885,6 +918,14 @@ button {
 .tag--cuisine {
   background: rgba(184, 84, 50, 0.12);
   color: var(--terracotta-deep);
+}
+
+.tag--source {
+  background: rgba(31, 78, 120, 0.10);
+  color: var(--aegean);
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-style: italic;
 }
 
 .entry-card__desc {
@@ -1221,7 +1262,12 @@ button {
   .day[open] .day__body { padding-top: 16px; }
   .day__title { font-size: 20px; }
   .slot__headline { font-size: 18px; }
-  .stay-card, .logistics-card, .entry-card, .packing-card, .phrases-card, .form { padding: 20px; }
+  .stay-card, .logistics-card, .packing-card, .phrases-card, .form { padding: 20px; }
+  .entry-card { padding: 0; }
+  .entry-card__summary { padding: 16px 18px; }
+  .entry-card__body { padding: 4px 18px 18px 18px; }
+  .entry-card[open] .entry-card__body { padding-top: 14px; }
+  .entry-card__name { font-size: 17px; }
   .form__check-group, .form__radio-group { grid-template-columns: 1fr; }
 }
 

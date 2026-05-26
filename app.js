@@ -109,12 +109,15 @@
     if (r) {
       const anchorId = 'rest-' + slugify(r.name);
       return el('a', { class: 'meal-pill', href: '#' + anchorId, onclick: function (e) {
-        /* Smooth scroll, but also switch to Restaurants tab */
+        /* Smooth scroll, switch to Restaurants tab, open the target card */
         e.preventDefault();
         activateSection('section-restaurants');
         setTimeout(function () {
           const target = document.getElementById(anchorId);
-          if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          if (target) {
+            if (target.tagName === 'DETAILS') target.open = true;
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
         }, 100);
       }, text: r.name });
     }
@@ -532,21 +535,28 @@
 
     function renderRestaurantCard(r) {
       const id = 'rest-' + slugify(r.name);
-      const card = el('article', { class: 'entry-card', 'data-city': r.city, id: id });
+      const card = el('details', { class: 'entry-card', 'data-city': r.city, id: id });
 
-      const head = el('div', { class: 'entry-card__head' });
-      head.appendChild(el('h3', { class: 'entry-card__name', text: r.name }));
-      head.appendChild(el('div', { class: 'entry-card__tags' }, [
-        el('span', { class: 'tag', text: r.city }),
-        el('span', { class: 'tag', text: r.area || '' }),
-        el('span', { class: 'tag tag--cuisine', text: r.cuisine || '' })
-      ]));
-      card.appendChild(head);
+      /* Summary bar (always visible) */
+      const summary = el('summary', { class: 'entry-card__summary' });
+      const sumInner = el('div', { class: 'entry-card__sum-inner' });
+      sumInner.appendChild(el('h3', { class: 'entry-card__name', text: r.name }));
+      const tags = el('div', { class: 'entry-card__tags' });
+      if (r.city) tags.appendChild(el('span', { class: 'tag', text: r.city }));
+      if (r.area) tags.appendChild(el('span', { class: 'tag', text: r.area }));
+      if (r.cuisine) tags.appendChild(el('span', { class: 'tag tag--cuisine', text: r.cuisine }));
+      if (r.source) tags.appendChild(el('span', { class: 'tag tag--source', text: r.source }));
+      sumInner.appendChild(tags);
+      summary.appendChild(sumInner);
+      summary.appendChild(el('span', { class: 'entry-card__chevron', text: '+' }));
+      card.appendChild(summary);
 
-      card.appendChild(el('p', { class: 'entry-card__desc', text: r.description }));
+      /* Body */
+      const body = el('div', { class: 'entry-card__body' });
+      body.appendChild(el('p', { class: 'entry-card__desc', text: r.description }));
 
       if (r.why) {
-        card.appendChild(el('p', { class: 'entry-card__why' }, [
+        body.appendChild(el('p', { class: 'entry-card__why' }, [
           el('span', { class: 'entry-card__why-label', text: 'Why: ' }),
           el('span', { text: r.why })
         ]));
@@ -557,20 +567,20 @@
       if (r.price) info.appendChild(infoBit('Price', r.price));
       if (r.hours) info.appendChild(infoBit('Hours', r.hours));
       if (r.reservations) info.appendChild(infoBit('Reservations', r.reservations));
-      if (info.children.length) card.appendChild(info);
+      if (info.children.length) body.appendChild(info);
 
       if (r.signatures && r.signatures.length) {
         const sig = el('div', { class: 'entry-card__sig' });
         sig.appendChild(el('span', { class: 'entry-card__sig-label', text: 'Signatures: ' }));
         r.signatures.forEach(function (s) { sig.appendChild(el('span', { class: 'chip', text: s })); });
-        card.appendChild(sig);
+        body.appendChild(sig);
       }
 
       if (r.bestFor && r.bestFor.length) {
         const bf = el('div', { class: 'entry-card__bestfor' });
         bf.appendChild(el('span', { class: 'entry-card__sig-label', text: 'Best for: ' }));
         r.bestFor.forEach(function (s) { bf.appendChild(el('span', { class: 'chip chip--alt', text: s })); });
-        card.appendChild(bf);
+        body.appendChild(bf);
       }
 
       const links = el('div', { class: 'links-row' });
@@ -580,8 +590,9 @@
       }
       const mb = linkBtn('Google Maps', mapsUrl(r.name, r.address));
       if (mb) links.appendChild(mb);
-      if (links.children.length) card.appendChild(links);
+      if (links.children.length) body.appendChild(links);
 
+      card.appendChild(body);
       return card;
     }
 
@@ -612,26 +623,31 @@
 
     function renderSiteCard(s) {
       const id = 'site-' + slugify(s.name);
-      const card = el('article', { class: 'entry-card', 'data-city': s.city, id: id });
+      const card = el('details', { class: 'entry-card', 'data-city': s.city, id: id });
 
-      const head = el('div', { class: 'entry-card__head' });
-      head.appendChild(el('h3', { class: 'entry-card__name', text: s.name }));
-      head.appendChild(el('div', { class: 'entry-card__tags' }, [
-        el('span', { class: 'tag', text: s.city }),
-        el('span', { class: 'tag', text: s.type || '' })
-      ]));
-      card.appendChild(head);
+      const summary = el('summary', { class: 'entry-card__summary' });
+      const sumInner = el('div', { class: 'entry-card__sum-inner' });
+      sumInner.appendChild(el('h3', { class: 'entry-card__name', text: s.name }));
+      const tags = el('div', { class: 'entry-card__tags' });
+      if (s.city) tags.appendChild(el('span', { class: 'tag', text: s.city }));
+      if (s.type) tags.appendChild(el('span', { class: 'tag', text: s.type }));
+      if (s.source) tags.appendChild(el('span', { class: 'tag tag--source', text: s.source }));
+      sumInner.appendChild(tags);
+      summary.appendChild(sumInner);
+      summary.appendChild(el('span', { class: 'entry-card__chevron', text: '+' }));
+      card.appendChild(summary);
 
-      card.appendChild(el('p', { class: 'entry-card__desc', text: s.description }));
+      const body = el('div', { class: 'entry-card__body' });
+      body.appendChild(el('p', { class: 'entry-card__desc', text: s.description }));
 
       const info = el('div', { class: 'entry-card__info' });
       if (s.cost) info.appendChild(infoBit('Cost', s.cost));
       if (s.hours) info.appendChild(infoBit('Hours', s.hours));
       if (s.whenToVisit) info.appendChild(infoBit('When to visit', s.whenToVisit));
-      if (info.children.length) card.appendChild(info);
+      if (info.children.length) body.appendChild(info);
 
       if (s.tips) {
-        card.appendChild(el('p', { class: 'entry-card__tip' }, [
+        body.appendChild(el('p', { class: 'entry-card__tip' }, [
           el('span', { class: 'entry-card__sig-label', text: 'Tips: ' }),
           el('span', { text: s.tips })
         ]));
@@ -648,36 +664,42 @@
       }
       const mb = linkBtn('Google Maps', mapsUrl(s.name, s.city + ', Greece'));
       if (mb) links.appendChild(mb);
-      if (links.children.length) card.appendChild(links);
+      if (links.children.length) body.appendChild(links);
 
+      card.appendChild(body);
       return card;
     }
 
     function renderBeachCard(b) {
       const id = 'beach-' + slugify(b.name);
-      const card = el('article', { class: 'entry-card', 'data-city': b.city, id: id });
+      const card = el('details', { class: 'entry-card', 'data-city': b.city, id: id });
 
-      const head = el('div', { class: 'entry-card__head' });
-      head.appendChild(el('h3', { class: 'entry-card__name', text: b.name }));
-      head.appendChild(el('div', { class: 'entry-card__tags' }, [
-        el('span', { class: 'tag', text: b.city }),
-        el('span', { class: 'tag', text: b.surface || '' })
-      ]));
-      card.appendChild(head);
+      const summary = el('summary', { class: 'entry-card__summary' });
+      const sumInner = el('div', { class: 'entry-card__sum-inner' });
+      sumInner.appendChild(el('h3', { class: 'entry-card__name', text: b.name }));
+      const tags = el('div', { class: 'entry-card__tags' });
+      if (b.city) tags.appendChild(el('span', { class: 'tag', text: b.city }));
+      if (b.surface) tags.appendChild(el('span', { class: 'tag', text: b.surface }));
+      if (b.source) tags.appendChild(el('span', { class: 'tag tag--source', text: b.source }));
+      sumInner.appendChild(tags);
+      summary.appendChild(sumInner);
+      summary.appendChild(el('span', { class: 'entry-card__chevron', text: '+' }));
+      card.appendChild(summary);
 
-      card.appendChild(el('p', { class: 'entry-card__desc', text: b.description }));
+      const body = el('div', { class: 'entry-card__body' });
+      body.appendChild(el('p', { class: 'entry-card__desc', text: b.description }));
 
       const info = el('div', { class: 'entry-card__info' });
       if (b.distance) info.appendChild(infoBit('Distance', b.distance));
       if (b.facilities) info.appendChild(infoBit('Facilities', b.facilities));
       if (b.vibe) info.appendChild(infoBit('Vibe', b.vibe));
-      if (info.children.length) card.appendChild(info);
+      if (info.children.length) body.appendChild(info);
 
       if (b.bestFor && b.bestFor.length) {
         const bf = el('div', { class: 'entry-card__bestfor' });
         bf.appendChild(el('span', { class: 'entry-card__sig-label', text: 'Best for: ' }));
         b.bestFor.forEach(function (s) { bf.appendChild(el('span', { class: 'chip chip--alt', text: s })); });
-        card.appendChild(bf);
+        body.appendChild(bf);
       }
 
       const links = el('div', { class: 'links-row' });
@@ -687,8 +709,9 @@
       }
       const mb = linkBtn('Google Maps', mapsUrl(b.name + ' beach', b.city + ', Greece'));
       if (mb) links.appendChild(mb);
-      if (links.children.length) card.appendChild(links);
+      if (links.children.length) body.appendChild(links);
 
+      card.appendChild(body);
       return card;
     }
 
@@ -977,15 +1000,15 @@
     renderForm();
     activateSection('section-overview');
 
-    /* When a link points to a specific day, open that day's details */
-    function openTargetedDay() {
+    /* When a link points to a specific day or entry card, open it */
+    function openTargetedDetails() {
       const hash = window.location.hash;
-      if (!hash || hash.indexOf('#day-') !== 0) return;
+      if (!hash) return;
       const target = document.querySelector(hash);
       if (target && target.tagName === 'DETAILS') target.open = true;
     }
-    window.addEventListener('hashchange', openTargetedDay);
-    openTargetedDay();
+    window.addEventListener('hashchange', openTargetedDetails);
+    openTargetedDetails();
   }
 
   if (document.readyState === 'loading') {
