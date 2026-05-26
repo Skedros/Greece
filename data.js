@@ -73,6 +73,96 @@ window.TRIP_DATA = {
     ]
   },
 
+  stays: [
+    {
+      leg: "Athens, arrival leg",
+      name: "Alke Homme apartment",
+      city: "Athens",
+      neighborhood: "Makrygianni, under the Acropolis",
+      address: "Lempesi 6, Makrygianni, Athens",
+      phone: "",
+      checkIn: "Saturday, Jun 6, 2026",
+      checkOut: "Tuesday, Jun 9, 2026",
+      checkInTime: "Per Vrbo host instructions",
+      nights: 3,
+      booking: "Vrbo #5563-3418276611, via the Lohse family",
+      links: [
+        { label: "Vrbo trip page", url: "https://www.vrbo.com/trips/egti-197-W8I-26QX" },
+        { label: "Google Maps", url: "https://www.google.com/maps/search/Lempesi+6+Athens" }
+      ]
+    },
+    {
+      leg: "Chios",
+      name: "Grecian Castle Hotel",
+      city: "Chios",
+      neighborhood: "Enoseos Avenue, seaside",
+      address: "Enoseos Avenue, Chios, Chios Island, 82100 Greece",
+      phone: "+30 22710 44740",
+      checkIn: "Tuesday, Jun 9, 2026",
+      checkOut: "Sunday, Jun 14, 2026",
+      checkInTime: "2:00 PM",
+      checkOutTime: "11:00 AM",
+      nights: 5,
+      booking: "Hotels.com itinerary #73329640415083, 2 rooms suite",
+      links: [
+        { label: "Hotel website", url: "https://www.greciancastle.gr" },
+        { label: "Google Maps", url: "https://www.google.com/maps/search/Grecian+Castle+Hotel+Chios" }
+      ]
+    },
+    {
+      leg: "Crete",
+      name: "Vrbo villa in Agioi Apostoloi",
+      city: "Chania (Crete)",
+      neighborhood: "Agioi Apostoloi, 5 km west of Old Town",
+      address: "Drakonianou 6, Agioi Apostoloi, Chania 73100",
+      phone: "",
+      checkIn: "Sunday, Jun 14, 2026",
+      checkOut: "Friday, Jun 19, 2026",
+      checkInTime: "Per Vrbo host instructions",
+      nights: 5,
+      booking: "Vrbo property 11694637, Unit 6738192. Host: Tsichlaki Maria (Be On Holidays)",
+      links: [
+        { label: "Vrbo listing", url: "https://www.vrbo.com/11694637ha" },
+        { label: "Google Maps", url: "https://www.google.com/maps/search/Drakonianou+6+Agioi+Apostoloi+Chania" }
+      ]
+    },
+    {
+      leg: "Athens, departure leg",
+      name: "Athens apartment, Syngrou Avenue",
+      city: "Athens",
+      neighborhood: "Koukaki / Neos Kosmos, south of the Acropolis",
+      address: "Leoforos Sygrou 29, Athens 11743",
+      phone: "",
+      checkIn: "Friday, Jun 19, 2026",
+      checkOut: "Sunday, Jun 21, 2026",
+      checkInTime: "Per host instructions",
+      nights: 2,
+      booking: "",
+      links: [
+        { label: "Google Maps", url: "https://www.google.com/maps/search/Leoforos+Sygrou+29+Athens+11743" }
+      ]
+    }
+  ],
+
+  /* ICS calendar events: flights, check-ins, anchor activities */
+  events: [
+    { date: "2026-06-06", time: "10:35", end: "11:35", title: "Arrive ATH: United 1710 from Chicago", description: "John, Maria, Athan, Piper, Gigi land at Athens airport.", location: "Athens International Airport (ATH)" },
+    { date: "2026-06-06", time: "16:50", end: "17:50", title: "Arrive ATH: Delta 9185 from Amsterdam", description: "Alex and Kinzie land at Athens airport.", location: "Athens International Airport (ATH)" },
+    { date: "2026-06-06", time: "15:00", end: "16:00", title: "Check in: Alke Homme apartment, Athens", description: "Lempesi 6, Makrygianni, Athens.", location: "Lempesi 6, Athens" },
+    { date: "2026-06-08", time: "08:00", end: "10:30", title: "Acropolis tour, 08:00 entry", description: "Pre-booked timed entry. Wear hat, bring water.", location: "Acropolis of Athens" },
+    { date: "2026-06-09", time: "09:55", end: "10:40", title: "Flight ATH to Chios (JKH)", description: "Domestic flight, ~45 min.", location: "Athens airport (ATH)" },
+    { date: "2026-06-09", time: "14:00", end: "15:00", title: "Check in: Grecian Castle Hotel, Chios", description: "Enoseos Avenue, Chios. 5 nights.", location: "Enoseos Avenue, Chios" },
+    { date: "2026-06-14", time: "11:00", end: "11:30", title: "Check out: Grecian Castle Hotel", description: "Taxi to Chios airport for the 11:50 flight.", location: "Enoseos Avenue, Chios" },
+    { date: "2026-06-14", time: "11:50", end: "12:35", title: "Flight Chios (JKH) to Chania (CHQ)", description: "Domestic flight.", location: "Chios airport (JKH)" },
+    { date: "2026-06-14", time: "14:00", end: "15:00", title: "Check in: Vrbo villa, Agioi Apostoloi, Crete", description: "Drakonianou 6, Agioi Apostoloi, Chania.", location: "Drakonianou 6, Agioi Apostoloi, Chania" },
+    { date: "2026-06-17", time: "06:00", end: "16:00", title: "Samaria Gorge hike (hikers)", description: "Bus to Omalos, 16 km downhill hike, ferry from Agia Roumeli to Sfakia, bus back to Chania.", location: "Samaria Gorge National Park" },
+    { date: "2026-06-19", time: "11:00", end: "11:30", title: "Check out: Crete villa", description: "Taxi to Chania airport (CHQ).", location: "Drakonianou 6, Agioi Apostoloi, Chania" },
+    { date: "2026-06-19", time: "13:40", end: "14:30", title: "Flight Chania (CHQ) to Athens (ATH)", description: "Domestic flight, ~50 min.", location: "Chania airport (CHQ)" },
+    { date: "2026-06-19", time: "16:00", end: "17:00", title: "Check in: Athens apartment, Syngrou", description: "Leoforos Sygrou 29, Athens. 2 nights.", location: "Leoforos Sygrou 29, Athens" },
+    { date: "2026-06-21", time: "12:35", end: "13:35", title: "Depart Athens: flight to Chicago", description: "John, Maria, Athan, Piper, Gigi. Arrive SLC 10:48 PM.", location: "Athens International Airport (ATH)" },
+    { date: "2026-06-21", time: "13:40", end: "14:40", title: "Depart Athens (Alex, Kinzie)", description: "1:40 PM departure, arrive SLC 7:30 PM.", location: "Athens International Airport (ATH)" }
+  ],
+
   days: [
     /* ATHENS LEG 1 */
     {

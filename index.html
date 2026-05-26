@@ -13,6 +13,8 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#1f4e78">
 </head>
 <body>
 
@@ -24,6 +26,7 @@
       </div>
       <nav class="nav">
         <button class="nav__btn is-active" data-target="section-overview">Overview</button>
+        <button class="nav__btn" data-target="section-stays">Stays</button>
         <button class="nav__btn" data-target="section-logistics">Logistics</button>
         <button class="nav__btn" data-target="section-athens1">Athens 1</button>
         <button class="nav__btn" data-target="section-chios">Chios</button>
@@ -40,6 +43,7 @@
 
   <main class="layout">
     <section id="section-overview" class="section is-active"></section>
+    <section id="section-stays" class="section"></section>
     <section id="section-logistics" class="section"></section>
     <section id="section-athens1" class="section"></section>
     <section id="section-chios" class="section"></section>
@@ -52,12 +56,32 @@
     <section id="section-form" class="section"></section>
   </main>
 
+  <!-- Floating action dock (mobile-only) -->
+  <div class="fab" aria-label="Quick actions">
+    <button class="fab__btn" data-fab="today" aria-label="Today">
+      <span class="fab__label">Today</span>
+    </button>
+    <button class="fab__btn" data-fab="stays" aria-label="Stays">
+      <span class="fab__label">Stays</span>
+    </button>
+    <button class="fab__btn" data-fab="map" aria-label="Map">
+      <span class="fab__label">Map</span>
+    </button>
+  </div>
+
   <footer class="site-footer">
     <div class="layout">Built for the Skedros family . Greece 2026</div>
   </footer>
 
   <script src="data.js"></script>
   <script src="app.js"></script>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function () {
+        navigator.serviceWorker.register('sw.js').catch(function () { /* offline support optional */ });
+      });
+    }
+  </script>
 
 </body>
 </html>

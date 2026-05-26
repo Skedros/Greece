@@ -153,6 +153,12 @@
 
     section.appendChild(el('h2', { class: 'section__title', text: 'Overview' }));
 
+    /* TODAY highlight: what's happening today, with quick link */
+    section.appendChild(renderTodayHighlight());
+
+    /* Dual-time clock: Athens vs SLC */
+    section.appendChild(renderDualClock());
+
     const meta = el('div', { class: 'meta-grid' });
     meta.appendChild(metaCard('Dates', D.meta.dateRange));
     meta.appendChild(metaCard('Travelers', D.meta.travelers));
@@ -161,9 +167,21 @@
 
     section.appendChild(el('p', { class: 'intro', text: D.meta.intro }));
 
+    /* Calendar export + Search */
+    const tools = el('div', { class: 'overview-tools' });
+    tools.appendChild(el('button', {
+      class: 'tool-btn tool-btn--ics',
+      text: 'Download trip to calendar (.ics)',
+      onclick: function () { downloadIcs(); }
+    }));
+    section.appendChild(tools);
+
+    section.appendChild(renderSearchBar());
+
     /* Quick links to all sections */
     const quickLinks = el('div', { class: 'quick-links' });
     [
+      { label: 'Stays', target: 'section-stays' },
       { label: 'Itinerary, Athens (arrival)', target: 'section-athens1' },
       { label: 'Itinerary, Chios', target: 'section-chios' },
       { label: 'Itinerary, Crete', target: 'section-crete' },
@@ -184,6 +202,203 @@
     section.appendChild(quickLinks);
   }
 
+  /* ---------------- TODAY highlight ---------------- */
+
+  function parseDayDate(dateStr) {
+    /* "Saturday, Jun 6, 2026" -> Date */
+    const months = { Jan: 0, Feb: 1, Mar: 2, Apr: 3, May: 4, Jun: 5, Jul: 6, Aug: 7, Sep: 8, Oct: 9, Nov: 10, Dec: 11 };
+    const m = dateStr.match(/(\w{3}) (\d{1,2}), (\d{4})/);
+    if (!m) return null;
+    return new Date(parseInt(m[3], 10), months[m[1]], parseInt(m[2], 10));
+  }
+
+  function renderTodayHighlight() {
+    const wrap = el('div', { class: 'today-block' });
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+
+    const matchedDay = (D.days || []).find(function (d) {
+      const dd = parseDayDate(d.date);
+      return dd && dd.getTime() === today.getTime();
+    });
+
+    const tripStart = parseDayDate(D.days[0].date);
+    const tripEnd = parseDayDate(D.days[D.days.length - 1].date);
+
+    if (matchedDay) {
+      wrap.classList.add('today-block--active');
+      wrap.appendChild(el('div', { class: 'today-block__label', text: 'Today, ' + matchedDay.date }));
+      wrap.appendChild(el('h3', { class: 'today-block__title', text: matchedDay.title }));
+      if (matchedDay.summary) wrap.appendChild(el('p', { class: 'today-block__summary', text: matchedDay.summary }));
+      const sectionId = 'section-' + (matchedDay.id.indexOf('athens-') === 0 ? 'athens1' : matchedDay.id.indexOf('athens2-') === 0 ? 'athens2' : matchedDay.id.split('-')[0]);
+      const btn = el('button', {
+        class: 'today-block__btn',
+        text: 'Open today\u2019s plan',
+        onclick: function () {
+          activateSection(sectionId);
+          setTimeout(function () {
+            const t = document.getElementById('day-' + matchedDay.id);
+            if (t) { if (t.tagName === 'DETAILS') t.open = true; t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+          }, 100);
+        }
+      });
+      wrap.appendChild(btn);
+    } else if (today < tripStart) {
+      const days = Math.ceil((tripStart - today) / 86400000);
+      wrap.appendChild(el('div', { class: 'today-block__label', text: 'Trip starts in' }));
+      wrap.appendChild(el('h3', { class: 'today-block__title', text: days + ' ' + (days === 1 ? 'day' : 'days') }));
+      wrap.appendChild(el('p', { class: 'today-block__summary', text: 'First flight: United 1710 from Chicago on June 6.' }));
+    } else if (today > tripEnd) {
+      wrap.appendChild(el('div', { class: 'today-block__label', text: 'Trip ended' }));
+      wrap.appendChild(el('h3', { class: 'today-block__title', text: 'Welcome home' }));
+      wrap.appendChild(el('p', { class: 'today-block__summary', text: 'Yamas. Until the next one.' }));
+    } else {
+      wrap.appendChild(el('div', { class: 'today-block__label', text: 'Mid-trip' }));
+      wrap.appendChild(el('h3', { class: 'today-block__title', text: 'Travel day' }));
+    }
+    return wrap;
+  }
+
+  /* ---------------- dual-time clock ---------------- */
+
+  function renderDualClock() {
+    const wrap = el('div', { class: 'dual-clock' });
+    const athens = el('div', { class: 'dual-clock__cell' });
+    athens.appendChild(el('div', { class: 'dual-clock__city', text: 'Athens' }));
+    athens.appendChild(el('div', { class: 'dual-clock__time', id: 'clock-athens', text: '--:--' }));
+    const slc = el('div', { class: 'dual-clock__cell' });
+    slc.appendChild(el('div', { class: 'dual-clock__city', text: 'Salt Lake City' }));
+    slc.appendChild(el('div', { class: 'dual-clock__time', id: 'clock-slc', text: '--:--' }));
+    wrap.appendChild(athens);
+    wrap.appendChild(slc);
+
+    function tick() {
+      const now = new Date();
+      const fmtAthens = new Intl.DateTimeFormat('en-GB', { timeZone: 'Europe/Athens', hour: '2-digit', minute: '2-digit', hour12: false });
+      const fmtSlc = new Intl.DateTimeFormat('en-GB', { timeZone: 'America/Denver', hour: '2-digit', minute: '2-digit', hour12: false });
+      const a = document.getElementById('clock-athens');
+      const s = document.getElementById('clock-slc');
+      if (a) a.textContent = fmtAthens.format(now);
+      if (s) s.textContent = fmtSlc.format(now);
+    }
+    tick();
+    setInterval(tick, 30000);
+    return wrap;
+  }
+
+  /* ---------------- search ---------------- */
+
+  function renderSearchBar() {
+    const wrap = el('div', { class: 'search-bar' });
+    const input = el('input', {
+      type: 'search',
+      class: 'search-bar__input',
+      placeholder: 'Search restaurants, sites, beaches...'
+    });
+    const results = el('div', { class: 'search-bar__results' });
+
+    function doSearch() {
+      const q = input.value.trim().toLowerCase();
+      results.innerHTML = '';
+      if (q.length < 2) { results.style.display = 'none'; return; }
+      results.style.display = 'block';
+
+      const hits = [];
+      (D.restaurants || []).forEach(function (r) {
+        if ((r.name + ' ' + (r.cuisine || '') + ' ' + (r.area || '')).toLowerCase().indexOf(q) > -1) {
+          hits.push({ kind: 'Restaurant', name: r.name, city: r.city, anchor: 'rest-' + slugify(r.name), section: 'section-restaurants' });
+        }
+      });
+      (D.sites || []).forEach(function (s) {
+        if ((s.name + ' ' + (s.type || '')).toLowerCase().indexOf(q) > -1) {
+          hits.push({ kind: 'Site', name: s.name, city: s.city, anchor: 'site-' + slugify(s.name), section: 'section-sites' });
+        }
+      });
+      (D.beaches || []).forEach(function (b) {
+        if (b.name.toLowerCase().indexOf(q) > -1) {
+          hits.push({ kind: 'Beach', name: b.name, city: b.city, anchor: 'beach-' + slugify(b.name), section: 'section-sites' });
+        }
+      });
+
+      if (!hits.length) {
+        results.appendChild(el('div', { class: 'search-bar__empty', text: 'No matches.' }));
+        return;
+      }
+      hits.slice(0, 12).forEach(function (h) {
+        const row = el('button', {
+          class: 'search-bar__hit',
+          onclick: function () {
+            activateSection(h.section);
+            setTimeout(function () {
+              const t = document.getElementById(h.anchor);
+              if (t) { if (t.tagName === 'DETAILS') t.open = true; t.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
+            }, 100);
+            results.style.display = 'none';
+            input.value = '';
+          }
+        });
+        row.appendChild(el('span', { class: 'search-bar__kind', text: h.kind }));
+        row.appendChild(el('span', { class: 'search-bar__name', text: h.name }));
+        row.appendChild(el('span', { class: 'search-bar__city', text: h.city }));
+        results.appendChild(row);
+      });
+    }
+    input.addEventListener('input', doSearch);
+    input.addEventListener('focus', doSearch);
+    document.addEventListener('click', function (e) {
+      if (!wrap.contains(e.target)) results.style.display = 'none';
+    });
+
+    wrap.appendChild(input);
+    wrap.appendChild(results);
+    return wrap;
+  }
+
+  /* ---------------- calendar (.ics) export ---------------- */
+
+  function pad2(n) { return (n < 10 ? '0' : '') + n; }
+  function icsTimestamp(dateStr, timeStr) {
+    /* dateStr "2026-06-06", timeStr "10:35" -> "20260606T103500" (floating local time in Europe/Athens) */
+    return dateStr.replace(/-/g, '') + 'T' + timeStr.replace(':', '') + '00';
+  }
+  function icsEscape(s) {
+    return (s || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
+  }
+  function generateIcs() {
+    const lines = [];
+    lines.push('BEGIN:VCALENDAR');
+    lines.push('VERSION:2.0');
+    lines.push('PRODID:-//Skedros//Greece 2026//EN');
+    lines.push('CALSCALE:GREGORIAN');
+    lines.push('METHOD:PUBLISH');
+    lines.push('X-WR-CALNAME:Greece 2026');
+    lines.push('X-WR-TIMEZONE:Europe/Athens');
+    (D.events || []).forEach(function (e, i) {
+      lines.push('BEGIN:VEVENT');
+      lines.push('UID:greece2026-' + i + '@skedros');
+      lines.push('DTSTAMP:20260101T000000Z');
+      lines.push('DTSTART;TZID=Europe/Athens:' + icsTimestamp(e.date, e.time));
+      lines.push('DTEND;TZID=Europe/Athens:' + icsTimestamp(e.date, e.end || e.time));
+      lines.push('SUMMARY:' + icsEscape(e.title));
+      if (e.description) lines.push('DESCRIPTION:' + icsEscape(e.description));
+      if (e.location) lines.push('LOCATION:' + icsEscape(e.location));
+      lines.push('END:VEVENT');
+    });
+    lines.push('END:VCALENDAR');
+    return lines.join('\r\n');
+  }
+  function downloadIcs() {
+    const blob = new Blob([generateIcs()], { type: 'text/calendar;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'greece-2026.ics';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function () { URL.revokeObjectURL(url); }, 1000);
+  }
+
   function metaCard(label, value, valueId) {
     const card = el('div', { class: 'meta-card' });
     card.appendChild(el('div', { class: 'meta-card__label', text: label }));
@@ -199,44 +414,78 @@
     section.innerHTML = '';
 
     section.appendChild(el('h2', { class: 'section__title', text: 'Stays' }));
-    section.appendChild(el('p', { class: 'section__lede', text: 'Accommodation details. Editable booking fields highlighted so Athan can fill in addresses and confirmation numbers as bookings finalize.' }));
+    section.appendChild(el('p', { class: 'section__lede', text: 'All four stays at a glance. Tap an address for Google Maps, tap a phone number to call. The address you need when the taxi driver is waiting.' }));
 
-    Object.keys(D.accommodations).forEach(function (k) {
-      const a = D.accommodations[k];
-      const card = el('div', { class: 'stay-card' + (a.confirmed ? ' stay-card--confirmed' : ' stay-card--pending') });
+    (D.stays || []).forEach(function (s) {
+      const card = el('article', { class: 'stay-v5' });
 
-      card.appendChild(el('div', { class: 'stay-card__header' }, [
-        el('div', { class: 'stay-card__label', text: a.label }),
-        el('div', { class: 'stay-card__dates', text: a.dates })
-      ]));
+      const head = el('header', { class: 'stay-v5__head' });
+      head.appendChild(el('div', { class: 'stay-v5__leg', text: s.leg }));
+      head.appendChild(el('h3', { class: 'stay-v5__name', text: s.name }));
+      head.appendChild(el('div', { class: 'stay-v5__dates', text: s.nights + (s.nights === 1 ? ' night' : ' nights') + ' . ' + s.checkIn.replace(/^[A-Za-z]+, /, '') + ' to ' + s.checkOut.replace(/^[A-Za-z]+, /, '') }));
+      card.appendChild(head);
 
-      const grid = el('div', { class: 'stay-card__grid' });
-      grid.appendChild(stayField('Property', a.name));
-      grid.appendChild(stayField('Address (editable)', null, editable(a.address || '', 'stay.' + k + '.address')));
-      grid.appendChild(stayField('Phone (editable)', null, editable(a.phone || '', 'stay.' + k + '.phone')));
-      grid.appendChild(stayField('Confirmation (editable)', null, editable(a.confirmation || '', 'stay.' + k + '.conf')));
-      if (a.checkIn) grid.appendChild(stayField('Check in', a.checkIn));
-      if (a.checkOut) grid.appendChild(stayField('Check out', a.checkOut));
-      if (a.host) grid.appendChild(stayField('Host', a.host));
-      if (a.hostEmail) grid.appendChild(stayField('Host email', a.hostEmail));
+      const grid = el('div', { class: 'stay-v5__grid' });
+
+      const addrCell = el('div', { class: 'stay-v5__cell stay-v5__cell--wide' });
+      addrCell.appendChild(el('div', { class: 'stay-v5__label', text: 'Address' }));
+      addrCell.appendChild(el('a', {
+        class: 'stay-v5__address',
+        href: 'https://www.google.com/maps/search/' + encodeURIComponent(s.address),
+        target: '_blank',
+        rel: 'noopener',
+        text: s.address
+      }));
+      addrCell.appendChild(el('div', { class: 'stay-v5__neighborhood', text: s.neighborhood }));
+      grid.appendChild(addrCell);
+
+      if (s.phone) {
+        const phoneCell = el('div', { class: 'stay-v5__cell' });
+        phoneCell.appendChild(el('div', { class: 'stay-v5__label', text: 'Phone' }));
+        phoneCell.appendChild(el('a', {
+          class: 'stay-v5__phone',
+          href: 'tel:' + s.phone.replace(/\s/g, ''),
+          text: s.phone
+        }));
+        grid.appendChild(phoneCell);
+      }
+
+      const ciCell = el('div', { class: 'stay-v5__cell' });
+      ciCell.appendChild(el('div', { class: 'stay-v5__label', text: 'Check in' }));
+      ciCell.appendChild(el('div', { class: 'stay-v5__val', text: s.checkIn + (s.checkInTime ? ', ' + s.checkInTime : '') }));
+      grid.appendChild(ciCell);
+
+      const coCell = el('div', { class: 'stay-v5__cell' });
+      coCell.appendChild(el('div', { class: 'stay-v5__label', text: 'Check out' }));
+      coCell.appendChild(el('div', { class: 'stay-v5__val', text: s.checkOut + (s.checkOutTime ? ', ' + s.checkOutTime : '') }));
+      grid.appendChild(coCell);
+
+      if (s.booking) {
+        const bk = el('div', { class: 'stay-v5__cell stay-v5__cell--wide' });
+        bk.appendChild(el('div', { class: 'stay-v5__label', text: 'Booking' }));
+        bk.appendChild(el('div', { class: 'stay-v5__val', text: s.booking }));
+        grid.appendChild(bk);
+      }
+
       card.appendChild(grid);
 
-      if (a.notes) card.appendChild(el('p', { class: 'stay-card__notes', text: a.notes }));
-
-      const links = el('div', { class: 'links-row' });
-      const mb = linkBtn('Google Maps', mapsUrl(a.name, a.address));
-      const wb = a.website ? linkBtn('Listing site', a.website) : null;
-      if (mb) links.appendChild(mb);
-      if (wb) links.appendChild(wb);
-      if (links.children.length) card.appendChild(links);
+      if (s.links && s.links.length) {
+        const links = el('div', { class: 'links-row' });
+        s.links.forEach(function (l) {
+          const lb = linkBtn(l.label, l.url);
+          if (lb) links.appendChild(lb);
+        });
+        card.appendChild(links);
+      }
 
       section.appendChild(card);
     });
 
-    /* Emergency contacts */
+    /* Emergency contacts at the bottom of the Stays page */
     section.appendChild(el('h3', { class: 'subsection__title', text: 'Emergency contacts' }));
+    section.appendChild(el('p', { class: 'section__lede', text: 'Tap any number to call.' }));
     const emer = el('div', { class: 'emer-grid' });
-    D.emergency.forEach(function (e) {
+    (D.emergency || []).forEach(function (e) {
       const c = el('div', { class: 'emer-card' });
       c.appendChild(el('div', { class: 'emer-card__label', text: e.label }));
       c.appendChild(el('a', { class: 'emer-card__value', href: 'tel:' + e.value.replace(/\s/g, ''), text: e.value }));
@@ -741,7 +990,17 @@
   function infoBit(label, value) {
     const b = el('div', { class: 'info-bit' });
     b.appendChild(el('span', { class: 'info-bit__label', text: label + ': ' }));
-    b.appendChild(el('span', { class: 'info-bit__value', text: value }));
+    /* Auto-detect phone numbers and wrap in tel: */
+    const looksPhone = label === 'Phone' || /^\+?\d[\d\s().-]{6,}$/.test(String(value).trim());
+    if (looksPhone && String(value).trim()) {
+      b.appendChild(el('a', {
+        class: 'info-bit__value info-bit__value--phone',
+        href: 'tel:' + String(value).replace(/\s/g, ''),
+        text: value
+      }));
+    } else {
+      b.appendChild(el('span', { class: 'info-bit__value', text: value }));
+    }
     return b;
   }
 
@@ -755,13 +1014,24 @@
     section.appendChild(el('h2', { class: 'section__title', text: 'Practical' }));
     section.appendChild(el('p', { class: 'section__lede', text: 'Emergency numbers, packing checklist, useful Greek, and etiquette notes for the trip.' }));
 
+    /* Currency hint */
+    const usd = el('div', { class: 'usd-hint' });
+    usd.appendChild(el('div', { class: 'usd-hint__label', text: 'Currency' }));
+    usd.appendChild(el('div', { class: 'usd-hint__body', text: 'Prices on this site are in euros (EUR). As of May 2026, EUR 1 is approximately USD 1.08. Quick mental math: drop the cents, add 10% (EUR 25 dinner ~ USD 27). For exact conversions, the XE app works offline once installed.' }));
+    section.appendChild(usd);
+
     /* Emergency contacts */
     section.appendChild(el('h3', { class: 'subsection__title', text: 'Emergency contacts' }));
+    section.appendChild(el('p', { class: 'section__lede', text: 'Tap any number to call.' }));
     const eGrid = el('div', { class: 'emergency-grid' });
     (D.emergency || []).forEach(function (item) {
       const cell = el('div', { class: 'emergency-cell' });
       cell.appendChild(el('div', { class: 'emergency-cell__label', text: item.label }));
-      cell.appendChild(el('div', { class: 'emergency-cell__value', text: item.value }));
+      cell.appendChild(el('a', {
+        class: 'emergency-cell__value',
+        href: 'tel:' + item.value.replace(/\s/g, ''),
+        text: item.value
+      }));
       eGrid.appendChild(cell);
     });
     section.appendChild(eGrid);
@@ -996,9 +1266,28 @@
     renderRestaurants();
     renderSitesAndBeaches();
     renderMap();
+    renderStays();
     renderPractical();
     renderForm();
     activateSection('section-overview');
+
+    /* Wire FAB buttons (mobile) */
+    document.querySelectorAll('.fab__btn').forEach(function (b) {
+      b.addEventListener('click', function () {
+        const target = b.getAttribute('data-fab');
+        if (target === 'today') {
+          activateSection('section-overview');
+          setTimeout(function () {
+            const t = document.querySelector('.today-block');
+            if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }, 80);
+        } else if (target === 'stays') {
+          activateSection('section-stays');
+        } else if (target === 'map') {
+          activateSection('section-map');
+        }
+      });
+    });
 
     /* When a link points to a specific day or entry card, open it */
     function openTargetedDetails() {
