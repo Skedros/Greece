@@ -279,9 +279,15 @@ window.TRIP_DATA = {
       weather: "Slightly cooler than Athens, sea breeze. June high 29C, low 21C.",
       slots: [
         {
-          time: "Late morning to afternoon",
-          headline: "Check in at Grecian Castle Hotel",
-          description: "The hotel is the home base for Chios, Jun 9 to 14 (5 nights). About 10 minutes by taxi from Chios airport. Quiet seaside setting, walking distance to Chios Town center and harbor.",
+          time: "Check-in",
+          headline: "Grecian Castle Hotel, 2:00 PM",
+          description: "Chios base for 5 nights, Jun 9 to 14. Booked through Hotels.com under Maria's account. 7 adults across 2 rooms (suite layout). Quiet seaside setting, walking distance to Chios Town center and harbor. About 10 minutes by taxi from Chios airport.",
+          options: [
+            { name: "Address", detail: "Enoseos Avenue, Chios, Chios Island, 82100 Greece" },
+            { name: "Phone", detail: "+30 22710 44740" },
+            { name: "Hotels.com itinerary", detail: "#73329640415083" },
+            { name: "Check-out", detail: "11:00 AM, Sunday Jun 14" }
+          ],
           links: [{ label: "Grecian Castle Hotel", url: "https://www.greciancastle.gr" }]
         },
         {
