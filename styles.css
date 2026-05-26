@@ -1091,36 +1091,68 @@ button {
 }
 
 .phrases-card__title {
-  font-size: 18px;
+  font-size: 22px;
   color: var(--aegean-deep);
-  margin: 0 0 12px 0;
+  margin: 0 0 6px 0;
+  font-family: var(--font-display), serif;
+}
+
+.phrases-card__lede {
+  font-size: 14px;
+  color: var(--ink-mute);
+  line-height: 1.55;
+  margin: 0 0 14px 0;
+  font-style: italic;
 }
 
 .phrases-table { width: 100%; border-collapse: collapse; }
 
-.phrases-table td {
-  padding: 8px 12px;
-  border-top: 1px solid var(--rule);
-  font-size: 14px;
+.phrases-table__h {
+  text-align: left;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--ink-mute);
+  font-weight: 600;
+  padding: 8px 12px 10px 12px;
+  border-bottom: 2px solid var(--aegean);
 }
 
-.phrases-table tr:first-child td { border-top: none; }
+.phrases-table td {
+  padding: 10px 12px;
+  border-top: 1px solid var(--rule);
+  font-size: 14px;
+  vertical-align: top;
+}
+
+.phrases-table tbody tr:first-child td { border-top: none; }
+.phrases-table tbody tr:nth-child(even) { background: rgba(0,0,0,0.015); }
 
 .phrases-table__gr {
   font-family: 'Fraunces', Georgia, serif;
-  font-size: 16px;
+  font-size: 17px;
   color: var(--aegean-deep);
-  width: 30%;
+  width: 28%;
+  font-weight: 500;
 }
 
 .phrases-table__trans {
   font-style: italic;
   color: var(--terracotta);
-  width: 30%;
+  width: 28%;
+  font-size: 14px;
 }
 
 .phrases-table__en {
   color: var(--ink-soft);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+@media (max-width: 640px) {
+  .phrases-table__gr { font-size: 15px; }
+  .phrases-table td { padding: 8px 8px; font-size: 13px; }
+  .phrases-table__h { padding: 6px 8px; font-size: 9px; }
 }
 
 /* -------------------- form -------------------- */

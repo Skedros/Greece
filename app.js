@@ -187,6 +187,7 @@
       { label: 'Restaurants', target: 'section-restaurants' },
       { label: 'Sites + beaches', target: 'section-sites' },
       { label: 'Map', target: 'section-map' },
+      { label: 'Greek', target: 'section-phrases' },
       { label: 'Practical', target: 'section-budget' }
     ].forEach(function (link) {
       quickLinks.appendChild(el('button', {
@@ -354,8 +355,17 @@
 
   function pad2(n) { return (n < 10 ? '0' : '') + n; }
   function icsTimestamp(dateStr, timeStr) {
-    /* dateStr "2026-06-06", timeStr "10:35" -> "20260606T103500" (floating local time in Europe/Athens) */
-    return dateStr.replace(/-/g, '') + 'T' + timeStr.replace(':', '') + '00';
+    /* dateStr "2026-06-06", timeStr "10:35 AM" or "4:50 PM" -> "20260606T103500" */
+    const m = String(timeStr).trim().match(/^(\d{1,2}):(\d{2})\s*(AM|PM)?$/i);
+    let hh = 0, mm = 0;
+    if (m) {
+      hh = parseInt(m[1], 10);
+      mm = parseInt(m[2], 10);
+      const suffix = (m[3] || '').toUpperCase();
+      if (suffix === 'PM' && hh < 12) hh += 12;
+      else if (suffix === 'AM' && hh === 12) hh = 0;
+    }
+    return dateStr.replace(/-/g, '') + 'T' + pad2(hh) + pad2(mm) + '00';
   }
   function icsEscape(s) {
     return (s || '').replace(/\\/g, '\\\\').replace(/;/g, '\\;').replace(/,/g, '\\,').replace(/\n/g, '\\n');
@@ -1032,42 +1042,47 @@
     });
     section.appendChild(eGrid);
 
-    /* Packing */
-    section.appendChild(el('h2', { class: 'section__title', text: 'Packing' }));
-    section.appendChild(el('p', { class: 'section__lede', text: 'Check off as you pack. Each person has their own state on their device.' }));
-    D.packing.forEach(function (group) {
-      const card = el('div', { class: 'packing-card' });
-      card.appendChild(el('h3', { class: 'packing-card__title', text: group.section }));
-      const list = el('div', { class: 'packing-list' });
-      group.items.forEach(function (item, i) {
-        list.appendChild(checkboxItem(item, 'packing.' + slugify(group.section) + '.' + i));
-      });
-      card.appendChild(list);
-      section.appendChild(card);
-    });
-
-    /* Phrases */
-    section.appendChild(el('h2', { class: 'section__title', text: 'Useful Greek' }));
-    D.phrases.forEach(function (group) {
-      const card = el('div', { class: 'phrases-card' });
-      card.appendChild(el('h3', { class: 'phrases-card__title', text: group.section }));
-      const table = el('table', { class: 'phrases-table' });
-      group.items.forEach(function (p) {
-        const r = el('tr');
-        r.appendChild(el('td', { class: 'phrases-table__gr', text: p.gr }));
-        r.appendChild(el('td', { class: 'phrases-table__trans', text: p.trans }));
-        r.appendChild(el('td', { class: 'phrases-table__en', text: p.en }));
-        table.appendChild(r);
-      });
-      card.appendChild(table);
-      section.appendChild(card);
-    });
-
     /* Etiquette */
     section.appendChild(el('h2', { class: 'section__title', text: 'Etiquette' }));
     const eul = el('ul', { class: 'tips-list' });
     D.etiquette.forEach(function (e) { eul.appendChild(el('li', { text: e })); });
     section.appendChild(eul);
+  }
+
+  /* ---------------- Greek phrases (its own page) ---------------- */
+
+  function renderPhrases() {
+    const section = $('#section-phrases');
+    if (!section) return;
+    section.innerHTML = '';
+
+    section.appendChild(el('h2', { class: 'section__title', text: 'Greek' }));
+    section.appendChild(el('p', { class: 'section__lede', text: 'A working set of Greek phrases for travelers, organized by situation. The middle column is rough pronunciation: read it aloud and you\u2019ll be close enough. Capital letters in the pronunciation mark the stressed syllable.' }));
+
+    D.phrases.forEach(function (group) {
+      const card = el('div', { class: 'phrases-card' });
+      card.appendChild(el('h3', { class: 'phrases-card__title', text: group.section }));
+      if (group.lede) card.appendChild(el('p', { class: 'phrases-card__lede', text: group.lede }));
+      const table = el('table', { class: 'phrases-table' });
+      const thead = el('thead');
+      const hr = el('tr');
+      hr.appendChild(el('th', { class: 'phrases-table__h', text: 'Greek' }));
+      hr.appendChild(el('th', { class: 'phrases-table__h', text: 'Pronunciation' }));
+      hr.appendChild(el('th', { class: 'phrases-table__h', text: 'English' }));
+      thead.appendChild(hr);
+      table.appendChild(thead);
+      const tbody = el('tbody');
+      group.items.forEach(function (p) {
+        const r = el('tr');
+        r.appendChild(el('td', { class: 'phrases-table__gr', text: p.gr }));
+        r.appendChild(el('td', { class: 'phrases-table__trans', text: p.trans }));
+        r.appendChild(el('td', { class: 'phrases-table__en', text: p.en }));
+        tbody.appendChild(r);
+      });
+      table.appendChild(tbody);
+      card.appendChild(table);
+      section.appendChild(card);
+    });
   }
 
   /* ---------------- contact form ---------------- */
@@ -1264,6 +1279,7 @@
     renderMap();
     renderStays();
     renderPractical();
+    renderPhrases();
     activateSection('section-overview');
 
     /* When a link points to a specific day or entry card, open it */
