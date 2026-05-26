@@ -1229,6 +1229,45 @@ button {
   .stay-card__grid, .day__meta-grid, .meta-grid, .emer-grid { grid-template-columns: 1fr; }
 }
 
+/* -------------------- map iframe -------------------- */
+
+.map-frame-wrap {
+  position: relative;
+  width: 100%;
+  height: 80vh;
+  min-height: 600px;
+  margin: 16px 0 12px 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--aegean-deep);
+}
+
+.map-frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  display: block;
+}
+
+.map-frame__hint {
+  font-size: 14px;
+  color: var(--ink-mute);
+  text-align: center;
+  margin: 0;
+}
+
+.map-frame__hint a {
+  color: var(--aegean);
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .map-frame-wrap { height: 70vh; min-height: 500px; }
+}
+
 /* -------------------- footer -------------------- */
 
 .site-footer {

@@ -168,6 +168,7 @@
       { label: 'Logistics', target: 'section-logistics' },
       { label: 'Restaurants', target: 'section-restaurants' },
       { label: 'Sites + beaches', target: 'section-sites' },
+      { label: 'Map', target: 'section-map' },
       { label: 'Practical', target: 'section-budget' },
       { label: 'Contact form', target: 'section-form' }
     ].forEach(function (link) {
@@ -478,6 +479,30 @@
 
     const days = D.days.filter(function (d) { return d.id.indexOf(prefix) === 0; });
     days.forEach(function (d) { section.appendChild(renderDayCard(d)); });
+  }
+
+  function renderMap() {
+    const section = $('#section-map');
+    if (!section) return;
+    section.innerHTML = '';
+
+    section.appendChild(el('h2', { class: 'section__title', text: 'Map' }));
+    section.appendChild(el('p', { class: 'section__lede', text: 'Cartography of the Greek regions and islands. Pinch to zoom, drag to pan. Tap a region for context. Best on a desktop or tablet, works on phone.' }));
+
+    const wrap = el('div', { class: 'map-frame-wrap' });
+    const iframe = el('iframe', {
+      class: 'map-frame',
+      src: 'map.html',
+      title: 'Greece map',
+      loading: 'lazy'
+    });
+    iframe.setAttribute('allowfullscreen', '');
+    wrap.appendChild(iframe);
+    section.appendChild(wrap);
+
+    section.appendChild(el('p', { class: 'map-frame__hint' }, [
+      el('a', { href: 'map.html', target: '_blank', text: 'Open map full-screen in a new tab' })
+    ]));
   }
 
   /* ---------------- restaurants / sites / beaches ---------------- */
@@ -947,6 +972,7 @@
     renderDaysByPrefix('section-athens2', 'athens2-', 'Athens, departure leg', 'Jun 19 to Jun 21. Cape Sounion at sunset, last meals, fly home.');
     renderRestaurants();
     renderSitesAndBeaches();
+    renderMap();
     renderPractical();
     renderForm();
     activateSection('section-overview');

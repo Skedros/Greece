@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hellas, a Cartography of the Greek Regions and Islands</title>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;700&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400&family=Public+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --aegean-deep: #0c2e44;
+    --aegean: #1a4d6e;
+    --aegean-mid: #2d6d96;
+    --aegean-light: #84b5d2;
+    --parchment: #f4ead5;
+    --parchment-light: #faf3e2;
+    --gold: #c9a961;
+    --gold-deep: #a8893f;
+    --terracotta: #b85a3e;
+    --olive: #7a8b4a;
+    --ink: #1c2733;
+  }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    font-family: 'Public Sans', sans-serif;
+    background: var(--aegean-deep);
+    color: var(--parchment);
+    overflow: hidden;
+  }
+
+  .app {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    height: 100vh;
+  }
+
+  /* Header */
+  .header {
+    background: linear-gradient(180deg, #0a2438 0%, #0c2e44 100%);
+    border-bottom: 1px solid var(--gold-deep);
+    padding: 14px 22px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    position: relative;
+    z-index: 1001;
+  }
+
+  .header::after {
+    content: "";
+    position: absolute;
+    left: 0; right: 0; bottom: -3px;
+    height: 2px;
+    background: linear-gradient(90deg, transparent, var(--gold) 20%, var(--gold) 80%, transparent);
+    opacity: 0.5;
+  }
+
+  .brand {
+    display: flex;
+    align-items: baseline;
+    gap: 14px;
+    min-width: 0;
+  }
+
+  .brand-mark {
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    font-size: clamp(20px, 3.2vw, 30px);
+    letter-spacing: 0.18em;
+    color: var(--parchment);
+    text-transform: uppercase;
+    line-height: 1;
+  }
+
+  .brand-mark span {
+    color: var(--gold);
+  }
+
+  .brand-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(11px, 1.6vw, 14px);
+    color: var(--aegean-light);
+    letter-spacing: 0.05em;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .header-controls {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+
+  .toggle {
+    background: rgba(244, 234, 213, 0.06);
+    color: var(--parchment);
+    border: 1px solid rgba(201, 169, 97, 0.35);
+    padding: 7px 13px;
+    font-family: 'Public Sans', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+
+  .toggle:hover {
+    background: rgba(201, 169, 97, 0.18);
+    border-color: var(--gold);
+  }
+
+  .toggle.active {
+    background: var(--gold);
+    color: var(--aegean-deep);
+    border-color: var(--gold);
+    font-weight: 600;
+  }
+
+  /* Map */
+  .map-wrap {
+    position: relative;
+    overflow: hidden;
+  }
+
+  #map {
+    width: 100%;
+    height: 100%;
+    background: #d4e6e8;
+  }
+
+  /* Legend */
+  .legend {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    background: rgba(12, 46, 68, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(201, 169, 97, 0.35);
+    padding: 16px 18px;
+    z-index: 1000;
+    max-width: 260px;
+    border-radius: 3px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease, opacity 0.3s ease;
+  }
+
+  .legend.collapsed {
+    transform: translateX(-110%);
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .legend-title {
+    font-family: 'Cinzel', serif;
+    font-size: 12px;
+    letter-spacing: 0.2em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin: 0 0 12px 0;
+    padding-bottom: 8px;
+    border-bottom: 1px solid rgba(201, 169, 97, 0.3);
+  }
+
+  .legend-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12.5px;
+    color: var(--parchment);
+    margin: 7px 0;
+    font-family: 'Cormorant Garamond', serif;
+  }
+
+  .legend-dot {
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    border: 1.5px solid var(--parchment);
+  }
+
+  .legend-dot.region { background: var(--terracotta); }
+  .legend-dot.group { background: var(--gold); }
+  .legend-dot.island { background: var(--aegean-light); }
+  .legend-dot.city { background: var(--parchment); border-color: var(--ink); }
+  .legend-dot.landmark { background: var(--olive); }
+
+  /* Info card */
+  .info-card {
+    position: absolute;
+    bottom: 18px;
+    right: 18px;
+    background: rgba(12, 46, 68, 0.94);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid rgba(201, 169, 97, 0.4);
+    padding: 18px 20px;
+    z-index: 1000;
+    max-width: 320px;
+    border-radius: 3px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.4);
+    display: none;
+  }
+
+  .info-card.visible {
+    display: block;
+    animation: slideUp 0.3s ease;
+  }
+
+  @keyframes slideUp {
+    from { transform: translateY(20px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
+  }
+
+  .info-card-eyebrow {
+    font-family: 'Cinzel', serif;
+    font-size: 10px;
+    letter-spacing: 0.25em;
+    color: var(--gold);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+
+  .info-card-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--parchment);
+    margin: 0 0 4px 0;
+    line-height: 1.1;
+  }
+
+  .info-card-greek {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 16px;
+    color: var(--aegean-light);
+    margin-bottom: 10px;
+  }
+
+  .info-card-body {
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--parchment);
+    opacity: 0.92;
+  }
+
+  .info-card-close {
+    position: absolute;
+    top: 8px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--parchment);
+    font-size: 18px;
+    cursor: pointer;
+    opacity: 0.6;
+    line-height: 1;
+    padding: 4px 6px;
+  }
+
+  .info-card-close:hover { opacity: 1; }
+
+  /* Custom map labels */
+  .map-label {
+    font-family: 'Cormorant Garamond', serif;
+    color: var(--ink);
+    text-align: center;
+    white-space: nowrap;
+    pointer-events: auto;
+    cursor: pointer;
+    text-shadow:
+      -1px -1px 0 rgba(244, 234, 213, 0.95),
+      1px -1px 0 rgba(244, 234, 213, 0.95),
+      -1px 1px 0 rgba(244, 234, 213, 0.95),
+      1px 1px 0 rgba(244, 234, 213, 0.95),
+      0 0 4px rgba(244, 234, 213, 0.8);
+    transition: transform 0.15s ease, color 0.15s ease;
+  }
+
+  .map-label:hover {
+    color: var(--terracotta);
+    transform: scale(1.08);
+  }
+
+  .map-label.region {
+    font-size: 14px;
+    font-weight: 600;
+    font-variant: small-caps;
+    letter-spacing: 0.18em;
+    color: #6e2a18;
+  }
+
+  .map-label.group {
+    font-family: 'Cinzel', serif;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.32em;
+    text-transform: uppercase;
+    color: #5a4a1e;
+    font-style: normal;
+  }
+
+  .map-label.island {
+    font-size: 12px;
+    font-weight: 500;
+    font-style: italic;
+    color: #1a4d6e;
+  }
+
+  .map-label.island-small {
+    font-size: 10.5px;
+    font-weight: 400;
+    font-style: italic;
+    color: #2d6d96;
+  }
+
+  .map-label.city {
+    font-size: 12px;
+    font-weight: 600;
+    color: #1c2733;
+    letter-spacing: 0.02em;
+  }
+
+  .map-label.capital {
+    font-size: 14px;
+    font-weight: 700;
+    color: #6e2a18;
+    letter-spacing: 0.06em;
+    font-variant: small-caps;
+  }
+
+  .map-label.landmark {
+    font-size: 11px;
+    font-weight: 500;
+    color: #4a5a2a;
+    font-style: italic;
+  }
+
+  .map-label.sea {
+    font-family: 'Cinzel', serif;
+    font-size: 13px;
+    font-weight: 400;
+    letter-spacing: 0.45em;
+    text-transform: uppercase;
+    color: #1a4d6e;
+    text-shadow:
+      -1px -1px 0 rgba(184, 212, 227, 0.7),
+      1px -1px 0 rgba(184, 212, 227, 0.7),
+      -1px 1px 0 rgba(184, 212, 227, 0.7),
+      1px 1px 0 rgba(184, 212, 227, 0.7);
+    opacity: 0.85;
+    pointer-events: none;
+  }
+
+  /* Hide marker pin icons, just show text */
+  .leaflet-marker-icon.text-only-marker {
+    background: transparent !important;
+    border: none !important;
+  }
+
+  /* Layer toggle hint */
+  .hint {
+    position: absolute;
+    top: 18px;
+    right: 18px;
+    background: rgba(12, 46, 68, 0.85);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    border: 1px solid rgba(201, 169, 97, 0.3);
+    padding: 9px 14px;
+    z-index: 1000;
+    border-radius: 2px;
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 12.5px;
+    color: var(--parchment);
+    opacity: 0.85;
+    pointer-events: none;
+    animation: fadeOut 6s 4s forwards;
+  }
+
+  @keyframes fadeOut {
+    to { opacity: 0; }
+  }
+
+  /* Mobile */
+  @media (max-width: 720px) {
+    .header { padding: 10px 14px; }
+    .brand { gap: 10px; }
+    .brand-sub { display: none; }
+    .toggle { padding: 6px 9px; font-size: 10px; letter-spacing: 0.08em; }
+    .legend { top: 10px; left: 10px; max-width: 200px; padding: 12px 14px; }
+    .legend-title { font-size: 10.5px; }
+    .legend-row { font-size: 11.5px; margin: 5px 0; }
+    .info-card { bottom: 10px; right: 10px; left: 10px; max-width: none; }
+    .map-label.region { font-size: 12px; letter-spacing: 0.12em; }
+    .map-label.group { font-size: 10px; letter-spacing: 0.22em; }
+    .map-label.island { font-size: 11px; }
+    .map-label.island-small { font-size: 9.5px; }
+    .hint { display: none; }
+  }
+
+  /* Leaflet attribution restyle */
+  .leaflet-control-attribution {
+    background: rgba(12, 46, 68, 0.85) !important;
+    color: var(--parchment) !important;
+    font-family: 'Public Sans', sans-serif !important;
+    font-size: 10px !important;
+    padding: 3px 8px !important;
+  }
+  .leaflet-control-attribution a {
+    color: var(--aegean-light) !important;
+  }
+
+  .leaflet-bar a {
+    background: rgba(12, 46, 68, 0.94) !important;
+    color: var(--parchment) !important;
+    border-color: rgba(201, 169, 97, 0.4) !important;
+  }
+  .leaflet-bar a:hover {
+    background: var(--aegean) !important;
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header class="header">
+    <div class="brand">
+      <div class="brand-mark">Hell<span>a</span>s</div>
+      <div class="brand-sub">A cartography of the Greek regions and islands</div>
+    </div>
+    <div class="header-controls">
+      <button class="toggle active" data-layer="regions">Regions</button>
+      <button class="toggle active" data-layer="groups">Island Groups</button>
+      <button class="toggle active" data-layer="islands">Islands</button>
+      <button class="toggle active" data-layer="cities">Cities</button>
+      <button class="toggle active" data-layer="seas">Seas</button>
+      <button class="toggle" id="legend-toggle">Legend</button>
+    </div>
+  </header>
+
+  <div class="map-wrap">
+    <div id="map"></div>
+
+    <aside class="legend collapsed" id="legend">
+      <h3 class="legend-title">Legend</h3>
+      <div class="legend-row"><span class="legend-dot region"></span>Administrative Regions</div>
+      <div class="legend-row"><span class="legend-dot group"></span>Island Groups</div>
+      <div class="legend-row"><span class="legend-dot island"></span>Individual Islands</div>
+      <div class="legend-row"><span class="legend-dot city"></span>Cities and Towns</div>
+      <div class="legend-row"><span class="legend-dot landmark"></span>Landmarks</div>
+      <div style="margin-top: 12px; padding-top: 10px; border-top: 1px solid rgba(201,169,97,0.25); font-family: 'Cormorant Garamond', serif; font-style: italic; font-size: 11.5px; opacity: 0.8; line-height: 1.4;">
+        Click any label for details. Pinch or scroll to zoom into the archipelago for every smaller island.
+      </div>
+    </aside>
+
+    <div class="hint">Pinch or scroll to zoom in for every island, tap labels for details</div>
+
+    <div class="info-card" id="info-card">
+      <button class="info-card-close" id="info-close">&times;</button>
+      <div class="info-card-eyebrow" id="info-eyebrow"></div>
+      <h2 class="info-card-title" id="info-title"></h2>
+      <div class="info-card-greek" id="info-greek"></div>
+      <div class="info-card-body" id="info-body"></div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
+<script>
+  // Initialize map centered on Greece, restrict pan to Greek territory
+  const map = L.map('map', {
+    center: [38.5, 24.5],
+    zoom: 7,
+    minZoom: 5,
+    maxZoom: 13,
+    zoomControl: true,
+    attributionControl: true,
+    maxBounds: [[33.5, 18.0], [42.8, 30.5]],
+    maxBoundsViscosity: 0.85
+  });
+
+  // Clean cartographic style. No labels (to avoid clashing with custom labels)
+  // and no administrative boundary lines drawn through the seas.
+  L.tileLayer('https://{s}.basemaps.cartocdn.com/light_nolabels/{z}/{x}/{y}{r}.png', {
+    attribution: 'Cartography &copy; OpenStreetMap contributors, &copy; CARTO',
+    subdomains: 'abcd',
+    maxZoom: 19
+  }).addTo(map);
+
+  // Inverse mask: hide every country except Greece by drawing a giant polygon
+  // over the world with Greece-shaped holes cut out of it. The fill color
+  // matches the underlying tile water color so non-Greek land disappears
+  // seamlessly into the sea.
+  const SEA_FILL = '#d4e6e8';
+
+  function applyMask(geoJsonData) {
+    const geom = geoJsonData.features
+      ? geoJsonData.features[0].geometry
+      : geoJsonData.geometry || geoJsonData;
+    const polys = geom.type === 'Polygon' ? [geom.coordinates] : geom.coordinates;
+
+    // GeoJSON is [lng, lat]; Leaflet wants [lat, lng]. Convert outer rings only.
+    const holes = polys.map(p => p[0].map(c => [c[1], c[0]]));
+
+    // World outer ring (slightly inside bounds to avoid antimeridian issues)
+    const world = [[-89.9, -179.9], [89.9, -179.9], [89.9, 179.9], [-89.9, 179.9]];
+
+    L.polygon([world, ...holes], {
+      fillColor: SEA_FILL,
+      fillOpacity: 1,
+      stroke: false,
+      interactive: false,
+      smoothFactor: 0,
+      pane: 'overlayPane'
+    }).addTo(map);
+  }
+
+  // Fetch Greece's country outline (mainland plus all islands) and apply mask.
+  fetch('https://cdn.jsdelivr.net/gh/johan/world.geo.json@master/countries/GRC.geo.json')
+    .then(res => res.json())
+    .then(applyMask)
+    .catch(err => {
+      console.warn('Could not load Greece outline for mask:', err);
+    });
+
+  // Layer groups
+  const layers = {
+    regions: L.layerGroup().addTo(map),
+    groups: L.layerGroup().addTo(map),
+    islands: L.layerGroup().addTo(map),
+    cities: L.layerGroup().addTo(map),
+    seas: L.layerGroup().addTo(map)
+  };
+
+  // Helper to create text-only labels on the map
+  function makeLabel(latlng, text, cls, info) {
+    const icon = L.divIcon({
+      className: 'text-only-marker',
+      html: `<div class="map-label ${cls}">${text}</div>`,
+      iconSize: [120, 20],
+      iconAnchor: [60, 10]
+    });
+    const marker = L.marker(latlng, { icon: icon, riseOnHover: true });
+    if (info) {
+      marker.on('click', () => showInfo(info));
+    }
+    return marker;
+  }
+
+  // The 13 Administrative Regions of Greece (peripheries)
+  const regions = [
+    { name: "Attica", greek: "Αττική", coords: [38.05, 23.85],
+      body: "The region surrounding Athens, ancient seat of democracy. Includes the Saronic Gulf islands and Kythira. Home to roughly a third of the Greek population." },
+    { name: "Central Greece", greek: "Στερεά Ελλάδα", coords: [38.75, 22.90],
+      body: "The mountainous heart of mainland Greece. Includes Delphi, Thermopylae, and most of the island of Evia. Crossed by the rugged Pindus range." },
+    { name: "Central Macedonia", greek: "Κεντρική Μακεδονία", coords: [40.65, 22.85],
+      body: "Greece's second largest region by population, anchored by Thessaloniki. Contains the three peninsulas of Halkidiki and the autonomous monastic state of Mount Athos." },
+    { name: "Crete", greek: "Κρήτη", coords: [35.30, 24.50],
+      body: "Greece's largest island and a region unto itself. Birthplace of the Minoan civilization. Four prefectures: Chania, Rethymno, Heraklion, Lasithi. Cradle of pentozali, syrto, and the Cretan lyra." },
+    { name: "Eastern Macedonia and Thrace", greek: "Αν. Μακεδονία και Θράκη", coords: [41.15, 25.25],
+      body: "The northeastern frontier, bordering Bulgaria and Turkey. Includes the islands of Thasos and Samothrace. Culturally distinct with Greek, Pomak, and Turkish-speaking communities." },
+    { name: "Epirus", greek: "Ήπειρος", coords: [39.65, 20.85],
+      body: "Greece's northwestern corner. Ioannina sits on a lake. The Vikos Gorge is among the deepest in the world. Rugged, mountainous, traditionally pastoral." },
+    { name: "Ionian Islands", greek: "Ιόνια Νησιά", coords: [38.80, 20.50],
+      body: "The western archipelago: Corfu, Paxos, Lefkada, Ithaca, Kefalonia, Zakynthos, and Kythira. Long Venetian influence shaped their architecture and music." },
+    { name: "North Aegean", greek: "Βόρειο Αιγαίο", coords: [39.10, 26.00],
+      body: "Lesbos, Chios, Samos, Ikaria, Lemnos, and Fournoi. Closer to the coast of Asia Minor than to the Greek mainland. Famous for ouzo, mastic, Samian wine, and Ikarian longevity." },
+    { name: "Peloponnese", greek: "Πελοπόννησος", coords: [37.35, 22.20],
+      body: "The southern peninsula, connected to the mainland by the Isthmus of Corinth. Sparta, Olympia, Mycenae, Mystras, Mani. A condensed atlas of Greek history." },
+    { name: "South Aegean", greek: "Νότιο Αιγαίο", coords: [36.85, 25.85],
+      body: "The Cyclades and the Dodecanese combined. Santorini, Mykonos, Naxos, Rhodes, Kos, Patmos, and dozens more. The popular image of the Greek islands." },
+    { name: "Thessaly", greek: "Θεσσαλία", coords: [39.55, 22.25],
+      body: "A fertile central plain framed by Mount Olympus, the Pindus, and the Pelion peninsula. Includes the Sporades islands and the rock monasteries of Meteora." },
+    { name: "Western Greece", greek: "Δυτική Ελλάδα", coords: [38.45, 21.45],
+      body: "Patras, the country's third city, anchors this region facing the Ionian Sea. The Rio-Antirrio bridge links it to mainland Roumeli." },
+    { name: "Western Macedonia", greek: "Δυτική Μακεδονία", coords: [40.30, 21.45],
+      body: "Greece's least populous region. Mountainous, cold, with the great lakes of Prespa and Kastoria. Borders Albania and North Macedonia." }
+  ];
+
+  // Island Groups (clustered labels)
+  const islandGroups = [
+    { name: "Cyclades", greek: "Κυκλάδες", coords: [37.10, 25.05],
+      body: "Roughly 220 islands forming a rough circle around the sacred isle of Delos. Whitewashed cubist villages, dry hills, deep blue. Includes Santorini, Mykonos, Naxos, Paros, Ios, Andros, Tinos, Syros, Milos, and many more." },
+    { name: "Dodecanese", greek: "Δωδεκάνησα", coords: [36.50, 27.40],
+      body: "The twelve major islands of the southeastern Aegean, hugging the Turkish coast. Rhodes, Kos, Patmos, Karpathos, Symi, Kalymnos, Leros, Astypalaia, Tilos, Nisyros, Kassos, Halki, Kastellorizo. Italian rule from 1912 to 1947 left a distinct architectural mark." },
+    { name: "North Aegean Islands", greek: "Νησιά Βορείου Αιγαίου", coords: [39.20, 25.95],
+      body: "Lesbos, Chios, Samos, Ikaria, Lemnos, Fournoi. Larger, greener, and less touristed than the Cyclades. Birthplaces of Sappho, Pythagoras, Aesop." },
+    { name: "Sporades", greek: "Σποράδες", coords: [39.20, 23.85],
+      body: "The 'scattered ones' off the coast of Thessaly: Skiathos, Skopelos, Alonissos, Skyros. Pine forests run down to the sea. The Alonissos marine park shelters monk seals." },
+    { name: "Ionian Islands", greek: "Επτάνησα", coords: [38.50, 20.30],
+      body: "The Seven Islands. Greener and more verdant than the Aegean, with a Venetian and British colonial past. Italian-inflected cuisine, distinctive cantades song tradition." },
+    { name: "Saronic Islands", greek: "Σαρωνικός", coords: [37.45, 23.40],
+      body: "The Athenian weekend escape, in the gulf south of the capital. Aegina, Poros, Hydra, Spetses, Salamis, Agistri. Hydra still bans motor vehicles." }
+  ];
+
+  // Individual islands. Major ones in larger label class, smaller ones in island-small
+  const islands = [
+    // Cyclades
+    { name: "Santorini", greek: "Σαντορίνη / Θήρα", coords: [36.40, 25.46], size: "big",
+      body: "A volcanic caldera, the rim of a vast underwater crater that erupted around 1600 BCE. Cliff villages of Oia, Fira, Imerovigli. Black, red, and white sand beaches." },
+    { name: "Mykonos", greek: "Μύκονος", coords: [37.45, 25.36], size: "big",
+      body: "The Cycladic crossroads, famed for its windmills, the Little Venice waterfront, and its reputation as the most cosmopolitan of the Greek islands." },
+    { name: "Naxos", greek: "Νάξος", coords: [37.10, 25.45], size: "big",
+      body: "Largest of the Cyclades. Marble quarries, the Portara gate of an unfinished temple to Apollo, mountain villages, long west-coast beaches, fertile valleys." },
+    { name: "Paros", greek: "Πάρος", coords: [37.07, 25.15], size: "big",
+      body: "Pure white Parian marble, used for the Venus de Milo and the Hermes of Praxiteles, is quarried here. Parikia and Naoussa are the principal towns." },
+    { name: "Ios", greek: "Ίος", coords: [36.73, 25.30], size: "med",
+      body: "Said to hold the tomb of Homer. A village of stacked Cycladic cubes crowns its hill." },
+    { name: "Andros", greek: "Άνδρος", coords: [37.83, 24.93], size: "med",
+      body: "The northernmost Cyclade. Wooded, with springs and ravines, untypical for the dry archipelago. A shipping island with neoclassical mansions in Chora." },
+    { name: "Tinos", greek: "Τήνος", coords: [37.55, 25.17], size: "med",
+      body: "Pilgrimage island, home to the Panagia Evangelistria icon. Forty Catholic and over 750 Orthodox villages dot its slopes. Famous for marble carving and dovecotes." },
+    { name: "Syros", greek: "Σύρος", coords: [37.45, 24.95], size: "med",
+      body: "Administrative capital of the South Aegean. Ermoupoli is one of Greece's most elegant neoclassical towns, founded by refugees from Chios in 1822." },
+    { name: "Milos", greek: "Μήλος", coords: [36.69, 24.43], size: "med",
+      body: "Volcanic, with surreal lunar coastlines at Sarakiniko and Kleftiko. The Venus de Milo was unearthed here in 1820." },
+    { name: "Sifnos", greek: "Σίφνος", coords: [36.97, 24.72], size: "small" },
+    { name: "Serifos", greek: "Σέριφος", coords: [37.15, 24.50], size: "small" },
+    { name: "Folegandros", greek: "Φολέγανδρος", coords: [36.62, 24.93], size: "small" },
+    { name: "Kea", greek: "Κέα / Τζια", coords: [37.62, 24.34], size: "small" },
+    { name: "Kythnos", greek: "Κύθνος", coords: [37.40, 24.42], size: "small" },
+    { name: "Amorgos", greek: "Αμοργός", coords: [36.83, 25.93], size: "small" },
+    { name: "Anafi", greek: "Ανάφη", coords: [36.36, 25.78], size: "small" },
+    { name: "Donoussa", greek: "Δονούσα", coords: [37.10, 25.82], size: "small" },
+    { name: "Koufonisia", greek: "Κουφονήσια", coords: [36.94, 25.59], size: "small" },
+    { name: "Schinoussa", greek: "Σχοινούσα", coords: [36.87, 25.52], size: "small" },
+    { name: "Iraklia", greek: "Ηρακλειά", coords: [36.85, 25.45], size: "small" },
+
+    // Dodecanese
+    { name: "Rhodes", greek: "Ρόδος", coords: [36.43, 28.22], size: "big",
+      body: "Capital of the Dodecanese and the largest island of the group. The medieval old town, walled by the Knights of St. John, is a UNESCO site. Lindos perches above its acropolis." },
+    { name: "Kos", greek: "Κως", coords: [36.85, 27.25], size: "big",
+      body: "Birthplace of Hippocrates, father of medicine. Long flat beaches, Italian colonial architecture, the ancient Asklepieion sanctuary." },
+    { name: "Patmos", greek: "Πάτμος", coords: [37.31, 26.55], size: "med",
+      body: "The Book of Revelation was written here, in a cave. The fortified Monastery of St. John crowns the island. A pilgrimage site since antiquity." },
+    { name: "Karpathos", greek: "Κάρπαθος", coords: [35.55, 27.15], size: "med",
+      body: "Long and narrow, between Crete and Rhodes. The mountain village of Olympos preserves its own dialect and traditional dress." },
+    { name: "Kalymnos", greek: "Κάλυμνος", coords: [36.97, 26.98], size: "med",
+      body: "The sponge-divers' island, now also a world climbing destination on its limestone cliffs." },
+    { name: "Leros", greek: "Λέρος", coords: [37.15, 26.85], size: "med" },
+    { name: "Symi", greek: "Σύμη", coords: [36.61, 27.84], size: "med",
+      body: "Pastel neoclassical mansions cascade down its harbor amphitheater. A sponge-trading port in Ottoman times." },
+    { name: "Tilos", greek: "Τήλος", coords: [36.46, 27.36], size: "small" },
+    { name: "Astypalaia", greek: "Αστυπάλαια", coords: [36.55, 26.36], size: "small",
+      body: "The butterfly-shaped island, sometimes considered the westernmost Dodecanese. Whitewashed and Cycladic in feel." },
+    { name: "Nisyros", greek: "Νίσυρος", coords: [36.59, 27.16], size: "small",
+      body: "A still-active volcano forms its center. Walk into the Stefanos crater." },
+    { name: "Kassos", greek: "Κάσος", coords: [35.40, 26.92], size: "small" },
+    { name: "Halki", greek: "Χάλκη", coords: [36.22, 27.60], size: "small" },
+    { name: "Kastellorizo", greek: "Καστελλόριζο", coords: [36.15, 29.59], size: "small",
+      body: "Greece's easternmost inhabited point, two kilometers off the Turkish coast." },
+
+    // North Aegean
+    { name: "Lesbos", greek: "Λέσβος / Μυτιλήνη", coords: [39.20, 26.40], size: "big",
+      body: "Third largest Greek island. Olive groves, ouzo distilleries, the petrified forest of Sigri. Birthplace of Sappho." },
+    { name: "Chios", greek: "Χίος", coords: [38.37, 26.06], size: "big",
+      body: "Home of mastic, the resin chewed since antiquity, harvested only from these trees. Medieval mastichochoria villages have geometric murals." },
+    { name: "Samos", greek: "Σάμος", coords: [37.75, 26.83], size: "big",
+      body: "Birthplace of Pythagoras and Epicurus. Famed for sweet muscat wine. The Eupalinian aqueduct tunnels through a mountain." },
+    { name: "Ikaria", greek: "Ικαρία", coords: [37.61, 26.16], size: "med",
+      body: "One of the world's Blue Zones, where people routinely live past 90. The island where Icarus fell from the sky." },
+    { name: "Lemnos", greek: "Λήμνος", coords: [39.92, 25.23], size: "med",
+      body: "Volcanic, with wheat fields rare elsewhere in the islands. Sacred to Hephaestus in myth." },
+    { name: "Thasos", greek: "Θάσος", coords: [40.69, 24.65], size: "med",
+      body: "The greenest Aegean island, of pine forests and ancient marble quarries. Northernmost major Greek island." },
+    { name: "Samothrace", greek: "Σαμοθράκη", coords: [40.47, 25.55], size: "small",
+      body: "Mount Saos rises sheer from the sea. The Winged Victory was found here in 1863." },
+    { name: "Fournoi", greek: "Φούρνοι", coords: [37.57, 26.50], size: "small" },
+    { name: "Psara", greek: "Ψαρά", coords: [38.55, 25.57], size: "small" },
+    { name: "Oinousses", greek: "Οινούσσες", coords: [38.51, 26.21], size: "small" },
+
+    // Sporades
+    { name: "Skiathos", greek: "Σκιάθος", coords: [39.16, 23.49], size: "med" },
+    { name: "Skopelos", greek: "Σκόπελος", coords: [39.12, 23.72], size: "med",
+      body: "Pine-clad and green. The Mamma Mia films were shot here. Glossa village steps down to the sea." },
+    { name: "Alonissos", greek: "Αλόννησος", coords: [39.16, 23.86], size: "small" },
+    { name: "Skyros", greek: "Σκύρος", coords: [38.90, 24.55], size: "small",
+      body: "Easternmost Sporade. Its small native pony breed roams the southern hills. Distinctive embroidery and woodcarving traditions." },
+
+    // Saronic
+    { name: "Aegina", greek: "Αίγινα", coords: [37.74, 23.43], size: "med",
+      body: "Once a rival of ancient Athens. The Temple of Aphaia stands among pines on a hilltop. Famous for pistachios." },
+    { name: "Hydra", greek: "Ύδρα", coords: [37.35, 23.47], size: "med",
+      body: "No cars, no motor vehicles. Donkeys and stone steps. The neoclassical port amphitheater is unchanged in two centuries." },
+    { name: "Poros", greek: "Πόρος", coords: [37.50, 23.45], size: "small" },
+    { name: "Spetses", greek: "Σπέτσες", coords: [37.26, 23.16], size: "small" },
+    { name: "Salamis", greek: "Σαλαμίνα", coords: [37.97, 23.50], size: "small",
+      body: "The strait between Salamis and the mainland was the site of the decisive Greek naval victory over Persia in 480 BCE." },
+    { name: "Agistri", greek: "Αγκίστρι", coords: [37.70, 23.35], size: "small" },
+
+    // Ionian
+    { name: "Corfu", greek: "Κέρκυρα", coords: [39.62, 19.92], size: "big",
+      body: "The closest Greek island to Italy. Venetian, French, and British rule shaped its old town, a UNESCO site. Cricket is still played on the Spianada esplanade." },
+    { name: "Kefalonia", greek: "Κεφαλονιά", coords: [38.20, 20.55], size: "big",
+      body: "Largest of the Ionian islands. Mount Ainos rises to over 1,600 meters. The underground Melissani lake is roofed by an open cave." },
+    { name: "Zakynthos", greek: "Ζάκυνθος", coords: [37.79, 20.90], size: "big",
+      body: "The Venetians called it Fior di Levante. Navagio Beach with its shipwreck is among the most photographed sights in Greece." },
+    { name: "Lefkada", greek: "Λευκάδα", coords: [38.70, 20.65], size: "med",
+      body: "Connected to the mainland by a short floating bridge. White cliffs face the open Ionian. Sappho is said to have leapt from one of them." },
+    { name: "Ithaca", greek: "Ιθάκη", coords: [38.37, 20.72], size: "small",
+      body: "The home of Odysseus. Small, mountainous, with deep harbors. Population under 3,000." },
+    { name: "Paxos", greek: "Παξοί", coords: [39.20, 20.18], size: "small" },
+    { name: "Kythira", greek: "Κύθηρα", coords: [36.27, 23.00], size: "small",
+      body: "Geographically Ionian, administratively part of Attica. Said birthplace of Aphrodite in some traditions. Watteau immortalized its embarcation." },
+
+    // Other major
+    { name: "Evia", greek: "Εύβοια", coords: [38.55, 23.80], size: "big",
+      body: "Greece's second largest island, separated from the mainland only by the narrow Euripus channel at Chalkida, whose currents reverse direction several times a day." },
+
+    // Cretan landmarks (treating as islands' inner places)
+    { name: "Gavdos", greek: "Γαύδος", coords: [34.83, 24.10], size: "small",
+      body: "Europe's southernmost point. A tiny island south of Crete." }
+  ];
+
+  // Major cities and towns
+  const cities = [
+    { name: "Athens", greek: "Αθήνα", coords: [37.98, 23.73], cls: "capital",
+      body: "The capital of Greece, founded in the 3rd millennium BCE. The Parthenon crowns the Acropolis above the city. Roughly 3.7 million people in the wider urban area." },
+    { name: "Thessaloniki", greek: "Θεσσαλονίκη", coords: [40.64, 22.94], cls: "city",
+      body: "Greece's second city, founded in 315 BCE. The White Tower stands on its waterfront. A meeting point of Balkan, Byzantine, and Sephardic histories." },
+    { name: "Patras", greek: "Πάτρα", coords: [38.25, 21.74], cls: "city",
+      body: "Third city, port of entry from Italy. Hosts one of Europe's largest carnivals." },
+    { name: "Heraklion", greek: "Ηράκλειο", coords: [35.34, 25.13], cls: "city",
+      body: "Capital of Crete. Knossos and its Minoan palace lie just south of the city." },
+    { name: "Chania", greek: "Χανιά", coords: [35.51, 24.02], cls: "city",
+      body: "Western Crete's Venetian harbor city, with its lighthouse and old shipyards." },
+    { name: "Rethymno", greek: "Ρέθυμνο", coords: [35.37, 24.47], cls: "city" },
+    { name: "Agios Nikolaos", greek: "Άγιος Νικόλαος", coords: [35.19, 25.71], cls: "city" },
+    { name: "Sitia", greek: "Σητεία", coords: [35.21, 26.10], cls: "city" },
+    { name: "Volos", greek: "Βόλος", coords: [39.36, 22.94], cls: "city",
+      body: "Port of Thessaly, said to be the point of departure of the Argonauts. Backed by Mount Pelion." },
+    { name: "Larissa", greek: "Λάρισα", coords: [39.64, 22.42], cls: "city" },
+    { name: "Ioannina", greek: "Ιωάννινα", coords: [39.67, 20.85], cls: "city",
+      body: "Capital of Epirus, on the shore of Lake Pamvotida. The walled old town was the seat of Ali Pasha." },
+    { name: "Kavala", greek: "Καβάλα", coords: [40.94, 24.41], cls: "city" },
+    { name: "Alexandroupoli", greek: "Αλεξανδρούπολη", coords: [40.85, 25.87], cls: "city" },
+    { name: "Komotini", greek: "Κομοτηνή", coords: [41.12, 25.41], cls: "city" },
+    { name: "Xanthi", greek: "Ξάνθη", coords: [41.14, 24.89], cls: "city" },
+    { name: "Drama", greek: "Δράμα", coords: [41.15, 24.14], cls: "city" },
+    { name: "Serres", greek: "Σέρρες", coords: [41.09, 23.55], cls: "city" },
+    { name: "Kozani", greek: "Κοζάνη", coords: [40.30, 21.79], cls: "city" },
+    { name: "Kastoria", greek: "Καστοριά", coords: [40.52, 21.27], cls: "city",
+      body: "On a peninsula in a mountain lake. Historic centre of the fur trade. Byzantine churches dot the old quarter." },
+    { name: "Florina", greek: "Φλώρινα", coords: [40.78, 21.41], cls: "city" },
+    { name: "Veria", greek: "Βέροια", coords: [40.52, 22.20], cls: "city" },
+    { name: "Edessa", greek: "Έδεσσα", coords: [40.80, 22.05], cls: "city" },
+    { name: "Katerini", greek: "Κατερίνη", coords: [40.27, 22.50], cls: "city" },
+    { name: "Trikala", greek: "Τρίκαλα", coords: [39.55, 21.77], cls: "city" },
+    { name: "Karditsa", greek: "Καρδίτσα", coords: [39.36, 21.92], cls: "city" },
+    { name: "Lamia", greek: "Λαμία", coords: [38.90, 22.43], cls: "city" },
+    { name: "Chalkida", greek: "Χαλκίδα", coords: [38.46, 23.59], cls: "city",
+      body: "Capital of Evia, linked to the mainland by a bridge over the Euripus strait, whose currents reverse direction several times a day." },
+    { name: "Agrinio", greek: "Αγρίνιο", coords: [38.62, 21.41], cls: "city" },
+    { name: "Mesolongi", greek: "Μεσολόγγι", coords: [38.37, 21.43], cls: "city",
+      body: "Where Lord Byron died in 1824 during the Greek War of Independence." },
+    { name: "Pyrgos", greek: "Πύργος", coords: [37.67, 21.44], cls: "city" },
+    { name: "Kalamata", greek: "Καλαμάτα", coords: [37.04, 22.11], cls: "city",
+      body: "Capital of Messenia, source of the namesake olives. Backed by the Taygetus mountains." },
+    { name: "Sparti", greek: "Σπάρτη", coords: [37.07, 22.43], cls: "city",
+      body: "Modern town on the site of ancient Sparta. Few ruins of the warrior city remain above ground." },
+    { name: "Nafplio", greek: "Ναύπλιο", coords: [37.57, 22.81], cls: "city",
+      body: "First capital of modern Greece after independence. The Palamidi fortress towers above the harbor." },
+    { name: "Tripoli", greek: "Τρίπολη", coords: [37.51, 22.37], cls: "city" },
+    { name: "Corinth", greek: "Κόρινθος", coords: [37.94, 22.93], cls: "city",
+      body: "Modern town beside the famous canal cut through the isthmus in 1893, separating the Peloponnese from the mainland." }
+  ];
+
+  // Sea labels (for orientation, Greek waters only)
+  const seas = [
+    { name: "Aegean Sea", coords: [38.40, 25.20] },
+    { name: "Ionian Sea", coords: [38.40, 19.80] },
+    { name: "Cretan Sea", coords: [35.90, 24.80] },
+    { name: "Mediterranean Sea", coords: [34.50, 25.80] },
+    { name: "Thracian Sea", coords: [40.20, 25.50] },
+    { name: "Myrtoan Sea", coords: [36.80, 23.50] }
+  ];
+
+  // Landmarks
+  const landmarks = [
+    { name: "Mount Olympus", greek: "Όλυμπος", coords: [40.09, 22.36],
+      body: "Throne of the gods, at 2,917 meters Greece's highest peak. The home of Zeus and the Olympians." },
+    { name: "Meteora", greek: "Μετέωρα", coords: [39.72, 21.63],
+      body: "Six monasteries perched atop sheer sandstone pinnacles. A UNESCO World Heritage Site." },
+    { name: "Delphi", greek: "Δελφοί", coords: [38.48, 22.50],
+      body: "The omphalos, ancient navel of the world. Site of the Pythian oracle of Apollo, on the slopes of Mount Parnassus." },
+    { name: "Mount Athos", greek: "Άγιον Όρος", coords: [40.16, 24.33],
+      body: "Autonomous monastic republic on the third finger of Halkidiki. Twenty Orthodox monasteries. Access restricted to male visitors with permits." },
+    { name: "Olympia", greek: "Αρχαία Ολυμπία", coords: [37.64, 21.63],
+      body: "Site of the ancient Olympic Games, held every four years from 776 BCE." },
+    { name: "Mycenae", greek: "Μυκήνες", coords: [37.73, 22.75],
+      body: "Citadel of Agamemnon, leader of the Greek forces at Troy. The Lion Gate stands at its entrance." },
+    { name: "Mystras", greek: "Μυστράς", coords: [37.07, 22.37],
+      body: "Late Byzantine city carved into a mountainside near Sparta. Largely abandoned but its churches survive." },
+    { name: "Vikos Gorge", greek: "Φαράγγι Βίκου", coords: [39.93, 20.74],
+      body: "Among the deepest canyons in the world by depth-to-width ratio, in the Zagori region of Epirus." },
+    { name: "Lake Prespa", greek: "Πρέσπα", coords: [40.80, 21.05],
+      body: "Twin alpine lakes where Greece, Albania, and North Macedonia meet." },
+    { name: "Samaria Gorge", greek: "Φαράγγι Σαμαριάς", coords: [35.30, 23.96],
+      body: "Sixteen kilometers through the White Mountains of Crete, ending at the Libyan Sea." }
+  ];
+
+  // Build markers
+  regions.forEach(r => {
+    layers.regions.addLayer(makeLabel(r.coords, r.name, 'region', {
+      eyebrow: "Administrative Region",
+      title: r.name,
+      greek: r.greek,
+      body: r.body
+    }));
+  });
+
+  islandGroups.forEach(g => {
+    layers.groups.addLayer(makeLabel(g.coords, g.name, 'group', {
+      eyebrow: "Island Group",
+      title: g.name,
+      greek: g.greek,
+      body: g.body
+    }));
+  });
+
+  islands.forEach(i => {
+    const cls = i.size === 'big' ? 'island' : i.size === 'med' ? 'island' : 'island-small';
+    layers.islands.addLayer(makeLabel(i.coords, i.name, cls, {
+      eyebrow: "Island",
+      title: i.name,
+      greek: i.greek,
+      body: i.body || `One of the Greek islands. Located at ${i.coords[0].toFixed(2)}°N, ${i.coords[1].toFixed(2)}°E.`
+    }));
+  });
+
+  cities.forEach(c => {
+    layers.cities.addLayer(makeLabel(c.coords, c.name, c.cls === 'capital' ? 'capital' : 'city', {
+      eyebrow: c.cls === 'capital' ? "Capital City" : "City",
+      title: c.name,
+      greek: c.greek,
+      body: c.body || `A Greek city, located at ${c.coords[0].toFixed(2)}°N, ${c.coords[1].toFixed(2)}°E.`
+    }));
+  });
+
+  landmarks.forEach(l => {
+    layers.cities.addLayer(makeLabel(l.coords, l.name, 'landmark', {
+      eyebrow: "Landmark",
+      title: l.name,
+      greek: l.greek,
+      body: l.body
+    }));
+  });
+
+  seas.forEach(s => {
+    layers.seas.addLayer(makeLabel(s.coords, s.name, 'sea', null));
+  });
+
+  // Info card
+  const infoCard = document.getElementById('info-card');
+  const infoEyebrow = document.getElementById('info-eyebrow');
+  const infoTitle = document.getElementById('info-title');
+  const infoGreek = document.getElementById('info-greek');
+  const infoBody = document.getElementById('info-body');
+
+  function showInfo(info) {
+    infoEyebrow.textContent = info.eyebrow || "";
+    infoTitle.textContent = info.title || "";
+    infoGreek.textContent = info.greek || "";
+    infoBody.textContent = info.body || "";
+    infoCard.classList.add('visible');
+  }
+
+  document.getElementById('info-close').addEventListener('click', () => {
+    infoCard.classList.remove('visible');
+  });
+
+  map.on('click', () => {
+    infoCard.classList.remove('visible');
+  });
+
+  // Layer toggles
+  document.querySelectorAll('.toggle[data-layer]').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const layerName = btn.dataset.layer;
+      const layer = layers[layerName];
+      if (btn.classList.contains('active')) {
+        btn.classList.remove('active');
+        map.removeLayer(layer);
+      } else {
+        btn.classList.add('active');
+        map.addLayer(layer);
+      }
+    });
+  });
+
+  // Legend toggle
+  const legendEl = document.getElementById('legend');
+  const legendBtn = document.getElementById('legend-toggle');
+  legendBtn.addEventListener('click', () => {
+    legendEl.classList.toggle('collapsed');
+    legendBtn.classList.toggle('active');
+  });
+
+  // Adjust label visibility based on zoom
+  function updateLabelVisibility() {
+    const z = map.getZoom();
+    document.querySelectorAll('.map-label.region').forEach(el => {
+      el.style.display = z >= 6 && z <= 9 ? 'block' : (z < 6 ? 'block' : 'block');
+    });
+    document.querySelectorAll('.map-label.group').forEach(el => {
+      el.style.display = z >= 6 && z <= 9 ? 'block' : 'none';
+    });
+    document.querySelectorAll('.map-label.island').forEach(el => {
+      el.style.display = z >= 7 ? 'block' : 'none';
+    });
+    document.querySelectorAll('.map-label.island-small').forEach(el => {
+      el.style.display = z >= 9 ? 'block' : 'none';
+    });
+    document.querySelectorAll('.map-label.city').forEach(el => {
+      el.style.display = z >= 8 ? 'block' : 'none';
+    });
+    document.querySelectorAll('.map-label.capital').forEach(el => {
+      el.style.display = z >= 6 ? 'block' : 'none';
+    });
+    document.querySelectorAll('.map-label.landmark').forEach(el => {
+      el.style.display = z >= 8 ? 'block' : 'none';
+    });
+    document.querySelectorAll('.map-label.sea').forEach(el => {
+      el.style.display = z >= 6 && z <= 8 ? 'block' : 'none';
+    });
+  }
+
+  map.on('zoomend', updateLabelVisibility);
+  setTimeout(updateLabelVisibility, 200);
+
+  // Fit to show all of Greece initially
+  const greeceBounds = L.latLngBounds([[34.5, 19.3], [42.0, 28.5]]);
+  map.fitBounds(greeceBounds, { padding: [20, 20] });
+</script>
+</body>
+</html>
