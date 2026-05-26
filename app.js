@@ -156,9 +156,6 @@
     /* TODAY highlight: what's happening today, with quick link */
     section.appendChild(renderTodayHighlight());
 
-    /* Dual-time clock: Athens vs SLC */
-    section.appendChild(renderDualClock());
-
     const meta = el('div', { class: 'meta-grid' });
     meta.appendChild(metaCard('Dates', D.meta.dateRange));
     meta.appendChild(metaCard('Travelers', D.meta.travelers));
@@ -190,8 +187,7 @@
       { label: 'Restaurants', target: 'section-restaurants' },
       { label: 'Sites + beaches', target: 'section-sites' },
       { label: 'Map', target: 'section-map' },
-      { label: 'Practical', target: 'section-budget' },
-      { label: 'Contact form', target: 'section-form' }
+      { label: 'Practical', target: 'section-budget' }
     ].forEach(function (link) {
       quickLinks.appendChild(el('button', {
         class: 'quick-link',
@@ -1268,7 +1264,6 @@
     renderMap();
     renderStays();
     renderPractical();
-    renderForm();
     activateSection('section-overview');
 
     /* When a link points to a specific day or entry card, open it */
