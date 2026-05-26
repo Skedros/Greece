@@ -480,29 +480,24 @@
     section.innerHTML = '';
 
     section.appendChild(el('h2', { class: 'section__title', text: 'Restaurants' }));
-    section.appendChild(el('p', { class: 'section__lede', text: 'Every restaurant is vetted with a description, why it made the list, signature dishes, and a Google Maps link. Filter by city below.' }));
+    section.appendChild(el('p', { class: 'section__lede', text: 'Every restaurant is vetted with a description, why it made the list, signature dishes, and a Google Maps link. Grouped by city below.' }));
 
-    const cities = ['All', 'Athens', 'Chios', 'Crete'];
-    const filterWrap = el('div', { class: 'filter-row' });
-    cities.forEach(function (c) {
-      filterWrap.appendChild(el('button', {
-        class: 'filter-btn' + (c === 'All' ? ' is-active' : ''),
-        'data-city': c,
-        text: c,
-        onclick: function () {
-          $$('.filter-btn', filterWrap).forEach(function (b) { b.classList.remove('is-active'); });
-          this.classList.add('is-active');
-          const city = this.getAttribute('data-city');
-          $$('.entry-card', section).forEach(function (card) {
-            if (city === 'All' || card.getAttribute('data-city') === city) card.style.display = '';
-            else card.style.display = 'none';
-          });
-        }
+    const CITY_ORDER = ['Athens', 'Chios', 'Crete'];
+
+    /* Quick-jump pills to each city bin */
+    const jumpWrap = el('div', { class: 'filter-row' });
+    CITY_ORDER.forEach(function (city) {
+      const count = D.restaurants.filter(function (r) { return r.city === city; }).length;
+      if (!count) return;
+      jumpWrap.appendChild(el('a', {
+        class: 'filter-btn',
+        href: '#restaurants-' + slugify(city),
+        text: city + ' (' + count + ')'
       }));
     });
-    section.appendChild(filterWrap);
+    section.appendChild(jumpWrap);
 
-    D.restaurants.forEach(function (r) {
+    function renderRestaurantCard(r) {
       const id = 'rest-' + slugify(r.name);
       const card = el('article', { class: 'entry-card', 'data-city': r.city, id: id });
 
@@ -554,7 +549,21 @@
       if (mb) links.appendChild(mb);
       if (links.children.length) card.appendChild(links);
 
-      section.appendChild(card);
+      return card;
+    }
+
+    /* Restaurants binned by city */
+    CITY_ORDER.forEach(function (city) {
+      const matches = D.restaurants.filter(function (r) { return r.city === city; });
+      if (!matches.length) return;
+      section.appendChild(el('h4', {
+        class: 'city-group__title',
+        id: 'restaurants-' + slugify(city),
+        text: city + ' (' + matches.length + ')'
+      }));
+      const grid = el('div', { class: 'city-group' });
+      matches.forEach(function (r) { grid.appendChild(renderRestaurantCard(r)); });
+      section.appendChild(grid);
     });
   }
 
@@ -924,10 +933,10 @@
     renderOverview();
     renderCountdown();
     renderLogistics();
-    renderDaysByPrefix('section-athens1', 'athens-', 'Athens, arrival leg', 'Jun 5 to Jun 7. Land, see the Acropolis, transit to Chios.');
-    renderDaysByPrefix('section-chios', 'chios-', 'Chios', 'Jun 7 to Jun 14. Seven days exploring the mastic villages, mountain monastery, and the empty Aegean beaches.');
-    renderDaysByPrefix('section-crete', 'crete-', 'Crete', 'Jun 14 to Jun 19. Chania base, Old Town and Venetian harbor, Balos and Elafonisi, and the Samaria Gorge.');
-    renderDaysByPrefix('section-athens2', 'athens2-', 'Athens, departure leg', 'Jun 19 to Jun 21. Cape Sounion at sunset, last meals, head home.');
+    renderDaysByPrefix('section-athens1', 'athens-', 'Athens, arrival leg', 'Jun 6 to Jun 9. Land, settle, see the Acropolis, fly to Chios.');
+    renderDaysByPrefix('section-chios', 'chios-', 'Chios', 'Jun 9 to Jun 14. Five nights at the Grecian Castle Hotel exploring the mastic villages, mountain monastery, and the quiet Aegean beaches.');
+    renderDaysByPrefix('section-crete', 'crete-', 'Crete', 'Jun 14 to Jun 19. Five nights in Chania, Old Town and Venetian harbor, Balos and Elafonisi, and the Samaria Gorge.');
+    renderDaysByPrefix('section-athens2', 'athens2-', 'Athens, departure leg', 'Jun 19 to Jun 21. Cape Sounion at sunset, last meals, fly home.');
     renderRestaurants();
     renderSitesAndBeaches();
     renderPractical();

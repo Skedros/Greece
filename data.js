@@ -9,10 +9,10 @@ window.TRIP_DATA = {
   meta: {
     title: "Greece 2026",
     subtitle: "Athens, Chios, Crete",
-    dateRange: "June 5 to June 21, 2026",
+    dateRange: "June 6 to June 21, 2026",
     travelers: "7 adults",
-    countdownTarget: "2026-06-05T00:00:00",
-    intro: "Seventeen days across the Greek mainland and islands. Athens for the ancients and late nights, Chios for mastic villages and the quiet Aegean, Crete for wild beaches and Chania's Venetian harbor. A reference site, not a booking site: travel arrangements are handled separately.",
+    countdownTarget: "2026-06-06T00:00:00",
+    intro: "Sixteen days across the Greek mainland and islands. Athens for the ancients and late nights, Chios for mastic villages and the quiet Aegean, Crete for wild beaches and Chania's Venetian harbor. A reference site, not a booking site: travel arrangements are handled separately.",
     formEndpoint: "https://formspree.io/f/YOUR_FORM_ID",
     contactEmail: "athan.skedros@gmail.com"
   },
@@ -78,15 +78,30 @@ window.TRIP_DATA = {
     {
       id: "athens-d1",
       city: "Athens",
-      date: "Friday, Jun 5, 2026",
+      date: "Saturday, Jun 6, 2026",
       title: "Arrive Athens, settle, walk Plaka",
-      summary: "Travel day. The play is keep it loose, walk a little to fight jet lag, eat early-ish by Greek standards, sleep hard. Acropolis is tomorrow.",
+      summary: "Arrival day. Two flights land at different times. The play is keep it loose, walk a little to fight jet lag, eat early-ish by Greek standards, sleep hard.",
       weather: "June average 31C high, 21C low. Sun sets around 20:50. Expect heat from 13:00 to 18:00.",
       slots: [
         {
+          time: "Arrivals",
+          headline: "Two flights landing today",
+          description: "Plan to meet at the apartment once everyone has settled. Athens airport (ATH) is about 35 to 45 minutes from central Athens by taxi (flat rate EUR 40 daytime, EUR 55 nighttime).",
+          options: [
+            { name: "United 1710 from Chicago, ~10:35 AM", detail: "John, Maria, Athan, Piper, and Gigi. Earlier arrival, can check in or stash bags and start the day light." },
+            { name: "Delta 9185 from Amsterdam, ~4:50 PM", detail: "Alex and Kinzie. Later arrival, likely heads straight to the apartment to settle." }
+          ]
+        },
+        {
+          time: "Check-in",
+          headline: "Athens base, Alke Homme apartment near the Acropolis",
+          description: "Three-night Vrbo apartment in central Athens, booked through the Lohse family (James and Heidi). Walking distance to the Acropolis, Plaka, and Monastiraki. Itinerary #5563-3418276611. Check-in Jun 6, check-out Jun 9. Property address and host check-in details appear on the Vrbo trip page closer to arrival.",
+          links: [{ label: "Vrbo trip page", url: "https://www.vrbo.com/trips/egti-197-W8I-26QX" }]
+        },
+        {
           time: "Late afternoon",
           headline: "Settle, freshen up, light walk through Plaka",
-          description: "Don't sleep yet, the jet lag will be brutal tomorrow if you do. Take a 30 minute walk through Plaka to acclimate. The neighborhood is at the foot of the Acropolis, all cobblestones and bougainvillea.",
+          description: "Once everyone is in, take a 30 minute walk through Plaka to acclimate. The neighborhood is at the foot of the Acropolis, all cobblestones and bougainvillea.",
           options: [
             { name: "Plaka loop", detail: "Start at Syntagma, walk down Ermou, cut south into Plaka, wander to Anafiotika (the white-and-blue island-style cluster on the Acropolis slope), return via Adrianou." },
             { name: "Monastiraki square", detail: "Lively, food stalls, flea market on weekends. Souvlaki at Bairaktaris if you want a quick bite." }
@@ -94,23 +109,79 @@ window.TRIP_DATA = {
         },
         {
           time: "20:00 onward",
-          headline: "Early dinner near the hotel",
-          description: "Stay close, eat well, in bed by 22:30. Three vetted dinner options:",
+          headline: "First dinner near the apartment",
+          description: "Stay close, eat well, in bed by 22:30. Three vetted options:",
           mealOptions: ["Geros Tou Moria", "Klimataria", "Karamanlidika tou Fani"]
         }
       ],
-      reservations: ["Dinner if Friday night and you have a strong preference"],
+      reservations: ["Dinner if you have a strong preference"],
       whatToBring: ["Light layer for evening", "Comfortable shoes for cobblestones", "Phone charger"],
       walking: "About 2 to 3 km of casual walking",
-      tip: "Greek dinners run late. 21:30 is normal, 22:30 is fine. But on your first night, fight the impulse to push past 22:00."
+      tip: "Greek dinners run late. 21:30 is normal. On the first night, fight the impulse to push past 22:00."
     },
 
     {
       id: "athens-d2",
       city: "Athens",
-      date: "Saturday, Jun 6, 2026",
-      title: "The classic Athens day, Acropolis to Plaka",
-      summary: "The big-ticket day. Beat the heat at the Acropolis at first entry, decompress at the museum, siesta through the worst sun, sunset rooftop, late dinner.",
+      date: "Sunday, Jun 7, 2026",
+      title: "Full day in Athens, light exploring",
+      summary: "First full day, no reservations on the books. Acropolis is tomorrow. Today is for walking, eating, getting your bearings.",
+      weather: "June high 31C, low 21C. Many small shops closed Sunday, but museums and tavernas are open.",
+      slots: [
+        {
+          time: "Morning",
+          headline: "Pick one easy outing",
+          description: "Three solid options depending on the group's energy:",
+          options: [
+            { name: "Anafiotika and Plaka wander", detail: "Coffee somewhere, slow walk through the white-and-blue island-style neighborhood under the Acropolis, end at Monastiraki." },
+            { name: "National Archaeological Museum", detail: "EUR 12. World-class Bronze Age and Classical collection. The gold Mask of Agamemnon, the Jockey of Artemision, the Antikythera Mechanism. 2 hours minimum.", links: [{ label: "Website", url: "https://www.namuseum.gr" }] },
+            { name: "Benaki Museum of Greek Culture", detail: "EUR 12. Cooler indoor option. Greek decorative arts from antiquity to today.", links: [{ label: "Website", url: "https://www.benaki.org" }] }
+          ]
+        },
+        {
+          time: "13:30",
+          headline: "Lunch",
+          description: "Sunday brings shorter hours at some spots. These three are reliably open:",
+          mealOptions: ["Karamanlidika tou Fani", "Lolos All Day", "Tzitzikas kai Mermigas"]
+        },
+        {
+          time: "Afternoon",
+          headline: "Light second outing or siesta",
+          description: "Heat peaks 14:00 to 18:00. Best to be inside or napping.",
+          options: [
+            { name: "Siesta", detail: "Truly. Tomorrow is the Acropolis day, fresh legs help." },
+            { name: "Panathenaic Stadium", detail: "EUR 5. The marble Olympic stadium, only stadium in the world built entirely of marble. 1 hour with audio guide.", links: [{ label: "Website", url: "https://www.panathenaicstadium.gr" }] },
+            { name: "Ancient Agora", detail: "EUR 10. Temple of Hephaestus inside is the best-preserved Doric temple in Greece. 1.5 hours, shaded paths.", links: [{ label: "Tickets", url: "https://hhticket.gr" }] }
+          ]
+        },
+        {
+          time: "19:30",
+          headline: "Sunset rooftop or early dinner",
+          description: "Pick one:",
+          options: [
+            { name: "360 Cocktail Bar", detail: "Direct Acropolis view from Monastiraki Square. Cocktails EUR 13 to 16.", links: [{ label: "Reserve", url: "https://three-sixty.gr" }] },
+            { name: "A for Athens", detail: "More casual, same view direction." }
+          ]
+        },
+        {
+          time: "21:30",
+          headline: "Dinner",
+          description: "Three picks:",
+          mealOptions: ["Tzitzikas kai Mermigas", "Taverna Saita", "Klimataria"]
+        }
+      ],
+      reservations: ["Rooftop for sunset if going to 360"],
+      whatToBring: ["Sun hat", "Water bottle", "Sunscreen", "Comfortable shoes"],
+      walking: "About 4 to 5 km",
+      tip: "Sundays many small shops close. The Central Market is closed too, save it for a weekday if interested."
+    },
+
+    {
+      id: "athens-d3",
+      city: "Athens",
+      date: "Monday, Jun 8, 2026",
+      title: "Acropolis day",
+      summary: "The big-ticket day. Acropolis tour is on the books. Beat the heat at first entry, decompress at the museum, siesta through the worst sun, sunset rooftop, late dinner.",
       weather: "June high 31C, low 21C. Marble at the Acropolis hits 40C+ by noon. Hat and 2L of water are not optional.",
       slots: [
         {
@@ -122,8 +193,7 @@ window.TRIP_DATA = {
             { label: "Official Acropolis info", url: "https://odysseus.culture.gr" }
           ],
           alternatives: [
-            { name: "Late slot at 17:00", detail: "Softer light and thinner crowds. Site closes at 20:00 in summer." },
-            { name: "Skip-the-line guided tour", detail: "EUR 60 to 90 pp via GetYourGuide. Worth it for historical context." }
+            { name: "Guided tour", detail: "EUR 60 to 90 pp via GetYourGuide. Worth it for historical context across the group." }
           ]
         },
         {
@@ -139,16 +209,16 @@ window.TRIP_DATA = {
         {
           time: "13:30",
           headline: "Lunch in Koukaki or Makrygianni",
-          description: "Walkable from the museum. Three picks, different price points:",
-          mealOptions: ["Mani Mani", "Lolos All Day", "Diporto"]
+          description: "Walkable from the museum. Note Mani Mani is closed Mondays, so save it for another trip:",
+          mealOptions: ["Lolos All Day", "Diporto", "Karamanlidika tou Fani"]
         },
         {
           time: "Afternoon (15:00 to 17:30)",
           headline: "Siesta or one more ruin",
-          description: "The honest answer is take a siesta. If you have the energy:",
+          description: "Take a siesta. The sun is at its worst, and you have a late dinner ahead. If anyone has energy:",
           options: [
             { name: "Siesta", detail: "A 90-minute lie-down resets the day." },
-            { name: "Ancient Agora", detail: "EUR 10. The Temple of Hephaestus inside is the best-preserved Doric temple in Greece.", links: [{ label: "Tickets", url: "https://hhticket.gr" }] },
+            { name: "Ancient Agora", detail: "EUR 10. The Temple of Hephaestus inside is the best-preserved Doric temple in Greece. 1.5 hours.", links: [{ label: "Tickets", url: "https://hhticket.gr" }] },
             { name: "Benaki Museum", detail: "EUR 12. Cooler indoor option.", links: [{ label: "Website", url: "https://www.benaki.org" }] }
           ]
         },
@@ -157,8 +227,8 @@ window.TRIP_DATA = {
           headline: "Sunset rooftop drink",
           description: "Athens has perhaps the best urban sunsets in Europe, with the Acropolis backlit gold. Pick one:",
           options: [
-            { name: "360 Cocktail Bar", detail: "The classic, direct Acropolis view from Monastiraki. Cocktails EUR 13 to 16.", links: [{ label: "Reserve", url: "https://three-sixty.gr" }] },
-            { name: "A for Athens", detail: "More casual, same view direction. Less reservation-needed." },
+            { name: "360 Cocktail Bar", detail: "Direct Acropolis view from Monastiraki Square. Cocktails EUR 13 to 16.", links: [{ label: "Reserve", url: "https://three-sixty.gr" }] },
+            { name: "A for Athens", detail: "More casual, same view direction." },
             { name: "Lycabettus Hill", detail: "Highest point in Athens. Funicular up (EUR 10), café at the top." }
           ]
         },
@@ -166,66 +236,58 @@ window.TRIP_DATA = {
           time: "21:30",
           headline: "Dinner",
           description: "Late by US standards, perfectly normal in Athens:",
-          mealOptions: ["Tzitzikas kai Mermigas", "Kuzina", "Klimataria"]
+          mealOptions: ["Kuzina", "Tzitzikas kai Mermigas", "Klimataria"]
         }
       ],
-      reservations: ["Acropolis 08:00 slot, book 2 weeks ahead", "Acropolis Museum, any time slot", "Rooftop for sunset if a Saturday", "Dinner if choosing Kuzina"],
+      reservations: ["Acropolis 08:00 slot, book 2 weeks ahead", "Acropolis Museum, any time slot", "Dinner if choosing Kuzina (rooftop, popular)"],
       whatToBring: ["Sun hat, wide brim", "2L water bottle per person", "Sunscreen SPF 50", "Shoes with grip (Acropolis marble is slick)", "Light cardigan for air-conditioned museum"],
       walking: "About 5 to 6 km total",
-      tip: "Modest dress is requested at the Acropolis. Selfie sticks are technically banned."
+      tip: "Modest dress requested at the Acropolis. Selfie sticks are technically banned."
     },
 
     {
-      id: "athens-d3",
+      id: "athens-d4",
       city: "Athens",
-      date: "Sunday, Jun 7, 2026",
-      title: "Last morning in Athens, transit to Chios",
-      summary: "Travel day. Get one more ruin or market or museum in before the transfer. Travel logistics are coordinated separately.",
-      weather: "Same as yesterday. Light layer for the evening if traveling by ferry.",
+      date: "Tuesday, Jun 9, 2026",
+      title: "Fly to Chios, 9:55 AM",
+      summary: "Early travel day. Flight to Chios at 9:55 AM means an airport arrival around 8:00 AM, so an early breakfast at the hotel and a taxi out. Most of today is logistics.",
+      weather: "Same as yesterday. Light layer for the plane.",
       slots: [
         {
-          time: "Morning",
-          headline: "Pick one, then pack",
-          description: "Three solid options for the last morning:",
-          options: [
-            { name: "National Archaeological Museum", detail: "EUR 12. World-class Bronze Age and Classical collection. 2 hours minimum.", links: [{ label: "Website", url: "https://www.namuseum.gr" }] },
-            { name: "Central Market (Varvakios)", detail: "Free, sensory overload. Closed Sundays, pivot to museum on this day." },
-            { name: "Easy walk + cafe", detail: "Coffee at Little Tree, walk the National Garden, see Hadrian's Arch and the Temple of Olympian Zeus." }
-          ]
+          time: "Early morning",
+          headline: "Hotel breakfast, taxi to ATH",
+          description: "Aim to leave the hotel by 7:00 to 7:15 AM for an Athens airport arrival around 7:45 to 8:00 AM (taxi flat rate EUR 40 daytime). Domestic flights need check-in 60 to 90 min before departure."
         },
         {
-          time: "Midday",
-          headline: "Last lunch in Athens",
-          description: "Light, near the hotel, easy to pivot to transfer mode.",
-          mealOptions: ["Karamanlidika tou Fani", "Lukumades", "Ariston"]
-        },
-        {
-          time: "PM or evening",
-          headline: "Travel to Chios",
-          description: "If on the Blue Star ferry: 7 to 13 hour sailing depending on route. Daytime departures around 07:00 to 08:00 from Piraeus, overnight options leave late evening. Book a cabin if overnight or you will not sleep. See the Logistics tab for the operator and booking link.",
-          links: [
-            { label: "Blue Star Ferries", url: "https://www.bluestarferries.com" }
-          ]
+          time: "09:55",
+          headline: "Flight to Chios",
+          description: "Domestic flight. About 45 minutes flying time. Land Chios airport (JKH) mid-morning. The Grecian Castle Hotel is about 10 minutes from the airport by taxi."
         }
       ],
-      reservations: [],
-      whatToBring: ["Snacks for the journey", "Earplugs and eye mask for overnight travel"],
-      walking: "Light, depends on morning choice"
+      reservations: ["Taxi from hotel to ATH (book night before or use Uber/FreeNow)"],
+      whatToBring: ["Snacks for early morning", "Phone charged"],
+      walking: "Light"
     },
 
     /* CHIOS */
     {
       id: "chios-d1",
       city: "Chios",
-      date: "Sunday, Jun 7, 2026",
-      title: "Arrive Chios, slow first evening",
-      summary: "Arrival day. Chios is quieter than the famous Cyclades, more lived-in, less touristed. Tonight is about settling, a quiet dinner, walking the waterfront.",
+      date: "Tuesday, Jun 9, 2026",
+      title: "Arrive Chios, Grecian Castle Hotel, easy first evening",
+      summary: "Land Chios late morning. Chios is quieter than the famous Cyclades, more lived-in, less touristed. Tonight is about settling, a quiet dinner, walking the waterfront.",
       weather: "Slightly cooler than Athens, sea breeze. June high 29C, low 21C.",
       slots: [
         {
+          time: "Late morning to afternoon",
+          headline: "Check in at Grecian Castle Hotel",
+          description: "The hotel is the home base for Chios, Jun 9 to 14 (5 nights). About 10 minutes by taxi from Chios airport. Quiet seaside setting, walking distance to Chios Town center and harbor.",
+          links: [{ label: "Grecian Castle Hotel", url: "https://www.greciancastle.gr" }]
+        },
+        {
           time: "Evening",
-          headline: "Settle, dinner near Chios Town waterfront",
-          description: "Three traditional Chian options, all walking distance from anywhere central:",
+          headline: "Dinner near Chios Town waterfront",
+          description: "Three traditional Chian options, all walking or short taxi from the hotel:",
           mealOptions: ["Hotzas", "Pyxari", "Ouzeri Theodosiou"]
         },
         {
@@ -234,16 +296,16 @@ window.TRIP_DATA = {
           description: "Chios Town's harbor is the social spine. Locals do the volta (evening walk) along the waterfront from 21:00 onward. Stop at the castle (free outside, EUR 4 for the Justiniani Museum inside) which is lit at night."
         }
       ],
-      reservations: ["Dinner Friday or Saturday only"],
+      reservations: [],
       whatToBring: ["Light jacket, the harbor catches a breeze"],
       walking: "1 to 2 km",
-      tip: "Try mastiha liqueur after dinner. The island's signature digestif, distilled from the mastic tree resin (only grown in south Chios). Served chilled."
+      tip: "Try mastiha liqueur after dinner. The island's signature digestif, distilled from the mastic tree resin. Served chilled."
     },
 
     {
       id: "chios-d2",
       city: "Chios",
-      date: "Monday, Jun 8, 2026",
+      date: "Wednesday, Jun 10, 2026",
       title: "Chios Town, Kambos estates, beach afternoon",
       summary: "Orientation day. Get the lay of Chios Town in the morning, lunch at one of the walled citrus estates in Kambos, swim at the closest beaches in the afternoon.",
       weather: "Same. Sea is around 22C in early June, swimmable.",
@@ -260,7 +322,7 @@ window.TRIP_DATA = {
         {
           time: "13:00",
           headline: "Lunch in Kambos, the walled citrus estates",
-          description: "Kambos is the neighborhood 4 km south of Chios Town, where wealthy Genoese and Greek merchants built walled estates with citrus orchards in the 14th to 19th centuries. Lunch in one of these gardens is the move:",
+          description: "Kambos is the neighborhood 4 km south of Chios Town, where wealthy Genoese and Greek merchants built walled estates with citrus orchards in the 14th to 19th centuries. Lunch in one of these gardens:",
           mealOptions: ["Mavrokordatiko", "Perivoli", "To Kechrimpari"]
         },
         {
@@ -280,7 +342,7 @@ window.TRIP_DATA = {
           mealOptions: ["Pelagos", "Nostos", "Yperion"]
         }
       ],
-      reservations: ["Kambos lunch, weekends only"],
+      reservations: ["Kambos lunch"],
       whatToBring: ["Swimsuit", "Beach towel", "Sunscreen", "Cash for loungers"],
       walking: "3 to 4 km in town, plus beach"
     },
@@ -288,15 +350,15 @@ window.TRIP_DATA = {
     {
       id: "chios-d3",
       city: "Chios",
-      date: "Tuesday, Jun 9, 2026",
+      date: "Thursday, Jun 11, 2026",
       title: "Nea Moni monastery and the mountain villages",
-      summary: "Driving day inland. The 11th-century UNESCO monastery, the abandoned village of Anavatos, lunch with valley views at Avgonima, swim at a west-coast cove on the way back. Note: Mastic Museum is closed Tuesdays.",
+      summary: "Driving day inland. The 11th-century UNESCO monastery, the abandoned village of Anavatos, lunch with valley views at Avgonima, swim at a west-coast cove on the way back.",
       weather: "Cooler in the mountains, can be windy. Long pants helpful at the monastery.",
       slots: [
         {
           time: "09:30",
           headline: "Nea Moni Monastery",
-          description: "11th-century UNESCO World Heritage Site, 14 km west of Chios Town. The katholikon has some of the finest surviving Byzantine mosaics anywhere. EUR 4 entry. Active monastery so modest dress required: covered shoulders for everyone, covered knees for women.",
+          description: "11th-century UNESCO World Heritage Site, 14 km west of Chios Town. The katholikon has some of the finest surviving Byzantine mosaics anywhere. EUR 4 entry. Active monastery so modest dress required.",
           links: [
             { label: "Nea Moni info", url: "https://odysseus.culture.gr/h/3/eh355.jsp?obj_id=1822" }
           ]
@@ -304,7 +366,7 @@ window.TRIP_DATA = {
         {
           time: "11:30",
           headline: "Anavatos, the abandoned village",
-          description: "Called the 'Mystras of the Aegean.' A vertical Byzantine village clinging to a 300 meter cliff, abandoned after the 1822 Ottoman massacre. Free. Solemn, photogenic, takes about 45 minutes."
+          description: "Called the Mystras of the Aegean. A vertical Byzantine village clinging to a 300 meter cliff, abandoned after the 1822 Ottoman massacre. Free. Solemn, photogenic, takes about 45 minutes."
         },
         {
           time: "13:30",
@@ -317,7 +379,7 @@ window.TRIP_DATA = {
           headline: "Swim on the west coast",
           description: "Drive 15 to 20 minutes down to the coast:",
           options: [
-            { name: "Lithi beach", detail: "Sand-and-pebble, taverna on the sand, small fishing harbor next door." },
+            { name: "Lithi beach", detail: "Sand-and-pebble, taverna on the sand, small fishing harbor." },
             { name: "Elinda", detail: "Crescent cove with calm water. Quieter than Lithi." }
           ]
         },
@@ -328,7 +390,7 @@ window.TRIP_DATA = {
           mealOptions: ["Hotzas", "To Kechrimpari"]
         }
       ],
-      reservations: ["Avgonima lunch on summer Saturdays only"],
+      reservations: [],
       whatToBring: ["Long pants or wrap for monastery", "Walking shoes for Anavatos", "Sunscreen", "Swimsuit"],
       walking: "4 to 5 km total including the village climbs",
       tip: "The road to Nea Moni is narrow with no shoulder. Drive 30 to 40 kph. Sound your horn before blind corners."
@@ -337,7 +399,7 @@ window.TRIP_DATA = {
     {
       id: "chios-d4",
       city: "Chios",
-      date: "Wednesday, Jun 10, 2026",
+      date: "Friday, Jun 12, 2026",
       title: "The mastic villages of the south",
       summary: "South Chios is the only place on earth where mastic resin is commercially produced. Painted Pyrgi, the medieval fortress-grid of Mesta, and the Mastic Museum. End at Mavra Volia, the black-pebble beach.",
       weather: "Hotter in the south, less breeze. June high 32C in the interior villages.",
@@ -358,18 +420,18 @@ window.TRIP_DATA = {
         {
           time: "13:30",
           headline: "Lunch in Mesta",
-          description: "Mesta is the best-preserved mastic village, a defensive fortress-grid of stone houses with vaulted passageways. Eat in the square:",
+          description: "Mesta is the best-preserved mastic village, a defensive fortress-grid of stone houses with vaulted passageways:",
           mealOptions: ["To Apomero", "Mesainos", "Roussiko"]
         },
         {
           time: "15:30",
           headline: "Olympi Cave (Sykia)",
-          description: "10 minutes from Mesta. Otherworldly underground chamber discovered in 1985. Stalactites, columns, 60 meter depth. EUR 6 entry. Closed Mondays."
+          description: "10 minutes from Mesta. Underground chamber discovered in 1985. Stalactites, columns, 60 meter depth. EUR 6 entry."
         },
         {
           time: "17:00",
           headline: "Mavra Volia beach",
-          description: "Near Emporios, the southern tip. 'Mavra Volia' means 'black pebbles,' the beach is made of small black volcanic stones. Three coves linked by paths. No facilities, bring water and shoes."
+          description: "Near Emporios, the southern tip. Mavra Volia means black pebbles, the beach is made of small black volcanic stones. Three coves linked by paths. No facilities, bring water and shoes."
         },
         {
           time: "20:30",
@@ -378,7 +440,7 @@ window.TRIP_DATA = {
           mealOptions: ["Pelagos", "Nostos"]
         }
       ],
-      reservations: ["Lunch in Mesta on weekends"],
+      reservations: ["Lunch in Mesta"],
       whatToBring: ["Water shoes for Mavra Volia", "Hat (no shade in the south)", "2L water", "Cash for the cave"],
       walking: "4 km in the villages",
       tip: "Buy mastiha products at the village shops, not the airport. Cheaper and village-specific blends."
@@ -387,113 +449,55 @@ window.TRIP_DATA = {
     {
       id: "chios-d5",
       city: "Chios",
-      date: "Thursday, Jun 11, 2026",
-      title: "Volissos and the empty northwest beaches",
-      summary: "Northwest Chios is the least-visited part of the island. Volissos is a medieval village with a Byzantine castle on the hill, surrounded by long, quiet beaches.",
+      date: "Saturday, Jun 13, 2026",
+      title: "Volissos and the empty northwest beaches, or rest day",
+      summary: "Last full day on Chios. Two paths: drive northwest to the least-visited part of the island (Volissos castle + Homer's reputed birthplace + empty beaches), or have a relaxed day at the hotel and a favorite from earlier in the week.",
       weather: "Coast can be windy in the afternoon, the meltemi picks up.",
       slots: [
         {
-          time: "10:00",
-          headline: "Drive to Volissos",
-          description: "About 45 minutes from Chios Town. Climb the castle (free, 15 minutes up), wander the cobbled lanes. Volissos was reputedly Homer's birthplace."
-        },
-        {
-          time: "13:00",
-          headline: "Lunch at Limnia harbor",
-          description: "5 minutes downhill from Volissos, the tiny fishing harbor of Limnia has two seafront tavernas with fresh catch."
-        },
-        {
-          time: "15:00",
-          headline: "Pick a northwest beach",
-          description: "Three nearby beaches, all long, all quiet:",
+          time: "Morning",
+          headline: "Pick a shape for the day",
+          description: "",
           options: [
-            { name: "Managros", detail: "10 minute drive. 1.5 km sand beach, one taverna, almost no people in June." },
-            { name: "Lefkathia", detail: "Smaller cove next to Managros." },
-            { name: "Trahili", detail: "Wild and undeveloped. No facilities. Bring everything." }
+            { name: "Volissos + northwest beaches", detail: "45 min drive. Climb the medieval castle (free), wander cobbled lanes. Lunch at Limnia harbor below. Afternoon at Managros, Lefkathia, or Trahili beach (all long, all quiet, almost no people in June)." },
+            { name: "Rest day at the hotel + favorite beach", detail: "Pool morning. Lunch in town. Repeat the best beach from earlier in the week. Energy preservation move before the Crete transit." },
+            { name: "Boat charter half-day", detail: "Several operators in Chios Town run private charters, EUR 350 to 600 for the group depending on boat size." }
           ]
         },
         {
-          time: "20:30",
-          headline: "Dinner back in Chios Town",
-          description: "Long drive back, eat near the hotel:",
-          mealOptions: ["Pyxari", "Yperion"]
+          time: "21:00",
+          headline: "Goodbye Chios dinner",
+          description: "Last night on the island. Go for a favorite:",
+          mealOptions: ["Pelagos", "Mavrokordatiko (book lunch instead if not done)", "Hotzas"]
         }
       ],
-      reservations: [],
-      whatToBring: ["Beach umbrella if possible, no shade", "Water, snacks", "Sunscreen"],
-      walking: "2 km in Volissos, plus beach",
-      tip: "The road to Volissos has a few one-lane sections through villages."
+      reservations: ["Boat charter, book 1 to 2 days ahead"],
+      whatToBring: ["Beach kit", "Sunscreen", "Cash"],
+      walking: "Depends on choice"
     },
 
     {
       id: "chios-d6",
       city: "Chios",
-      date: "Friday, Jun 12, 2026",
-      title: "Slow day, repeat favorites, Chios Town evening",
-      summary: "A built-in rest day. Choose a beach you already loved or a new one, slow lunch, easy evening. After 5 days of exploring, a low-effort day prevents burnout.",
+      date: "Sunday, Jun 14, 2026",
+      title: "Check out of Grecian Castle, fly to Chania at 11:50 AM",
+      summary: "Morning transit day. Flight to Chania at 11:50 AM means an airport arrival by 10:00 AM. Quick breakfast, taxi to the airport, then island-hop south.",
       weather: "Same.",
       slots: [
         {
           time: "Morning",
-          headline: "Beach of choice or boat day",
-          description: "Three modes for the day:",
-          options: [
-            { name: "Repeat favorite beach", detail: "Whichever beach the group rated highest earlier in the week." },
-            { name: "New beach: Komi or Mavra Volia again", detail: "Komi is sand, family-friendly, in the south." },
-            { name: "Daskalopetra and Vrontados", detail: "Short morning to the 'Stone of Homer' (free)." }
-          ]
+          headline: "Check out and travel to Chios airport",
+          description: "Aim to leave the hotel by 9:30 AM. Chios airport (JKH) is about 10 minutes by taxi. Domestic check-in 60 to 90 min before departure."
         },
         {
-          time: "13:30",
-          headline: "Slow lunch",
-          description: "Mix-and-match:",
-          mealOptions: ["Hotzas", "Mavrokordatiko", "To Kechrimpari"]
-        },
-        {
-          time: "18:00",
-          headline: "Sunset drinks, Chios Town waterfront",
-          description: "Several waterfront bars line the harbor. Pick one with shade and a view, order a tsipouro or a frappé."
-        },
-        {
-          time: "21:00",
-          headline: "Dinner",
-          description: "Return to a favorite or try something new:",
-          mealOptions: ["Pelagos", "Nostos", "Pyxari"]
+          time: "11:50",
+          headline: "Flight to Chania",
+          description: "Domestic flight. Land Chania airport (CHQ) early afternoon. About 20 minutes by taxi to central Chania."
         }
       ],
-      reservations: [],
-      whatToBring: ["Beach kit", "Reading material"],
+      reservations: ["Hotel checkout", "Taxi to JKH"],
+      whatToBring: ["Snacks for the journey", "Water"],
       walking: "Light"
-    },
-
-    {
-      id: "chios-d7",
-      city: "Chios",
-      date: "Saturday, Jun 13, 2026",
-      title: "Optional day trip or final Chios explore",
-      summary: "Last full day on Chios. Three completely different shapes for the day, pick one based on what's missing from the week.",
-      weather: "Same.",
-      slots: [
-        {
-          time: "All day",
-          headline: "Pick a shape for the day",
-          description: "",
-          options: [
-            { name: "Inousses island day trip", detail: "Small ferry from Chios Town (EUR 5 to 8 each way, 1 hour). Tiny, traditional, almost no tourists." },
-            { name: "North Chios drive", detail: "Drive up the east coast to Marmaro, Kardamyla, Nagos beach. Lunch in Kardamyla harbor." },
-            { name: "Boat charter half-day", detail: "Several operators in Chios Town run private boat charters along the east coast, EUR 350 to 600 for the group." }
-          ]
-        },
-        {
-          time: "21:00",
-          headline: "Goodbye dinner",
-          description: "Hit the favorite from the week:",
-          mealOptions: ["Pelagos", "Mavrokordatiko (book lunch instead if not done)", "Hotzas"]
-        }
-      ],
-      reservations: ["Inousses ferry: walk-up usually fine. Boat charter: book 1 to 2 days ahead."],
-      whatToBring: ["Depends on choice"],
-      walking: "Depends on choice"
     },
 
     /* CRETE */
@@ -502,20 +506,31 @@ window.TRIP_DATA = {
       city: "Crete",
       date: "Sunday, Jun 14, 2026",
       title: "Arrive Chania, first evening in Nea Chora",
-      summary: "Travel day from Chios to Crete (arrangements coordinated separately). Once settled in Chania, the first evening is best kept easy: walk Nea Chora, eat seafood by the water.",
+      summary: "Land Chania mid-afternoon, settle, walk Nea Chora, eat seafood by the water.",
       weather: "Crete is hotter and drier than Chios. June Chania high 28C, low 19C, but inland and at noon expect 32C+.",
       slots: [
         {
+          time: "Check-in",
+          headline: "Crete base, Vrbo villa in Kato Galatas",
+          description: "Five-night Vrbo villa in Kato Galatas, the seaside suburb about 8 km west of central Chania. Quieter than the Old Town, easy drives to Balos, Elafonisi, and the Samaria trailhead. Property ID 11694637, Unit 6738192. Host: Tsichlaki Maria (Be On Holidays). Check-in Jun 14, check-out Jun 19. Maria has the host contact details and check-in instructions.",
+          links: [{ label: "Vrbo listing", url: "https://www.vrbo.com/11694637ha" }]
+        },
+        {
+          time: "Afternoon",
+          headline: "Settle, drop bags, freshen up",
+          description: "Unpack, get oriented, sort out groceries if you want to stock the villa kitchen."
+        },
+        {
           time: "Evening",
           headline: "Easy first dinner in Nea Chora",
-          description: "Nea Chora is the seafood quarter, a short walk west of the Old Town:",
+          description: "Nea Chora is the seafood quarter, a short walk west of the Old Town. Walk along the beachfront promenade. Three picks:",
           mealOptions: ["Kariatis", "Mikrolimano", "Oasis Souvlaki"]
         }
       ],
       reservations: [],
-      whatToBring: ["Snacks for the journey"],
+      whatToBring: [],
       walking: "Light",
-      tip: "Order a delivery from a Chania supermarket (My Market, Vergina) for your stay's stocking. Cheaper than restaurants for breakfast."
+      tip: "Order a delivery from a Chania supermarket (My Market, Vergina) for stocking the stay: coffee, breakfast items, water, wine."
     },
 
     {
@@ -524,7 +539,7 @@ window.TRIP_DATA = {
       date: "Monday, Jun 15, 2026",
       title: "Chania Old Town and the Venetian harbor",
       summary: "Discovery day in the old town. The Venetian harbor, the lighthouse, Stivanadika (the leather-makers' alley), the indoor market, dinner along the water.",
-      weather: "Same. Old town is shaded by tall buildings, very walkable until 14:00, then hot.",
+      weather: "Same. Old town is shaded by tall buildings, very walkable until 14:00.",
       slots: [
         {
           time: "10:00",
@@ -537,7 +552,7 @@ window.TRIP_DATA = {
         {
           time: "13:30",
           headline: "Lunch in the Old Town",
-          description: "Cretan tavernas at a range of price points. Maria's family recommendations are along the main Limani:",
+          description: "Cretan tavernas along the main Limani, Maria's family recommendations:",
           mealOptions: ["Christoforos", "Salis", "Tamam", "Apostolis"]
         },
         {
@@ -545,14 +560,14 @@ window.TRIP_DATA = {
           headline: "Indoor market and afternoon",
           description: "The Agora (Demotiki Agora) is a cross-shaped covered market from 1913, with cheese, olive oil, raki, spices, fresh produce. Then siesta, or museum.",
           options: [
-            { name: "Archaeological Museum of Chania", detail: "EUR 6, Minoan to Roman finds, in a former Venetian monastery.", links: [{ label: "Website", url: "https://amch.gr" }] },
+            { name: "Archaeological Museum of Chania", detail: "EUR 6, Minoan to Roman finds.", links: [{ label: "Website", url: "https://amch.gr" }] },
             { name: "Pool / beach time", detail: "Walk to Nea Chora for a swim, 10 minutes from the harbor." }
           ]
         },
         {
           time: "20:30",
           headline: "Dinner with the harbor view",
-          description: "Atmospheric options on or near the water. Ta Chalkina is the live-music option, worth calling ahead to find out which nights musicians are playing for the best Cretan music experience:",
+          description: "Ta Chalkina is the live-music option, worth calling ahead to find out which nights musicians are playing:",
           mealOptions: ["Ta Chalkina", "Salis", "Well of the Turk", "Zepos"]
         },
         {
@@ -561,8 +576,8 @@ window.TRIP_DATA = {
           description: "The lit Venetian lighthouse, the boats, the cocktail bars along Akti Tombazi. Stop for ice cream at Iordanis or pastry at Hatzis."
         }
       ],
-      reservations: ["Dinner: Tamam, Well of the Turk, Ta Chalkina all fill up Friday and Saturday"],
-      whatToBring: ["Sandals (cobblestones, but flat)", "Cash for the market"],
+      reservations: ["Dinner: Tamam, Well of the Turk, Ta Chalkina fill up Friday and Saturday"],
+      whatToBring: ["Sandals", "Cash for the market"],
       walking: "5 to 6 km in town"
     },
 
@@ -571,42 +586,42 @@ window.TRIP_DATA = {
       city: "Crete",
       date: "Tuesday, Jun 16, 2026",
       title: "Balos Lagoon day trip",
-      summary: "Full day boat trip to one of the most famous beaches in Greece. The lagoon between Cape Tigani and the Balos peninsula has a sandbar that glows turquoise. Maria's tip: skip the large ferry and book a private or small cruise from the Chania harbor. Less crowded, more flexible, and you can see multiple beaches in one day.",
+      summary: "Full day boat trip to one of the most famous beaches in Greece. Maria's tip: skip the large ferry and book a private or small cruise from the Chania harbor. Less crowded, more flexible, and you can see multiple beaches in one day.",
       weather: "Same, but the boat is exposed. Wind picks up afternoon.",
       slots: [
         {
           time: "09:00",
           headline: "Drive to Kissamos port (or skip if booking private from Chania)",
-          description: "If on the standard ferry: about 40 minutes west of Chania to Kissamos port. Park at the port lot, EUR 5. If on a private charter from Chania harbor: walk the harborfront and find one of the boats advertising trips to all the beaches in one day."
+          description: "Standard ferry: 40 min west to Kissamos port. Park EUR 5. Private charter from Chania harbor: walk the harborfront and find one of the boats advertising trips to all the beaches in one day."
         },
         {
           time: "10:30",
           headline: "Ferry or charter to Gramvousa and Balos",
-          description: "Standard ferry: Cretan Daily Cruises. EUR 40 to 45 pp. The boat stops first at Gramvousa island for about 2 hours, time to swim and climb to the Venetian fortress. Then continues to Balos for about 3 hours. Private charter from Chania: typically EUR 80 to 150 pp, less crowded, more flexible.",
+          description: "Standard ferry: Cretan Daily Cruises, EUR 40 to 45 pp. Stops first at Gramvousa island for about 2 hours, then continues to Balos for about 3 hours. Private charter from Chania: EUR 80 to 150 pp, less crowded, more flexible.",
           links: [
-            { label: "Cretan Daily Cruises (large ferry)", url: "https://www.cretandailycruises.com" }
+            { label: "Cretan Daily Cruises", url: "https://www.cretandailycruises.com" }
           ]
         },
         {
           time: "13:30 to 16:30",
           headline: "Balos Lagoon",
-          description: "The shallow lagoon is photogenic but crowded by midday on the large ferry. Walk left along the beach for thinner crowds. Bring lunch (boat has a small snack bar, expensive) or eat at the one beach taverna."
+          description: "The shallow lagoon is photogenic but crowded by midday on the large ferry. Walk left along the beach for thinner crowds."
         },
         {
           time: "17:45",
-          headline: "Boat back to Kissamos or Chania",
+          headline: "Boat back",
           description: "Standard ferry arrives Kissamos about 18:45. Private charter returns to Chania harbor."
         },
         {
           time: "21:00",
           headline: "Dinner",
-          description: "Kissamos has good seaside tavernas if you don't want to drive on a tired day. Or back to Chania:",
+          description: "Back to Chania:",
           mealOptions: ["Ta Chalkina", "Mikrolimano", "Salis"]
         }
       ],
-      reservations: ["Cretan Daily Cruises, book 2 to 3 days ahead in June. Private charter, walk the Chania harbor day-of or book 1 to 2 days ahead."],
-      whatToBring: ["Water shoes (lagoon floor is shell and rock)", "Sunscreen (no shade on the boat)", "Hat", "Cash for snacks and the fortress climb", "Light layer for the windy boat ride"],
-      walking: "Up to 4 km if you do the Gramvousa fortress climb",
+      reservations: ["Cretan Daily Cruises, book 2 to 3 days ahead. Private charter, walk the Chania harbor day-of or book ahead."],
+      whatToBring: ["Water shoes", "Sunscreen", "Hat", "Cash", "Light layer for the boat"],
+      walking: "Up to 4 km",
       tip: "Alternative: drive yourself to Balos via the rough dirt road from Kaliviani. 45 minutes of bad road, no boat needed."
     },
 
@@ -621,7 +636,7 @@ window.TRIP_DATA = {
         {
           time: "FOR HIKERS, 05:30",
           headline: "KTEL bus from Chania to Omalos",
-          description: "KTEL bus departs Chania bus station 06:15. EUR 8 each way. Arrives Omalos around 07:45. Book the day before at chaniabus.gr. Buy gorge entry on arrival, EUR 10. Last entry is 14:00. Alternative: most tour companies along the Chania harbor offer Samaria packages with transport included, EUR 30 to 45 pp.",
+          description: "KTEL bus departs Chania bus station 06:15. EUR 8 each way. Arrives Omalos around 07:45. Most tour companies along the Chania harbor also offer Samaria packages with transport included, EUR 30 to 45 pp.",
           links: [
             { label: "KTEL bus schedule", url: "https://www.e-ktel.com" },
             { label: "Gorge official", url: "https://www.samaria.gr" }
@@ -630,12 +645,12 @@ window.TRIP_DATA = {
         {
           time: "FOR HIKERS, 08:00 to 14:00",
           headline: "Samaria Gorge hike",
-          description: "16 km, strenuous, mostly downhill. Descent (Xyloskalo) is steep wooden steps for the first 2 km. Pass the abandoned Samaria village mid-hike. Squeeze through 'Sideroportes' (Iron Gates) where the gorge narrows to 4 meters wide and walls rise 300m. Exit at Agia Roumeli on the Libyan Sea. Natural spring midway, no other amenities, bring all supplies including lots of water."
+          description: "16 km, strenuous, mostly downhill. Descent (Xyloskalo) is steep wooden steps for the first 2 km. Pass the abandoned Samaria village mid-hike. Squeeze through Sideroportes (Iron Gates) where the gorge narrows to 4 meters wide and walls rise 300m. Exit at Agia Roumeli on the Libyan Sea. Natural spring midway, no other amenities."
         },
         {
           time: "FOR HIKERS, 14:00 to 17:30",
           headline: "Lunch at Agia Roumeli, ferry to Sfakia",
-          description: "Agia Roumeli is car-free, reached only by foot or boat. Quick swim, lunch, board the ferry at 15:00 to Chora Sfakion (EUR 15, 1 hour). KTEL bus from Sfakia to Chania departs around 19:00, arrives 21:00.",
+          description: "Agia Roumeli is car-free. Quick swim, lunch, board the ferry at 15:00 to Chora Sfakion. KTEL bus from Sfakia to Chania departs around 19:00, arrives 21:00.",
           links: [
             { label: "Anendyk ferries", url: "https://www.anendyk.gr" }
           ],
@@ -646,10 +661,10 @@ window.TRIP_DATA = {
           headline: "Pool, beach, gentle outings",
           description: "Several low-key options:",
           options: [
-            { name: "Pool / villa day", detail: "Loungers, swim, late breakfast, lunch in." },
-            { name: "Nea Chora beach", detail: "Walk to Nea Chora, sun loungers, beachfront tavernas, easy lunch at Mikrolimano." },
+            { name: "Pool / villa day", detail: "Loungers, swim, late breakfast." },
+            { name: "Nea Chora beach", detail: "Walk to Nea Chora. Lunch at Mikrolimano." },
             { name: "Botanical Park of Crete", detail: "20 minutes drive. 20 hectares of fruit trees and herbs.", links: [{ label: "Website", url: "https://www.botanical-park.com" }] },
-            { name: "Manousakis Nostos Winery", detail: "Family-run winery in Vatolakkos, 20 min from Chania. Tour, tasting, lunch sourced from their land. Partners with the Salis restaurant.", links: [{ label: "Website", url: "https://nostoswines.com" }] },
+            { name: "Manousakis Nostos Winery", detail: "Family-run winery in Vatolakkos, 20 min from Chania. Tour, tasting, lunch from their land. Partners with the Salis restaurant.", links: [{ label: "Website", url: "https://nostoswines.com" }] },
             { name: "Akrotiri peninsula", detail: "Drive 20 min east, Marathi beach for lunch, Stavros for the Zorba beach, Agia Triada monastery." }
           ]
         },
@@ -660,8 +675,8 @@ window.TRIP_DATA = {
           mealOptions: ["Ta Meraklikia", "Mikrolimano", "Oasis Souvlaki (takeaway)"]
         }
       ],
-      reservations: ["KTEL bus to Omalos, book day before (or tour company at the harbor)", "Manousakis winery tour if interested"],
-      whatToBring: ["FOR HIKERS: real hiking shoes, 2L water minimum, sun hat, snacks, refillable water bottle, light layer for early morning at altitude (Omalos is 1230m), camera, EUR 60 cash for entry+ferry+bus", "FOR RELAXERS: pool / beach kit, book"],
+      reservations: ["KTEL bus to Omalos, book day before", "Manousakis winery tour if interested"],
+      whatToBring: ["FOR HIKERS: hiking shoes, 2L water minimum, hat, snacks, layer for altitude, camera, EUR 60 cash", "FOR RELAXERS: pool / beach kit"],
       walking: "Hikers: 16 km. Relaxers: 1 to 4 km",
       tip: "Hikers: trekking poles save your knees on the descent. Buy or rent from Chania outdoor shops the day before."
     },
@@ -671,18 +686,18 @@ window.TRIP_DATA = {
       city: "Crete",
       date: "Thursday, Jun 18, 2026",
       title: "Elafonisi pink beach day",
-      summary: "Last full day in Crete. Elafonisi is the famous pink-sand beach 75 km southwest. Long drive each way, but the destination is unforgettable. Several picturesque villages along the way, plus a chapel built into a cave reached by stairs cut into the mountainside.",
+      summary: "Last full day in Crete. Elafonisi is the famous pink-sand beach 73 km southwest. Long drive each way, but the destination is unforgettable. Several picturesque villages along the way, plus a chapel built into a cave reached by stairs cut into the mountainside.",
       weather: "Same. Elafonisi can be windy in the afternoon, lagoon stays warm.",
       slots: [
         {
           time: "08:30",
           headline: "Drive to Elafonisi (with stops)",
-          description: "About 1.5 hours, 73 km. Mostly mountain roads. Several picturesque villages along the route, worth stopping in. Also: a chapel built into a cave on the way, accessible by climbing stairs carved into the mountainside, a great photo and rest stop. Leave early to claim parking (EUR 3 cash) and beach space."
+          description: "About 1.5 hours. Mostly mountain roads. Several picturesque villages worth stopping in. The chapel built into a cave on the way is a memorable photo and rest stop. Leave early to claim parking (EUR 3 cash) and beach space."
         },
         {
           time: "10:00 to 13:30",
           headline: "Elafonisi beach and lagoon",
-          description: "The pink sand comes from crushed shells. The shallow lagoon is warm and waist-deep for 100 meters out. Cross the sandbar to the small island for fewer people. Sun loungers EUR 8 to 15 pair, snack bar with mediocre food. Bring or rent a beach umbrella, no natural shade."
+          description: "Pink sand from crushed shells. Shallow lagoon, waist-deep for 100 meters out. Cross the sandbar to the small island for fewer people. Bring or rent a beach umbrella, no natural shade."
         },
         {
           time: "13:30 (alt)",
@@ -698,7 +713,7 @@ window.TRIP_DATA = {
         {
           time: "Sunset",
           headline: "Optional: I Koukouvagia in Halepa",
-          description: "On the way back, detour to Halepa, a historic Chania suburb of grand 19th-century mansions. Eleftherios Venizelos (who led the revolution to liberate Crete from the Ottomans) lived here. I Koukouvagia (Η Κουκουβάγια) is a pastry shop and café on a hill with one of the best sunset views in Chania. The German cemetery for paratroopers killed in the WWII invasion of Crete is in the same neighborhood."
+          description: "On the way back, detour to Halepa, a historic Chania suburb of grand 19th-century mansions. Eleftherios Venizelos (who led the revolution to liberate Crete from the Ottomans) lived here. I Koukouvagia is a pastry shop and café on a hill with one of the best sunset views in Chania."
         },
         {
           time: "Evening",
@@ -711,18 +726,18 @@ window.TRIP_DATA = {
           ]
         }
       ],
-      reservations: ["Private chef if interested, 3+ days ahead", "Restaurant dinner Friday night"],
-      whatToBring: ["Beach umbrella or rent on-site", "Water shoes (lagoon floor is shells)", "Snacks for the drive", "Cash for parking and lunch"],
+      reservations: ["Private chef if interested, 3+ days ahead", "Restaurant dinner Thursday night"],
+      whatToBring: ["Beach umbrella or rent on-site", "Water shoes", "Snacks for the drive", "Cash"],
       walking: "2 km on the beach",
-      tip: "Elafonisi has been protected as a Natura 2000 site. Don't take pink sand home, it's illegal and bad for the ecosystem."
+      tip: "Elafonisi is a Natura 2000 protected site. Don't take pink sand home, it's illegal and damages the ecosystem."
     },
 
     {
       id: "crete-d6",
       city: "Crete",
       date: "Friday, Jun 19, 2026",
-      title: "Last morning in Chania, transit to Athens",
-      summary: "Travel day from Crete to Athens (arrangements coordinated separately). Last morning options: a final coffee at the harbor, a souvenir run at the indoor market, one more swim at Nea Chora.",
+      title: "Last morning in Chania, fly to Athens at 1:40 PM",
+      summary: "Final morning in Crete. Flight to Athens at 1:40 PM means a leisurely morning, then check out and head to the airport.",
       weather: "Same.",
       slots: [
         {
@@ -736,22 +751,18 @@ window.TRIP_DATA = {
           ]
         },
         {
-          time: "Midday",
-          headline: "Last lunch",
-          description: "Quick and easy:",
-          mealOptions: ["Oasis Souvlaki", "Mikrolimano", "Kariatis"]
+          time: "11:30",
+          headline: "Check out, taxi to Chania airport (CHQ)",
+          description: "About 20 minutes by taxi from central Chania. Check-in 60 to 90 min before departure. Quick lunch at the airport or in town beforehand."
         },
         {
-          time: "PM or evening",
-          headline: "Travel to Athens",
-          description: "If on the ANEK or Minoan ferry: 8 to 9 hour overnight sailing from Souda port. Departs around 21:00, arrives Piraeus around 06:00. Cabin recommended.",
-          links: [
-            { label: "ANEK Lines", url: "https://www.anek.gr" }
-          ]
+          time: "13:40",
+          headline: "Flight to Athens",
+          description: "Domestic flight, about 50 min. Land Athens (ATH) mid-afternoon. Taxi to Athens hotel, EUR 40 daytime flat rate."
         }
       ],
-      reservations: [],
-      whatToBring: ["Snacks for the journey", "Earplugs and eye mask for overnight ferry"],
+      reservations: ["Hotel checkout", "Taxi to CHQ"],
+      whatToBring: ["Snacks for the journey"],
       walking: "Light"
     },
 
@@ -765,8 +776,13 @@ window.TRIP_DATA = {
       weather: "Same as leg 1.",
       slots: [
         {
+          time: "Late afternoon",
+          headline: "Check in, freshen up",
+          description: "Land ATH around 14:30 to 15:00. Taxi to hotel, EUR 40 daytime. Settle in, rest before dinner."
+        },
+        {
           time: "Evening",
-          headline: "Settle, dinner",
+          headline: "Dinner",
           description: "Pick a Psyrri or Monastiraki spot:",
           mealOptions: ["Kuzina", "Taverna Saita", "Avli"]
         }
@@ -789,7 +805,7 @@ window.TRIP_DATA = {
           headline: "Pick what you missed",
           description: "Three options:",
           options: [
-            { name: "National Archaeological Museum", detail: "If you skipped it on leg 1. EUR 12.", links: [{ label: "Website", url: "https://www.namuseum.gr" }] },
+            { name: "National Archaeological Museum", detail: "If skipped on leg 1. EUR 12.", links: [{ label: "Website", url: "https://www.namuseum.gr" }] },
             { name: "Panathenaic Stadium", detail: "EUR 5. The only stadium in the world built entirely of marble.", links: [{ label: "Website", url: "https://www.panathenaicstadium.gr" }] },
             { name: "Anafiotika and Plaka wander", detail: "Coffee, last shopping, walk slowly." }
           ]
@@ -800,7 +816,7 @@ window.TRIP_DATA = {
           description: "70 km south, 90 min drive along the Athens Riviera. Two ways:",
           options: [
             { name: "Drive yourself", detail: "Rent a car for the day. Park at the Sounion lot, EUR 20 entry per person." },
-            { name: "Half-day tour", detail: "EUR 45 to 60 pp with transport included. GetYourGuide or Viator.", links: [{ label: "GetYourGuide Sounion tours", url: "https://www.getyourguide.com/cape-sounion-l30019" }] }
+            { name: "Half-day tour", detail: "EUR 45 to 60 pp with transport included.", links: [{ label: "GetYourGuide Sounion tours", url: "https://www.getyourguide.com/cape-sounion-l30019" }] }
           ]
         },
         {
@@ -810,15 +826,15 @@ window.TRIP_DATA = {
         },
         {
           time: "21:30",
-          headline: "Late dinner back in Athens",
-          description: "Last night dinner. Go special:",
+          headline: "Last dinner in Greece",
+          description: "Go special:",
           mealOptions: ["Aleria", "Little Tree (lighter)", "Klimataria (with live music)"]
         }
       ],
       reservations: ["Dinner if Aleria"],
-      whatToBring: ["Camera", "Light jacket for the open cliff", "Snacks/water on the road"],
+      whatToBring: ["Camera", "Light jacket for the open cliff"],
       walking: "2 to 3 km plus Sounion site",
-      tip: "Sounion site closes at sunset, but parking lot is open later."
+      tip: "Sounion site closes at sunset, but parking lot is open later. Plan to be back at the car within 30 minutes of sunset."
     },
 
     {
@@ -826,23 +842,32 @@ window.TRIP_DATA = {
       city: "Athens",
       date: "Sunday, Jun 21, 2026",
       title: "Depart Athens",
-      summary: "Last morning. Coffee, gifts, then onward (transit arranged separately).",
+      summary: "Travel home day. Two flights leaving, different times.",
       weather: "Same.",
       slots: [
         {
           time: "Morning",
           headline: "Breakfast and last gifts",
-          description: "Two stops worth making:",
+          description: "Two stops worth making if there is time:",
           options: [
             { name: "Krinos for loukoumades", detail: "Since 1923. Traditional Greek honey-soaked donuts." },
             { name: "Mastihashop for gifts", detail: "Mastic products from Chios.", links: [{ label: "Website", url: "https://www.mastihashop.com" }] }
           ]
+        },
+        {
+          time: "Departures",
+          headline: "Two flights home",
+          description: "Plan airport arrivals 2.5 to 3 hours before international departure. Athens airport (ATH) is 35 to 45 min from central Athens, taxi EUR 40 daytime.",
+          options: [
+            { name: "12:35 PM to Chicago", detail: "John, Maria, Athan, Piper, and Gigi. Arrive SLC at 10:48 PM." },
+            { name: "1:40 PM departure", detail: "Alex and Kinzie. Arrive SLC at 7:30 PM." }
+          ]
         }
       ],
-      reservations: [],
+      reservations: ["Taxi to ATH (book night before for early-morning rides)"],
       whatToBring: ["Patience"],
       walking: "Light",
-      tip: "Mastic liqueur should go in checked baggage if you're flying. Olive oil too."
+      tip: "Mastic liqueur, olive oil, and any liquid souvenirs must go in checked baggage if flying."
     }
   ],
 
