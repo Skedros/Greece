@@ -95,8 +95,16 @@ window.TRIP_DATA = {
         {
           time: "Check-in",
           headline: "Athens base, Alke Homme apartment near the Acropolis",
-          description: "Three-night Vrbo apartment in central Athens, booked through the Lohse family (James and Heidi). Walking distance to the Acropolis, Plaka, and Monastiraki. Itinerary #5563-3418276611. Check-in Jun 6, check-out Jun 9. Property address and host check-in details appear on the Vrbo trip page closer to arrival.",
-          links: [{ label: "Vrbo trip page", url: "https://www.vrbo.com/trips/egti-197-W8I-26QX" }]
+          description: "Three-night Vrbo apartment in Makrygianni, the neighborhood right under the Acropolis. Booked through the Lohse family (James and Heidi). Walking distance to the Acropolis, Plaka, and Monastiraki. Itinerary #5563-3418276611. Check-in Jun 6, check-out Jun 9.",
+          options: [
+            { name: "Address", detail: "Lempesi 6, Makrygianni, Athens" },
+            { name: "Vrbo itinerary", detail: "#5563-3418276611" },
+            { name: "Booked by", detail: "James Lohse (jamesklohse@gmail.com), shared with Maria via Heidi Lohse" }
+          ],
+          links: [
+            { label: "Vrbo trip page", url: "https://www.vrbo.com/trips/egti-197-W8I-26QX" },
+            { label: "Google Maps", url: "https://www.google.com/maps/search/Lempesi+6+Athens" }
+          ]
         },
         {
           time: "Late afternoon",
@@ -517,9 +525,17 @@ window.TRIP_DATA = {
       slots: [
         {
           time: "Check-in",
-          headline: "Crete base, Vrbo villa in Kato Galatas",
-          description: "Five-night Vrbo villa in Kato Galatas, the seaside suburb about 8 km west of central Chania. Quieter than the Old Town, easy drives to Balos, Elafonisi, and the Samaria trailhead. Property ID 11694637, Unit 6738192. Host: Tsichlaki Maria (Be On Holidays). Check-in Jun 14, check-out Jun 19. Maria has the host contact details and check-in instructions.",
-          links: [{ label: "Vrbo listing", url: "https://www.vrbo.com/11694637ha" }]
+          headline: "Crete base, Vrbo villa in Agioi Apostoloi",
+          description: "Five-night Vrbo villa in Agioi Apostoloi, a beach suburb on the western edge of Chania about 5 km from the Old Town. Quiet residential streets, two coves with sandy beaches walking distance away, easy drives to Balos, Elafonisi, and the Samaria trailhead. Property ID 11694637, Unit 6738192. Host: Tsichlaki Maria (Be On Holidays). Check-in Jun 14, check-out Jun 19.",
+          options: [
+            { name: "Address", detail: "Drakonianou 6, Agioi Apostoloi, Chania 73100" },
+            { name: "Property", detail: "Vrbo 11694637, Unit 6738192" },
+            { name: "Host", detail: "Tsichlaki Maria, Be On Holidays" }
+          ],
+          links: [
+            { label: "Vrbo listing", url: "https://www.vrbo.com/11694637ha" },
+            { label: "Google Maps", url: "https://www.google.com/maps/search/Drakonianou+6+Agioi+Apostoloi+Chania" }
+          ]
         },
         {
           time: "Afternoon",
@@ -782,14 +798,26 @@ window.TRIP_DATA = {
       weather: "Same as leg 1.",
       slots: [
         {
+          time: "Check-in",
+          headline: "Athens leg 2 stay, Koukaki / Neos Kosmos area",
+          description: "Two-night stay on Syngrou Avenue, the main artery running south from the Acropolis toward the coast. Koukaki and Neos Kosmos sit on either side, both walkable to Plaka, the Acropolis Museum, and the Stavros Niarchos Foundation. Quieter than Plaka itself, easy to get around. Check-in Jun 19, check-out Jun 21.",
+          options: [
+            { name: "Address", detail: "Leoforos Sygrou 29, Athens 11743" },
+            { name: "Area", detail: "Koukaki / Neos Kosmos, south of the Acropolis" }
+          ],
+          links: [
+            { label: "Google Maps", url: "https://www.google.com/maps/search/Leoforos+Sygrou+29+Athens+11743" }
+          ]
+        },
+        {
           time: "Late afternoon",
-          headline: "Check in, freshen up",
-          description: "Land ATH around 14:30 to 15:00. Taxi to hotel, EUR 40 daytime. Settle in, rest before dinner."
+          headline: "Settle in",
+          description: "Land ATH around 14:30 to 15:00. Taxi from ATH to the apartment, EUR 40 daytime flat rate. Drop bags, freshen up, rest before dinner."
         },
         {
           time: "Evening",
           headline: "Dinner",
-          description: "Pick a Psyrri or Monastiraki spot:",
+          description: "Pick a Psyrri or Monastiraki spot, all 10 to 15 minutes by taxi from Syngrou:",
           mealOptions: ["Kuzina", "Taverna Saita", "Avli"]
         }
       ],
