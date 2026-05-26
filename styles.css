@@ -1563,33 +1563,7 @@ button {
   color: var(--ink);
 }
 
-/* Floating action button (mobile only) */
-.fab {
-  display: none;
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  flex-direction: column;
-  gap: 8px;
-  z-index: 90;
-}
-.fab__btn {
-  background: var(--aegean-deep);
-  color: #fff;
-  border: 0;
-  padding: 12px 18px;
-  border-radius: 24px;
-  font-weight: 600;
-  font-size: 13px;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
-  min-width: 80px;
-}
-.fab__btn:active { transform: scale(0.96); }
-.fab__btn[data-fab="today"] { background: var(--terracotta); }
-
 @media (max-width: 768px) {
-  .fab { display: flex; }
   .dual-clock__time { font-size: 22px; }
   .stay-v5 { padding: 20px; }
   .stay-v5__grid { grid-template-columns: 1fr; gap: 12px; }

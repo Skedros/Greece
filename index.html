@@ -13,8 +13,6 @@
 
   <!-- Styles -->
   <link rel="stylesheet" href="styles.css">
-  <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#1f4e78">
 </head>
 <body>
 
@@ -56,32 +54,12 @@
     <section id="section-form" class="section"></section>
   </main>
 
-  <!-- Floating action dock (mobile-only) -->
-  <div class="fab" aria-label="Quick actions">
-    <button class="fab__btn" data-fab="today" aria-label="Today">
-      <span class="fab__label">Today</span>
-    </button>
-    <button class="fab__btn" data-fab="stays" aria-label="Stays">
-      <span class="fab__label">Stays</span>
-    </button>
-    <button class="fab__btn" data-fab="map" aria-label="Map">
-      <span class="fab__label">Map</span>
-    </button>
-  </div>
-
   <footer class="site-footer">
     <div class="layout">Built for the Skedros family . Greece 2026</div>
   </footer>
 
   <script src="data.js"></script>
   <script src="app.js"></script>
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', function () {
-        navigator.serviceWorker.register('sw.js').catch(function () { /* offline support optional */ });
-      });
-    }
-  </script>
 
 </body>
 </html>

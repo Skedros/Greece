@@ -1271,24 +1271,6 @@
     renderForm();
     activateSection('section-overview');
 
-    /* Wire FAB buttons (mobile) */
-    document.querySelectorAll('.fab__btn').forEach(function (b) {
-      b.addEventListener('click', function () {
-        const target = b.getAttribute('data-fab');
-        if (target === 'today') {
-          activateSection('section-overview');
-          setTimeout(function () {
-            const t = document.querySelector('.today-block');
-            if (t) t.scrollIntoView({ behavior: 'smooth', block: 'start' });
-          }, 80);
-        } else if (target === 'stays') {
-          activateSection('section-stays');
-        } else if (target === 'map') {
-          activateSection('section-map');
-        }
-      });
-    });
-
     /* When a link points to a specific day or entry card, open it */
     function openTargetedDetails() {
       const hash = window.location.hash;
