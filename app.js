@@ -316,16 +316,23 @@
   /* ---------------- days ---------------- */
 
   function renderDayCard(d) {
-    const card = el('article', { class: 'day', id: 'day-' + d.id });
+    const card = el('details', { class: 'day', id: 'day-' + d.id });
 
-    /* Header */
-    const head = el('header', { class: 'day__head' });
-    head.appendChild(el('div', { class: 'day__city', text: d.city }));
-    head.appendChild(el('div', { class: 'day__date', text: d.date }));
-    head.appendChild(el('h3', { class: 'day__title', text: d.title }));
-    if (d.summary) head.appendChild(el('p', { class: 'day__summary', text: d.summary }));
-    if (d.weather) head.appendChild(el('p', { class: 'day__weather', text: 'Weather: ' + d.weather }));
-    card.appendChild(head);
+    /* Summary bar (always visible, click to expand) */
+    const summary = el('summary', { class: 'day__summary-bar' });
+    const summaryInner = el('div', { class: 'day__summary-inner' });
+    summaryInner.appendChild(el('div', { class: 'day__city', text: d.city }));
+    summaryInner.appendChild(el('div', { class: 'day__date', text: d.date }));
+    summaryInner.appendChild(el('h3', { class: 'day__title', text: d.title }));
+    summary.appendChild(summaryInner);
+    summary.appendChild(el('span', { class: 'day__chevron', text: '+' }));
+    card.appendChild(summary);
+
+    /* Body (collapsed by default) */
+    const body = el('div', { class: 'day__body' });
+
+    if (d.summary) body.appendChild(el('p', { class: 'day__summary', text: d.summary }));
+    if (d.weather) body.appendChild(el('p', { class: 'day__weather', text: 'Weather: ' + d.weather }));
 
     /* Slots */
     if (d.slots && d.slots.length) {
@@ -333,10 +340,10 @@
       d.slots.forEach(function (s) {
         slotsWrap.appendChild(renderSlot(s));
       });
-      card.appendChild(slotsWrap);
+      body.appendChild(slotsWrap);
     }
 
-    /* Reservations + what to bring + walking + tip */
+    /* Reservations + what to bring + walking */
     const meta = el('div', { class: 'day__meta-grid' });
 
     if (d.reservations && d.reservations.length) {
@@ -364,10 +371,10 @@
       meta.appendChild(w);
     }
 
-    if (meta.children.length) card.appendChild(meta);
+    if (meta.children.length) body.appendChild(meta);
 
     if (d.tip) {
-      card.appendChild(el('div', { class: 'day__tip' }, [
+      body.appendChild(el('div', { class: 'day__tip' }, [
         el('span', { class: 'day__tip-label', text: 'Tip: ' }),
         el('span', { text: d.tip })
       ]));
@@ -379,8 +386,9 @@
     notes.appendChild(el('div', { class: 'day__notes-box' }, [
       editable(getStoreVal('day.notes.' + d.id, '') || 'Tap to add notes for this day...', 'day.notes.' + d.id)
     ]));
-    card.appendChild(notes);
+    body.appendChild(notes);
 
+    card.appendChild(body);
     return card;
   }
 
@@ -942,6 +950,16 @@
     renderPractical();
     renderForm();
     activateSection('section-overview');
+
+    /* When a link points to a specific day, open that day's details */
+    function openTargetedDay() {
+      const hash = window.location.hash;
+      if (!hash || hash.indexOf('#day-') !== 0) return;
+      const target = document.querySelector(hash);
+      if (target && target.tagName === 'DETAILS') target.open = true;
+    }
+    window.addEventListener('hashchange', openTargetedDay);
+    openTargetedDay();
   }
 
   if (document.readyState === 'loading') {

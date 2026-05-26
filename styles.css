@@ -427,11 +427,50 @@ button {
 .day {
   background: var(--paper-card);
   border-radius: 12px;
-  padding: 32px;
-  margin-bottom: 32px;
+  margin-bottom: 16px;
   box-shadow: var(--shadow);
   border-top: 4px solid var(--aegean);
+  overflow: hidden;
 }
+
+/* Summary bar: always visible, click to expand */
+.day__summary-bar {
+  list-style: none;
+  cursor: pointer;
+  padding: 22px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  transition: background-color 0.15s ease;
+}
+.day__summary-bar::-webkit-details-marker { display: none; }
+.day__summary-bar:hover { background: rgba(31, 78, 120, 0.04); }
+
+.day__summary-inner {
+  flex: 1;
+  min-width: 0;
+}
+
+.day__chevron {
+  flex-shrink: 0;
+  font-family: var(--font-display), serif;
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--aegean);
+  line-height: 1;
+  transition: transform 0.2s ease;
+  user-select: none;
+}
+.day[open] .day__chevron {
+  transform: rotate(45deg);
+}
+
+.day__body {
+  padding: 4px 28px 28px 28px;
+  border-top: 1px solid rgba(0,0,0,0.06);
+}
+.day[open] .day__body { padding-top: 20px; }
 
 .day__head { margin-bottom: 24px; }
 
@@ -447,15 +486,15 @@ button {
 .day__date {
   font-size: 14px;
   color: var(--ink-mute);
-  margin-bottom: 10px;
+  margin-bottom: 6px;
   font-weight: 500;
 }
 
 .day__title {
-  font-size: 28px;
+  font-size: 24px;
   line-height: 1.2;
   color: var(--aegean-deep);
-  margin: 0 0 12px 0;
+  margin: 0;
 }
 
 .day__summary {
@@ -1176,8 +1215,11 @@ button {
   .section__title { font-size: 28px; }
   .section__lede { font-size: 16px; }
   .subsection__title { font-size: 20px; }
-  .day { padding: 22px; }
-  .day__title { font-size: 22px; }
+  .day { padding: 0; }
+  .day__summary-bar { padding: 18px 20px; }
+  .day__body { padding: 4px 20px 22px 20px; }
+  .day[open] .day__body { padding-top: 16px; }
+  .day__title { font-size: 20px; }
   .slot__headline { font-size: 18px; }
   .stay-card, .logistics-card, .entry-card, .packing-card, .phrases-card, .form { padding: 20px; }
   .form__check-group, .form__radio-group { grid-template-columns: 1fr; }
