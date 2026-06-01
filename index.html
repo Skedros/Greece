@@ -6,13 +6,37 @@
   <meta name="description" content="Greece 2026 trip planner. Athens, Chios, Crete. June 5 to 21.">
   <title>Greece 2026</title>
 
+  <!-- Aggressive cleanup: remove any stale service worker from the old PWA version
+       and force a one-time reload so fresh content is fetched. Runs BEFORE the rest
+       of the page so cached scripts don't get a chance to run with old data. -->
+  <script>
+  (function () {
+    if (sessionStorage.getItem('greece_sw_cleaned') === '1') return;
+    if (!('serviceWorker' in navigator)) return;
+    navigator.serviceWorker.getRegistrations().then(function (regs) {
+      var hadSW = regs.length > 0;
+      Promise.all(regs.map(function (r) { return r.unregister(); })).then(function () {
+        var clearCaches = ('caches' in window)
+          ? caches.keys().then(function (ns) { return Promise.all(ns.map(function (n) { return caches.delete(n); })); })
+          : Promise.resolve();
+        clearCaches.then(function () {
+          if (hadSW) {
+            sessionStorage.setItem('greece_sw_cleaned', '1');
+            window.location.reload();
+          }
+        });
+      });
+    });
+  })();
+  </script>
+
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Sora:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
   <!-- Styles -->
-  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="styles.css?v=20260601">
 </head>
 <body>
 
@@ -35,6 +59,7 @@
         <button class="nav__btn" data-target="section-map">Map</button>
         <button class="nav__btn" data-target="section-phrases">Greek</button>
         <button class="nav__btn" data-target="section-budget">Practical</button>
+        <a class="nav__btn nav__btn--journey" href="journey.html">Journey</a>
       </nav>
     </div>
   </header>
@@ -58,8 +83,8 @@
     <div class="layout">Built for the Skedros family . Greece 2026</div>
   </footer>
 
-  <script src="data.js"></script>
-  <script src="app.js"></script>
+  <script src="data.js?v=20260601"></script>
+  <script src="app.js?v=20260601"></script>
 
 </body>
 </html>

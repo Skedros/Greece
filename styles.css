@@ -135,6 +135,17 @@ button {
   color: var(--paper);
 }
 
+.nav__btn--journey {
+  background: var(--terracotta);
+  color: #fff;
+  text-decoration: none;
+  display: inline-block;
+}
+.nav__btn--journey:hover {
+  background: var(--terracotta-deep);
+  color: #fff;
+}
+
 /* -------------------- sections -------------------- */
 
 .section {

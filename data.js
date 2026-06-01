@@ -1116,6 +1116,172 @@ window.TRIP_DATA = {
   ],
 
   /* ========== PACKING ========== */
+  packing: {
+    intro: "Two bags: carry-on holds the things you cannot afford to lose or be without if your checked bag goes missing. Checked bag holds everything else and the bulky stuff. Tap to check off, your progress saves to this device.",
+    carryOn: [
+      {
+        section: "Documents and money (never check these)",
+        items: [
+          "Passport (valid through at least Dec 2026)",
+          "Driver's license or backup ID",
+          "Printed copy of passport, stashed separately",
+          "Photo of passport in your phone's Photos and in cloud",
+          "Credit cards (notify your bank of travel dates Jun 6 to 21)",
+          "Backup credit card in a separate pocket",
+          "Cash: $100 to $200 USD plus EUR 50 to 100 if you have it from home",
+          "Travel insurance card and policy number",
+          "Printed copies of all confirmations (Athens Vrbo, Grecian Castle, Crete Vrbo, return flights)"
+        ]
+      },
+      {
+        section: "Electronics (TSA requires these in carry-on)",
+        items: [
+          "Phone + charging cable",
+          "EU plug adapter, Type C or Type F (Greek outlets)",
+          "Power bank, 10,000 to 20,000 mAh (lithium batteries are NOT allowed in checked bags)",
+          "Wireless or wired earbuds",
+          "Laptop or tablet if bringing one",
+          "Any spare batteries or vapes (also banned from checked bags)"
+        ]
+      },
+      {
+        section: "Medications and health",
+        items: [
+          "Prescription medications in original bottles",
+          "Copy of any prescriptions (in case you need a refill abroad)",
+          "Ibuprofen / Tylenol",
+          "Imodium (changes in diet hit hard)",
+          "Antihistamines (Benadryl or Zyrtec)",
+          "Band-aids and blister bandages (especially if hiking Samaria)",
+          "Hand sanitizer (under 3.4 oz / 100 ml)",
+          "Tissues or a small pack of wet wipes"
+        ]
+      },
+      {
+        section: "Personal items",
+        items: [
+          "Glasses, contacts, or both",
+          "Contact lens solution (3.4 oz / 100 ml or smaller)",
+          "Sunglasses",
+          "Lip balm with SPF",
+          "Travel-size toothbrush and toothpaste (if checked bag goes missing)",
+          "Hairbrush or comb",
+          "Personal hygiene essentials for one day"
+        ]
+      },
+      {
+        section: "One day of clothes (in case checked bag is delayed)",
+        items: [
+          "One full outfit: shirt, shorts or pants, underwear, socks",
+          "One pair of swim trunks or swimsuit",
+          "Light layer for the plane (cardigan, hoodie, or wrap)"
+        ]
+      },
+      {
+        section: "Plane comfort",
+        items: [
+          "Empty refillable water bottle (fill after security)",
+          "Snacks: nuts, jerky, granola bars (no fresh fruit or meat into the EU)",
+          "Eye mask",
+          "Compression socks if you're prone to swelling",
+          "Book, downloaded shows, or a magazine",
+          "Pen for landing cards"
+        ]
+      }
+    ],
+    checked: [
+      {
+        section: "Tops (June in Greece: 85 to 95 F)",
+        items: [
+          "5 to 7 t-shirts (quick-dry or linen; cotton dries slowly in humidity)",
+          "2 tank tops or sleeveless options",
+          "1 long-sleeve linen or button-down for cool evenings and monasteries",
+          "1 nicer top for dinners in Athens or Chania",
+          "1 light cardigan or wrap for AC and evening breeze"
+        ]
+      },
+      {
+        section: "Bottoms",
+        items: [
+          "2 pairs shorts (athletic and casual)",
+          "1 pair lightweight pants or linen trousers (for monasteries and cooler evenings)",
+          "1 sundress or skirt (optional)",
+          "1 pair of jeans if you must, but linen pants are better in this heat"
+        ]
+      },
+      {
+        section: "Swim and beach",
+        items: [
+          "2 swimsuits or swim trunks (one always dry)",
+          "Cover-up, sarong, or beach dress",
+          "Quick-dry beach towel (the Vrbos usually have towels, but for sand they get destroyed)",
+          "Reef-safe sunscreen, SPF 50+ (Greece has expensive sunscreen, buy at home)",
+          "Aftersun gel or aloe"
+        ]
+      },
+      {
+        section: "Shoes (2 to 3 pairs, no more)",
+        items: [
+          "Comfortable walking shoes or trail runners (cobblestones, ruins, Samaria if hiking)",
+          "Sandals: Tevas, Bedrocks, or Birks (beach, casual dinner, taverna)",
+          "1 nicer pair for evenings (optional)"
+        ]
+      },
+      {
+        section: "Sleep and lounge",
+        items: [
+          "Pajamas or sleepwear (light, the apartments may not have great AC)",
+          "5 to 7 pairs underwear (plan to wash mid-trip)",
+          "5 to 7 pairs socks (lighter pairs, plus 1 athletic if hiking)"
+        ]
+      },
+      {
+        section: "Toiletries (full-size, in checked bag)",
+        items: [
+          "Shampoo and conditioner",
+          "Body wash or bar soap",
+          "Toothpaste (full-size)",
+          "Deodorant",
+          "Razor and shaving cream",
+          "Skincare and any nightly routine items",
+          "Hair styling tools (dual-voltage or with EU plug)",
+          "Bug spray (mosquitoes appear in evenings, especially Crete countryside)"
+        ]
+      },
+      {
+        section: "Day kit and outdoor gear",
+        items: [
+          "Packable daypack, 15 to 25 L",
+          "Wide-brim hat or packable sun hat",
+          "Refillable water bottle",
+          "Dry bag or zip pouch for boat days (Balos, ferry trips)",
+          "Small umbrella (Athens rare summer showers)"
+        ]
+      },
+      {
+        section: "If hiking Samaria Gorge (Jun 17)",
+        items: [
+          "Trail runners or supportive hiking shoes",
+          "Moisture-wicking socks (avoid blisters on the 10-mile downhill)",
+          "Hiking poles, foldable (huge help for descent)",
+          "2 L water capacity total (bottles or bladder)",
+          "Electrolyte powder packets",
+          "Trail snacks: bars, dried fruit, nuts"
+        ]
+      },
+      {
+        section: "Optional extras",
+        items: [
+          "Reusable shopping bag (for markets, beach runs)",
+          "Travel laundry soap or detergent sheets",
+          "Clothesline (the apartments may have one already)",
+          "Snorkel mask if you snorkel",
+          "Small gifts if you're meeting Maria's family or Kostas and Georgia"
+        ]
+      }
+    ]
+  },
+
   /* ========== PHRASES ========== */
   phrases: [
     {
