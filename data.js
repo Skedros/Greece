@@ -110,19 +110,35 @@ window.TRIP_DATA = {
       ]
     },
     {
-      leg: "Crete",
-      name: "Vrbo villa in Agioi Apostoloi",
+      leg: "Crete, Villa 1",
+      name: "Villa Dioni",
+      city: "Chania (Crete)",
+      neighborhood: "Kato Daratso, west of Chania",
+      address: "Makedonomachon, Glaros, Kato Daratso, Chania 73100",
+      phone: "+30 2821031220",
+      checkIn: "Sunday, Jun 14, 2026",
+      checkOut: "Friday, Jun 19, 2026",
+      checkInTime: "Per Vrbo host instructions",
+      nights: 5,
+      booking: "Vrbo property 11694637, Unit 6738192. Be On Holidays reservation #986661. Host: Tsichlaki Maria. Sleeps 7 adults.",
+      links: [
+        { label: "Vrbo listing", url: "https://www.vrbo.com/11694637ha" },
+        { label: "Google Maps", url: "https://www.google.com/maps/search/Makedonomachon+Glaros+Kato+Daratso+Chania" }
+      ]
+    },
+    {
+      leg: "Crete, Villa 2",
+      name: "Vrbo villa, Agioi Apostoloi",
       city: "Chania (Crete)",
       neighborhood: "Agioi Apostoloi, 5 km west of Old Town",
       address: "Drakonianou 6, Agioi Apostoloi, Chania 73100",
       phone: "",
       checkIn: "Sunday, Jun 14, 2026",
       checkOut: "Friday, Jun 19, 2026",
-      checkInTime: "Per Vrbo host instructions",
+      checkInTime: "Per host instructions",
       nights: 5,
-      booking: "Vrbo property 11694637, Unit 6738192. Host: Tsichlaki Maria (Be On Holidays)",
+      booking: "Separate booking, details to confirm with Maria/Jim.",
       links: [
-        { label: "Vrbo listing", url: "https://www.vrbo.com/11694637ha" },
         { label: "Google Maps", url: "https://www.google.com/maps/search/Drakonianou+6+Agioi+Apostoloi+Chania" }
       ]
     },
@@ -154,9 +170,10 @@ window.TRIP_DATA = {
     { date: "2026-06-09", time: "2:00 PM", end: "3:00 PM", title: "Check in: Grecian Castle Hotel, Chios", description: "Enoseos Avenue, Chios. 5 nights.", location: "Enoseos Avenue, Chios" },
     { date: "2026-06-14", time: "11:00 AM", end: "11:30 AM", title: "Check out: Grecian Castle Hotel", description: "Taxi to Chios airport for the 11:50 AM flight.", location: "Enoseos Avenue, Chios" },
     { date: "2026-06-14", time: "11:50 AM", end: "12:35 PM", title: "Flight Chios (JKH) to Chania (CHQ)", description: "Domestic flight.", location: "Chios airport (JKH)" },
-    { date: "2026-06-14", time: "2:00 PM", end: "3:00 PM", title: "Check in: Vrbo villa, Agioi Apostoloi, Crete", description: "Drakonianou 6, Agioi Apostoloi, Chania.", location: "Drakonianou 6, Agioi Apostoloi, Chania" },
+    { date: "2026-06-14", time: "2:00 PM", end: "3:00 PM", title: "Check in: Villa Dioni (Crete Villa 1)", description: "Makedonomachon, Glaros, Kato Daratso, Chania. Host: Be On Holidays.", location: "Makedonomachon, Glaros, Kato Daratso, Chania" },
+    { date: "2026-06-14", time: "2:00 PM", end: "3:00 PM", title: "Check in: Vrbo villa, Agioi Apostoloi (Crete Villa 2)", description: "Drakonianou 6, Agioi Apostoloi, Chania.", location: "Drakonianou 6, Agioi Apostoloi, Chania" },
     { date: "2026-06-17", time: "6:00 AM", end: "4:00 PM", title: "Samaria Gorge hike (hikers)", description: "Bus to Omalos, 16 km downhill hike, ferry from Agia Roumeli to Sfakia, bus back to Chania.", location: "Samaria Gorge National Park" },
-    { date: "2026-06-19", time: "11:00 AM", end: "11:30 AM", title: "Check out: Crete villa", description: "Taxi to Chania airport (CHQ).", location: "Drakonianou 6, Agioi Apostoloi, Chania" },
+    { date: "2026-06-19", time: "11:00 AM", end: "11:30 AM", title: "Check out: both Crete villas", description: "Both groups taxi to Chania airport (CHQ).", location: "Chania (Crete)" },
     { date: "2026-06-19", time: "1:40 PM", end: "2:30 PM", title: "Flight Chania (CHQ) to Athens (ATH)", description: "Domestic flight, ~50 min.", location: "Chania airport (CHQ)" },
     { date: "2026-06-19", time: "4:00 PM", end: "5:00 PM", title: "Check in: Athens apartment, Syngrou", description: "Leoforos Sygrou 29, Athens. 2 nights.", location: "Leoforos Sygrou 29, Athens" },
     { date: "2026-06-21", time: "12:35 PM", end: "1:35 PM", title: "Depart Athens: flight to Chicago", description: "John, Maria, Athan, Piper, Gigi. Arrive SLC 10:48 PM.", location: "Athens International Airport (ATH)" },
@@ -615,16 +632,16 @@ window.TRIP_DATA = {
       slots: [
         {
           time: "Check-in",
-          headline: "Crete base, Vrbo villa in Agioi Apostoloi",
-          description: "Five-night Vrbo villa in Agioi Apostoloi, a beach suburb on the western edge of Chania about 5 km from the Old Town. Quiet residential streets, two coves with sandy beaches walking distance away, easy drives to Balos, Elafonisi, and the Samaria trailhead. Property ID 11694637, Unit 6738192. Host: Tsichlaki Maria (Be On Holidays). Check-in Jun 14, check-out Jun 19.",
+          headline: "Crete bases: two villas, five nights",
+          description: "Group is split between two villas in the Chania area, both five nights from Jun 14 to Jun 19. Each villa is a short drive from the Old Town, Samaria trailhead, and the western beaches.",
           options: [
-            { name: "Address", detail: "Drakonianou 6, Agioi Apostoloi, Chania 73100" },
-            { name: "Property", detail: "Vrbo 11694637, Unit 6738192" },
-            { name: "Host", detail: "Tsichlaki Maria, Be On Holidays" }
+            { name: "Villa 1: Villa Dioni", detail: "Makedonomachon, Glaros, Kato Daratso, Chania 73100. Vrbo 11694637, Unit 6738192. Host: Tsichlaki Maria (Be On Holidays), +30 2821031220. Sleeps 7 adults." },
+            { name: "Villa 2: Vrbo villa, Agioi Apostoloi", detail: "Drakonianou 6, Agioi Apostoloi, Chania 73100. Separate booking, details TBC with Maria and Jim." }
           ],
           links: [
-            { label: "Vrbo listing", url: "https://www.vrbo.com/11694637ha" },
-            { label: "Google Maps", url: "https://www.google.com/maps/search/Drakonianou+6+Agioi+Apostoloi+Chania" }
+            { label: "Villa 1 Vrbo listing", url: "https://www.vrbo.com/11694637ha" },
+            { label: "Villa 1 Google Maps", url: "https://www.google.com/maps/search/Makedonomachon+Glaros+Kato+Daratso+Chania" },
+            { label: "Villa 2 Google Maps", url: "https://www.google.com/maps/search/Drakonianou+6+Agioi+Apostoloi+Chania" }
           ]
         },
         {
