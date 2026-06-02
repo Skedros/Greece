@@ -166,18 +166,20 @@ window.TRIP_DATA = {
     },
     {
       leg: "Athens, departure leg",
-      name: "Athens return stay (to be confirmed)",
+      name: "Hotel Acropolis House",
       city: "Athens",
-      neighborhood: "TBD",
-      address: "Booking not yet confirmed in the shared Vrbo trip plan. Please check with James or Maria.",
+      neighborhood: "Plaka, edge of Syntagma Square",
+      address: "6-8 Kodrou, Athens, Attiki, 10558",
       phone: "",
       checkIn: "Friday, Jun 19, 2026",
       checkOut: "Sunday, Jun 21, 2026",
-      checkInTime: "Evening, post-flight",
-      checkOutTime: "Sunday morning before ATH departure",
+      checkInTime: "1:00 PM",
+      checkOutTime: "11:30 AM",
       nights: 2,
-      booking: "Status: To be confirmed. The two Athens Vrbo properties (Alke Homme at Sygrou 29, Chic Home at Lempesi 6) are both Jun 6-9 only. A separate booking is needed for the Jun 19-21 return leg.",
-      links: []
+      booking: "Expedia itinerary #73424648455870. 4 Classic Triple Rooms (sleeps the full group of 12). Reserved by Heidi Lohse, booked Apr 19, 2026. Total $1,595.31 (paid $1,576.47 on Visa, $18.84 due at property for city tax). Continental breakfast included, free WiFi, AC. 24-hour airport shuttle available for EUR 55 per vehicle (4 max). 3 min walk to Syntagma Square, 9 min to Monastiraki, 10 min to the Parthenon.",
+      links: [
+        { label: "Google Maps", url: "https://www.google.com/maps/search/Hotel+Acropolis+House+6-8+Kodrou+Athens+10558" }
+      ]
     }
   ],
 
@@ -213,7 +215,7 @@ window.TRIP_DATA = {
     { date: "2026-06-17", time: "6:00 AM", end: "4:00 PM", title: "Samaria Gorge hike (hikers)", description: "Bus to Omalos, 16 km downhill hike, ferry from Agia Roumeli to Sfakia, bus back to Chania.", location: "Samaria Gorge National Park" },
     { date: "2026-06-19", time: "11:00 AM", end: "11:30 AM", title: "Check out: both Crete villas", description: "Both groups taxi to Chania airport (CHQ).", location: "Chania (Crete)" },
     { date: "2026-06-19", time: "1:40 PM", end: "2:30 PM", title: "Flight Chania (CHQ) to Athens (ATH)", description: "Domestic flight, ~50 min.", location: "Chania airport (CHQ)" },
-    { date: "2026-06-19", time: "4:00 PM", end: "5:00 PM", title: "Check in: Athens return stay (TBD)", description: "Booking to be confirmed. The two Athens Vrbo properties were both Jun 6-9. A return-leg booking is still needed for Jun 19-21.", location: "Athens (location TBD)" },
+    { date: "2026-06-19", time: "4:00 PM", end: "5:00 PM", title: "Check in: Hotel Acropolis House, Athens", description: "6-8 Kodrou, Athens 10558. 4 Classic Triple Rooms for 12. Expedia #73424648455870. Booked by Heidi Lohse. Continental breakfast included.", location: "6-8 Kodrou, Athens, Attiki, 10558 Greece" },
     { date: "2026-06-21", time: "12:35 PM", end: "1:35 PM", title: "Depart Athens: flight to Chicago", description: "John, Maria, Athan, Piper, Gigi. Arrive SLC 10:48 PM.", location: "Athens International Airport (ATH)" },
     { date: "2026-06-21", time: "1:40 PM", end: "2:40 PM", title: "Depart Athens (Alex, Kinzie)", description: "1:40 PM departure, arrive SLC 7:30 PM.", location: "Athens International Airport (ATH)" }
   ],
@@ -946,14 +948,20 @@ window.TRIP_DATA = {
       slots: [
         {
           time: "Check-in",
-          headline: "Athens return stay (to be confirmed)",
-          description: "The two Athens Vrbo properties (Alke Homme at Sygrou 29 and Chic Home at Lempesi 6) are both for the Jun 6-9 arrival leg only. A separate booking is still needed for the Jun 19-21 return leg. Confirm with James or Maria before departure.",
+          headline: "Hotel Acropolis House, Plaka",
+          description: "Two-night stay at a small, family-run 2-star hotel on Kodrou Street, on the edge of Plaka and three minutes from Syntagma Square. Four Classic Triple Rooms reserved for the full group of 12. Continental breakfast included, free WiFi, AC. The 19th-century building has frescoed reception areas and a much-loved owner family. Note: no elevator.",
           options: [
-            { name: "Status", detail: "To be confirmed. No active Vrbo booking visible for these dates." },
-            { name: "Dates", detail: "Friday Jun 19 evening to Sunday Jun 21 morning (departure day)." },
-            { name: "Action", detail: "Check the Lohse / Skedros family trip plan or other booking platforms (Airbnb, Booking.com, hotel direct) for the return leg." }
+            { name: "Address", detail: "6-8 Kodrou, Athens, Attiki, 10558" },
+            { name: "Rooms", detail: "4 Classic Triple Rooms (3 guests each, 12 total)" },
+            { name: "Booking", detail: "Expedia itinerary #73424648455870. Booked Apr 19, 2026 by Heidi Lohse." },
+            { name: "Cost", detail: "$1,595.31 total. $1,576.47 paid (Visa), $18.84 due at property for city tax." },
+            { name: "Includes", detail: "Continental breakfast, free WiFi, AC, 24-hour front desk." },
+            { name: "Airport shuttle", detail: "Optional, EUR 55 per vehicle (max 4 occupants). Contact property 48 hours before arrival to arrange." },
+            { name: "Walking distance", detail: "Syntagma Square 3 min, Monastiraki 9 min, Parthenon 10 min. ATH airport 35 min by car." }
           ],
-          links: []
+          links: [
+            { label: "Google Maps", url: "https://www.google.com/maps/search/Hotel+Acropolis+House+6-8+Kodrou+Athens+10558" }
+          ]
         },
         {
           time: "Late afternoon",
