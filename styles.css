@@ -219,6 +219,46 @@ button {
   margin: 0 0 40px 0;
 }
 
+.travelers {
+  margin: 0 0 40px 0;
+  padding: 22px 24px;
+  background: var(--cream);
+  border-left: 3px solid var(--aegean-deep);
+  border-radius: 6px;
+}
+.travelers__title {
+  font-family: 'Fraunces', serif;
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  margin: 0 0 14px 0;
+  letter-spacing: 0.01em;
+}
+.travelers__group { margin-bottom: 14px; }
+.travelers__group:last-child { margin-bottom: 0; }
+.travelers__group-label {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ink-soft);
+  margin-bottom: 8px;
+  font-weight: 600;
+}
+.travelers__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+.travelers__chip {
+  font-size: 13px;
+  padding: 5px 12px;
+  background: #fff;
+  border: 1px solid var(--cream-deep);
+  border-radius: 100px;
+  color: var(--ink);
+  white-space: nowrap;
+}
+
 .quick-links {
   display: flex;
   flex-wrap: wrap;

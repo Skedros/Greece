@@ -164,6 +164,33 @@
 
     section.appendChild(el('p', { class: 'intro', text: D.meta.intro }));
 
+    /* TRAVELERS list, grouped by family */
+    if (D.travelers && D.travelers.length) {
+      const travelersWrap = el('div', { class: 'travelers' });
+      travelersWrap.appendChild(el('h3', { class: 'travelers__title', text: 'Travelers (' + D.travelers.length + ')' }));
+
+      const families = [
+        { key: 'Skedros', label: 'Skedros family' },
+        { key: 'Lohse', label: 'Lohse family' },
+        { key: 'Other', label: '' }
+      ];
+
+      families.forEach(function (fam) {
+        const members = D.travelers.filter(function (t) { return t.family === fam.key; });
+        if (!members.length) return;
+        const group = el('div', { class: 'travelers__group' });
+        if (fam.label) group.appendChild(el('div', { class: 'travelers__group-label', text: fam.label }));
+        const list = el('div', { class: 'travelers__list' });
+        members.forEach(function (m) {
+          list.appendChild(el('span', { class: 'travelers__chip', text: m.name }));
+        });
+        group.appendChild(list);
+        travelersWrap.appendChild(group);
+      });
+
+      section.appendChild(travelersWrap);
+    }
+
     /* Calendar export + Search */
     const tools = el('div', { class: 'overview-tools' });
     tools.appendChild(el('button', {

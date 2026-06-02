@@ -10,9 +10,9 @@ window.TRIP_DATA = {
     title: "Greece 2026",
     subtitle: "Athens, Chios, Crete",
     dateRange: "June 6 to June 21, 2026",
-    travelers: "7 adults",
+    travelers: "12 adults",
     countdownTarget: "2026-06-06T00:00:00",
-    intro: "Sixteen days across the Greek mainland and islands. Athens for the ancients and late nights, Chios for mastic villages and the quiet Aegean, Crete for wild beaches and Chania's Venetian harbor. A reference site, not a booking site: travel arrangements are handled separately.",
+    intro: "Sixteen days across the Greek mainland and islands. Athens for the ancients and late nights, Chios for mastic villages and the quiet Aegean, Crete for wild beaches and Chania's Venetian harbor. A group of twelve travelers across the Skedros and Lohse families plus Alex and Kinzie. A reference site, not a booking site: travel arrangements are handled separately.",
     formEndpoint: "https://formspree.io/f/YOUR_FORM_ID",
     contactEmail: "athan.skedros@gmail.com"
   },
@@ -120,7 +120,7 @@ window.TRIP_DATA = {
       checkOut: "Friday, Jun 19, 2026",
       checkInTime: "Per Vrbo host instructions",
       nights: 5,
-      booking: "Vrbo property 11694637, Unit 6738192. Be On Holidays reservation #986661. Host: Tsichlaki Maria. Sleeps 7 adults.",
+      booking: "Vrbo property 11694637, Unit 6738192. Be On Holidays reservation #986661. Host: Tsichlaki Maria. Sleeps 7 adults (group of 12 is split between Villa 1 and Villa 2).",
       links: [
         { label: "Vrbo listing", url: "https://www.vrbo.com/11694637ha" },
         { label: "Google Maps", url: "https://www.google.com/maps/search/Makedonomachon+Glaros+Kato+Daratso+Chania" }
@@ -137,7 +137,7 @@ window.TRIP_DATA = {
       checkOut: "Friday, Jun 19, 2026",
       checkInTime: "Per host instructions",
       nights: 5,
-      booking: "Separate booking, details to confirm with Maria/Jim.",
+      booking: "Separate booking for the remaining 5 of the 12-person group. Details to confirm with Maria and Jim.",
       links: [
         { label: "Google Maps", url: "https://www.google.com/maps/search/Drakonianou+6+Agioi+Apostoloi+Chania" }
       ]
@@ -158,6 +158,22 @@ window.TRIP_DATA = {
         { label: "Google Maps", url: "https://www.google.com/maps/search/Leoforos+Sygrou+29+Athens+11743" }
       ]
     }
+  ],
+
+  /* TRAVELERS: the full group of 12 across the Skedros and Lohse families plus Alex and Kinzie */
+  travelers: [
+    { name: "John Skedros", family: "Skedros" },
+    { name: "Maria Skedros", family: "Skedros" },
+    { name: "Athan Skedros", family: "Skedros" },
+    { name: "Piper Kinkead", family: "Skedros" },
+    { name: "Gigi Skedros", family: "Skedros" },
+    { name: "Jim Lohse", family: "Lohse" },
+    { name: "Heidi Lohse", family: "Lohse" },
+    { name: "Matt Lohse", family: "Lohse" },
+    { name: "Luke Lohse", family: "Lohse" },
+    { name: "Dana Lohse", family: "Lohse" },
+    { name: "Alex Millet", family: "Skedros" },
+    { name: "Kinzie Shoen", family: "Skedros" }
   ],
 
   /* ICS calendar events: flights, check-ins, anchor activities */
