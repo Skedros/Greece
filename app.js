@@ -798,22 +798,9 @@
     section.innerHTML = '';
 
     section.appendChild(el('h2', { class: 'section__title', text: 'Restaurants' }));
-    section.appendChild(el('p', { class: 'section__lede', text: 'Every restaurant is vetted with a description, why it made the list, signature dishes, and a Google Maps link. Grouped by city below.' }));
+    section.appendChild(el('p', { class: 'section__lede', text: 'Every restaurant is vetted with a description, why it made the list, signature dishes, and a Google Maps link. Tap a city to see its restaurants.' }));
 
     const CITY_ORDER = ['Athens', 'Chios', 'Crete'];
-
-    /* Quick-jump pills to each city bin */
-    const jumpWrap = el('div', { class: 'filter-row' });
-    CITY_ORDER.forEach(function (city) {
-      const count = D.restaurants.filter(function (r) { return r.city === city; }).length;
-      if (!count) return;
-      jumpWrap.appendChild(el('a', {
-        class: 'filter-btn',
-        href: '#restaurants-' + slugify(city),
-        text: city + ' (' + count + ')'
-      }));
-    });
-    section.appendChild(jumpWrap);
 
     function renderRestaurantCard(r) {
       const id = 'rest-' + slugify(r.name);
@@ -878,18 +865,25 @@
       return card;
     }
 
-    /* Restaurants binned by city */
+    /* Restaurants binned by city, each city is a collapsible city-group-card */
     CITY_ORDER.forEach(function (city) {
       const matches = D.restaurants.filter(function (r) { return r.city === city; });
       if (!matches.length) return;
-      section.appendChild(el('h4', {
-        class: 'city-group__title',
-        id: 'restaurants-' + slugify(city),
-        text: city + ' (' + matches.length + ')'
-      }));
-      const grid = el('div', { class: 'city-group' });
-      matches.forEach(function (r) { grid.appendChild(renderRestaurantCard(r)); });
-      section.appendChild(grid);
+
+      const cityCard = el('details', { class: 'city-group-card', id: 'restaurants-' + slugify(city) });
+      const citySummary = el('summary', { class: 'city-group-card__summary' });
+      const citySumInner = el('div', { class: 'city-group-card__sum-inner' });
+      citySumInner.appendChild(el('h3', { class: 'city-group-card__name', text: city }));
+      citySumInner.appendChild(el('div', { class: 'city-group-card__count', text: matches.length + ' restaurant' + (matches.length === 1 ? '' : 's') }));
+      citySummary.appendChild(citySumInner);
+      citySummary.appendChild(el('span', { class: 'city-group-card__chevron', text: '+' }));
+      cityCard.appendChild(citySummary);
+
+      const cityBody = el('div', { class: 'city-group-card__body' });
+      matches.forEach(function (r) { cityBody.appendChild(renderRestaurantCard(r)); });
+      cityCard.appendChild(cityBody);
+
+      section.appendChild(cityCard);
     });
   }
 
@@ -997,26 +991,48 @@
       return card;
     }
 
-    /* Sites subsection, grouped by city */
+    /* Sites subsection, each city is a collapsible city-group-card */
     section.appendChild(el('h3', { class: 'subsection__title', text: 'Sites and museums' }));
     CITY_ORDER.forEach(function (city) {
       const matches = D.sites.filter(function (s) { return s.city === city; });
       if (!matches.length) return;
-      section.appendChild(el('h4', { class: 'city-group__title', text: city }));
-      const grid = el('div', { class: 'city-group' });
-      matches.forEach(function (s) { grid.appendChild(renderSiteCard(s)); });
-      section.appendChild(grid);
+
+      const cityCard = el('details', { class: 'city-group-card', id: 'sites-' + slugify(city) });
+      const citySummary = el('summary', { class: 'city-group-card__summary' });
+      const citySumInner = el('div', { class: 'city-group-card__sum-inner' });
+      citySumInner.appendChild(el('h3', { class: 'city-group-card__name', text: city }));
+      citySumInner.appendChild(el('div', { class: 'city-group-card__count', text: matches.length + ' site' + (matches.length === 1 ? '' : 's') }));
+      citySummary.appendChild(citySumInner);
+      citySummary.appendChild(el('span', { class: 'city-group-card__chevron', text: '+' }));
+      cityCard.appendChild(citySummary);
+
+      const cityBody = el('div', { class: 'city-group-card__body' });
+      matches.forEach(function (s) { cityBody.appendChild(renderSiteCard(s)); });
+      cityCard.appendChild(cityBody);
+
+      section.appendChild(cityCard);
     });
 
-    /* Beaches subsection, grouped by city */
+    /* Beaches subsection, each city is a collapsible city-group-card */
     section.appendChild(el('h3', { class: 'subsection__title', text: 'Beaches' }));
     CITY_ORDER.forEach(function (city) {
       const matches = D.beaches.filter(function (b) { return b.city === city; });
       if (!matches.length) return;
-      section.appendChild(el('h4', { class: 'city-group__title', text: city }));
-      const grid = el('div', { class: 'city-group' });
-      matches.forEach(function (b) { grid.appendChild(renderBeachCard(b)); });
-      section.appendChild(grid);
+
+      const cityCard = el('details', { class: 'city-group-card', id: 'beaches-' + slugify(city) });
+      const citySummary = el('summary', { class: 'city-group-card__summary' });
+      const citySumInner = el('div', { class: 'city-group-card__sum-inner' });
+      citySumInner.appendChild(el('h3', { class: 'city-group-card__name', text: city }));
+      citySumInner.appendChild(el('div', { class: 'city-group-card__count', text: matches.length + ' beach' + (matches.length === 1 ? '' : 'es') }));
+      citySummary.appendChild(citySumInner);
+      citySummary.appendChild(el('span', { class: 'city-group-card__chevron', text: '+' }));
+      cityCard.appendChild(citySummary);
+
+      const cityBody = el('div', { class: 'city-group-card__body' });
+      matches.forEach(function (b) { cityBody.appendChild(renderBeachCard(b)); });
+      cityCard.appendChild(cityBody);
+
+      section.appendChild(cityCard);
     });
   }
 
