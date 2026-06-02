@@ -75,20 +75,39 @@ window.TRIP_DATA = {
 
   stays: [
     {
-      leg: "Athens, arrival leg",
-      name: "Alke Homme apartment",
+      leg: "Athens, arrival leg (Property 1)",
+      name: "Alke Homme, Elegant Apartment, Acropolis",
       city: "Athens",
       neighborhood: "Makrygianni, under the Acropolis",
-      address: "Lempesi 6, Makrygianni, Athens",
+      address: "Leoforos Andrea Syngrou 29, Athens 11743",
       phone: "",
       checkIn: "Saturday, Jun 6, 2026",
       checkOut: "Tuesday, Jun 9, 2026",
-      checkInTime: "Per Vrbo host instructions",
+      checkInTime: "2:00 PM",
+      checkOutTime: "10:00 AM",
       nights: 3,
-      booking: "Vrbo #5563-3418276611, via the Lohse family",
+      booking: "Vrbo property 8381678. 5 adults. Total €959.65. Booked by James Lohse. Group splits between this and the Lempesi 6 property for the arrival leg.",
       links: [
-        { label: "Vrbo trip page", url: "https://www.vrbo.com/trips/egti-197-W8I-26QX" },
-        { label: "Google Maps", url: "https://www.google.com/maps/search/Lempesi+6+Athens" }
+        { label: "Vrbo listing", url: "https://www.vrbo.com/8381678ha" },
+        { label: "Google Maps", url: "https://www.google.com/maps/search/Leoforos+Andrea+Syngrou+29+Athens+11743+Greece" }
+      ]
+    },
+    {
+      leg: "Athens, arrival leg (Property 2)",
+      name: "Walk to Iconic Athenian Locations, Chic Home",
+      city: "Athens",
+      neighborhood: "Makrygianni, under the Acropolis",
+      address: "Lempesi 6, Athens 11742",
+      phone: "",
+      checkIn: "Saturday, Jun 6, 2026",
+      checkOut: "Tuesday, Jun 9, 2026",
+      checkInTime: "2:00 PM",
+      checkOutTime: "11:00 AM",
+      nights: 3,
+      booking: "Vrbo property 8643658. 5 adults. Total €904.00. Booked by James Lohse. Group splits between this and the Sygrou 29 property for the arrival leg.",
+      links: [
+        { label: "Vrbo listing", url: "https://www.vrbo.com/8643658ha" },
+        { label: "Google Maps", url: "https://www.google.com/maps/search/Lempesi+6+Athens+11742+Greece" }
       ]
     },
     {
@@ -103,7 +122,7 @@ window.TRIP_DATA = {
       checkInTime: "2:00 PM",
       checkOutTime: "11:00 AM",
       nights: 5,
-      booking: "Hotels.com itinerary #73329640415083, 2 rooms suite",
+      booking: "Hotels.com itinerary #73329640415083. 2 rooms suite, 7 adults (Skedros side of the group). Reserved by Maria Skedros, booked Dec 18, 2025. Total $2,602.68 paid (Stay Protection Plan included). Additional fees due at property: resort fee $58.71/night ($293.55 total) plus city tax EUR 10/night Apr-Oct (EUR 50 total). The Lohse family books separately for Chios.",
       links: [
         { label: "Hotel website", url: "https://www.greciancastle.gr" },
         { label: "Google Maps", url: "https://www.google.com/maps/search/Grecian+Castle+Hotel+Chios" }
@@ -111,16 +130,17 @@ window.TRIP_DATA = {
     },
     {
       leg: "Crete, Villa 1",
-      name: "Villa Dioni",
+      name: "Villa Dioni (Modern villa w/ pool)",
       city: "Chania (Crete)",
       neighborhood: "Kato Daratso, west of Chania",
       address: "Makedonomachon, Glaros, Kato Daratso, Chania 73100",
       phone: "+30 2821031220",
       checkIn: "Sunday, Jun 14, 2026",
       checkOut: "Friday, Jun 19, 2026",
-      checkInTime: "Per Vrbo host instructions",
+      checkInTime: "4:00 PM",
+      checkOutTime: "10:00 AM",
       nights: 5,
-      booking: "Vrbo property 11694637, Unit 6738192. Be On Holidays reservation #986661. Host: Tsichlaki Maria. Sleeps 7 adults (group of 12 is split between Villa 1 and Villa 2).",
+      booking: "Vrbo property 11694637. 7 adults. Total €3,050.00. Booked by Maria Skedros. Host: Tsichlaki Maria (Be On Holidays). Group splits across Villa 1 and Villa 2.",
       links: [
         { label: "Vrbo listing", url: "https://www.vrbo.com/11694637ha" },
         { label: "Google Maps", url: "https://www.google.com/maps/search/Makedonomachon+Glaros+Kato+Daratso+Chania" }
@@ -128,35 +148,36 @@ window.TRIP_DATA = {
     },
     {
       leg: "Crete, Villa 2",
-      name: "Vrbo villa, Agioi Apostoloi",
+      name: "Park-view Lux Pool Villa, steps to the Beach",
       city: "Chania (Crete)",
       neighborhood: "Agioi Apostoloi, 5 km west of Old Town",
       address: "Drakonianou 6, Agioi Apostoloi, Chania 73100",
       phone: "",
       checkIn: "Sunday, Jun 14, 2026",
       checkOut: "Friday, Jun 19, 2026",
-      checkInTime: "Per host instructions",
+      checkInTime: "3:00 PM",
+      checkOutTime: "10:00 AM",
       nights: 5,
-      booking: "Separate booking for the remaining 5 of the 12-person group. Details to confirm with Maria and Jim.",
+      booking: "Vrbo property 11473645. 7 adults. Total €3,107.38. Booked by James Lohse.",
       links: [
+        { label: "Vrbo listing", url: "https://www.vrbo.com/11473645ha" },
         { label: "Google Maps", url: "https://www.google.com/maps/search/Drakonianou+6+Agioi+Apostoloi+Chania" }
       ]
     },
     {
       leg: "Athens, departure leg",
-      name: "Athens apartment, Syngrou Avenue",
+      name: "Athens return stay (to be confirmed)",
       city: "Athens",
-      neighborhood: "Koukaki / Neos Kosmos, south of the Acropolis",
-      address: "Leoforos Sygrou 29, Athens 11743",
+      neighborhood: "TBD",
+      address: "Booking not yet confirmed in the shared Vrbo trip plan. Please check with James or Maria.",
       phone: "",
       checkIn: "Friday, Jun 19, 2026",
       checkOut: "Sunday, Jun 21, 2026",
-      checkInTime: "Per host instructions",
+      checkInTime: "Evening, post-flight",
+      checkOutTime: "Sunday morning before ATH departure",
       nights: 2,
-      booking: "",
-      links: [
-        { label: "Google Maps", url: "https://www.google.com/maps/search/Leoforos+Sygrou+29+Athens+11743" }
-      ]
+      booking: "Status: To be confirmed. The two Athens Vrbo properties (Alke Homme at Sygrou 29, Chic Home at Lempesi 6) are both Jun 6-9 only. A separate booking is needed for the Jun 19-21 return leg.",
+      links: []
     }
   ],
 
@@ -180,7 +201,8 @@ window.TRIP_DATA = {
   events: [
     { date: "2026-06-06", time: "10:35 AM", end: "11:35 AM", title: "Arrive ATH: United 1710 from Chicago", description: "John, Maria, Athan, Piper, Gigi land at Athens airport.", location: "Athens International Airport (ATH)" },
     { date: "2026-06-06", time: "4:50 PM", end: "5:50 PM", title: "Arrive ATH: Delta 9185 from Amsterdam", description: "Alex and Kinzie land at Athens airport.", location: "Athens International Airport (ATH)" },
-    { date: "2026-06-06", time: "3:00 PM", end: "4:00 PM", title: "Check in: Alke Homme apartment, Athens", description: "Lempesi 6, Makrygianni, Athens.", location: "Lempesi 6, Athens" },
+    { date: "2026-06-06", time: "2:00 PM", end: "3:00 PM", title: "Check in: Alke Homme apartment (Property 1)", description: "Leoforos Andrea Syngrou 29, Athens 11743. Vrbo 8381678. 5 adults.", location: "Leoforos Andrea Syngrou 29, Athens 11743" },
+    { date: "2026-06-06", time: "2:00 PM", end: "3:00 PM", title: "Check in: Chic Home apartment (Property 2)", description: "Lempesi 6, Athens 11742. Vrbo 8643658. 5 adults. Group splits between the two Athens apartments.", location: "Lempesi 6, Athens 11742" },
     { date: "2026-06-08", time: "8:00 AM", end: "10:30 AM", title: "Acropolis tour, 8:00 AM entry", description: "Pre-booked timed entry. Wear hat, bring water.", location: "Acropolis of Athens" },
     { date: "2026-06-09", time: "9:55 AM", end: "10:40 AM", title: "Flight ATH to Chios (JKH)", description: "Domestic flight, ~45 min.", location: "Athens airport (ATH)" },
     { date: "2026-06-09", time: "2:00 PM", end: "3:00 PM", title: "Check in: Grecian Castle Hotel, Chios", description: "Enoseos Avenue, Chios. 5 nights.", location: "Enoseos Avenue, Chios" },
@@ -191,7 +213,7 @@ window.TRIP_DATA = {
     { date: "2026-06-17", time: "6:00 AM", end: "4:00 PM", title: "Samaria Gorge hike (hikers)", description: "Bus to Omalos, 16 km downhill hike, ferry from Agia Roumeli to Sfakia, bus back to Chania.", location: "Samaria Gorge National Park" },
     { date: "2026-06-19", time: "11:00 AM", end: "11:30 AM", title: "Check out: both Crete villas", description: "Both groups taxi to Chania airport (CHQ).", location: "Chania (Crete)" },
     { date: "2026-06-19", time: "1:40 PM", end: "2:30 PM", title: "Flight Chania (CHQ) to Athens (ATH)", description: "Domestic flight, ~50 min.", location: "Chania airport (CHQ)" },
-    { date: "2026-06-19", time: "4:00 PM", end: "5:00 PM", title: "Check in: Athens apartment, Syngrou", description: "Leoforos Sygrou 29, Athens. 2 nights.", location: "Leoforos Sygrou 29, Athens" },
+    { date: "2026-06-19", time: "4:00 PM", end: "5:00 PM", title: "Check in: Athens return stay (TBD)", description: "Booking to be confirmed. The two Athens Vrbo properties were both Jun 6-9. A return-leg booking is still needed for Jun 19-21.", location: "Athens (location TBD)" },
     { date: "2026-06-21", time: "12:35 PM", end: "1:35 PM", title: "Depart Athens: flight to Chicago", description: "John, Maria, Athan, Piper, Gigi. Arrive SLC 10:48 PM.", location: "Athens International Airport (ATH)" },
     { date: "2026-06-21", time: "1:40 PM", end: "2:40 PM", title: "Depart Athens (Alex, Kinzie)", description: "1:40 PM departure, arrive SLC 7:30 PM.", location: "Athens International Airport (ATH)" }
   ],
@@ -217,16 +239,18 @@ window.TRIP_DATA = {
         },
         {
           time: "Check-in",
-          headline: "Athens base, Alke Homme apartment near the Acropolis",
-          description: "Three-night Vrbo apartment in Makrygianni, the neighborhood right under the Acropolis. Booked through the Lohse family (James and Heidi). Walking distance to the Acropolis, Plaka, and Monastiraki. Itinerary #5563-3418276611. Check-in Jun 6, check-out Jun 9.",
+          headline: "Athens base, two apartments under the Acropolis",
+          description: "Three-night Vrbo stay split across two apartments in Makrygianni, the neighborhood right under the Acropolis. Both bookings are by James Lohse, both Jun 6 to Jun 9. Walking distance to the Acropolis, Plaka, and Monastiraki.",
           options: [
-            { name: "Address", detail: "Lempesi 6, Makrygianni, Athens" },
-            { name: "Vrbo itinerary", detail: "#5563-3418276611" },
-            { name: "Booked by", detail: "James Lohse (jamesklohse@gmail.com), shared with Maria via Heidi Lohse" }
+            { name: "Property 1: Alke Homme", detail: "Leoforos Andrea Syngrou 29, Athens 11743. Vrbo 8381678. 5 adults. €959.65. Check-in 2:00 PM, check-out 10:00 AM." },
+            { name: "Property 2: Chic Home", detail: "Lempesi 6, Athens 11742. Vrbo 8643658. 5 adults. €904.00. Check-in 2:00 PM, check-out 11:00 AM." },
+            { name: "Note", detail: "The two apartments are about 600 m apart (under 10 min walk between them)." }
           ],
           links: [
-            { label: "Vrbo trip page", url: "https://www.vrbo.com/trips/egti-197-W8I-26QX" },
-            { label: "Google Maps", url: "https://www.google.com/maps/search/Lempesi+6+Athens" }
+            { label: "Alke Homme on Vrbo", url: "https://www.vrbo.com/8381678ha" },
+            { label: "Chic Home on Vrbo", url: "https://www.vrbo.com/8643658ha" },
+            { label: "Map: Alke Homme", url: "https://www.google.com/maps/search/Leoforos+Andrea+Syngrou+29+Athens+11743+Greece" },
+            { label: "Map: Chic Home", url: "https://www.google.com/maps/search/Lempesi+6+Athens+11742+Greece" }
           ]
         },
         {
@@ -651,8 +675,8 @@ window.TRIP_DATA = {
           headline: "Crete bases: two villas, five nights",
           description: "Group is split between two villas in the Chania area, both five nights from Jun 14 to Jun 19. Each villa is a short drive from the Old Town, Samaria trailhead, and the western beaches.",
           options: [
-            { name: "Villa 1: Villa Dioni", detail: "Makedonomachon, Glaros, Kato Daratso, Chania 73100. Vrbo 11694637, Unit 6738192. Host: Tsichlaki Maria (Be On Holidays), +30 2821031220. Sleeps 7 adults." },
-            { name: "Villa 2: Vrbo villa, Agioi Apostoloi", detail: "Drakonianou 6, Agioi Apostoloi, Chania 73100. Separate booking, details TBC with Maria and Jim." }
+            { name: "Villa 1: Villa Dioni", detail: "Makedonomachon, Glaros, Kato Daratso, Chania 73100. Vrbo 11694637. 7 adults. €3,050.00. Booked by Maria Skedros. Host: Tsichlaki Maria (Be On Holidays), +30 2821031220." },
+            { name: "Villa 2: Park-view Lux Pool Villa", detail: "Drakonianou 6, Agioi Apostoloi, Chania 73100. Vrbo 11473645. 7 adults. €3,107.38. Booked by James Lohse." }
           ],
           links: [
             { label: "Villa 1 Vrbo listing", url: "https://www.vrbo.com/11694637ha" },
@@ -922,15 +946,14 @@ window.TRIP_DATA = {
       slots: [
         {
           time: "Check-in",
-          headline: "Athens leg 2 stay, Koukaki / Neos Kosmos area",
-          description: "Two-night stay on Syngrou Avenue, the main artery running south from the Acropolis toward the coast. Koukaki and Neos Kosmos sit on either side, both walkable to Plaka, the Acropolis Museum, and the Stavros Niarchos Foundation. Quieter than Plaka itself, easy to get around. Check-in Jun 19, check-out Jun 21.",
+          headline: "Athens return stay (to be confirmed)",
+          description: "The two Athens Vrbo properties (Alke Homme at Sygrou 29 and Chic Home at Lempesi 6) are both for the Jun 6-9 arrival leg only. A separate booking is still needed for the Jun 19-21 return leg. Confirm with James or Maria before departure.",
           options: [
-            { name: "Address", detail: "Leoforos Sygrou 29, Athens 11743" },
-            { name: "Area", detail: "Koukaki / Neos Kosmos, south of the Acropolis" }
+            { name: "Status", detail: "To be confirmed. No active Vrbo booking visible for these dates." },
+            { name: "Dates", detail: "Friday Jun 19 evening to Sunday Jun 21 morning (departure day)." },
+            { name: "Action", detail: "Check the Lohse / Skedros family trip plan or other booking platforms (Airbnb, Booking.com, hotel direct) for the return leg." }
           ],
-          links: [
-            { label: "Google Maps", url: "https://www.google.com/maps/search/Leoforos+Sygrou+29+Athens+11743" }
-          ]
+          links: []
         },
         {
           time: "Late afternoon",

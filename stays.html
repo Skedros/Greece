@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#1B3A5F">
+<title>Greece 2026 · Where We're Staying</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B3A5F;
+    --navy-deep: #112740;
+    --terracotta: #B85432;
+    --terracotta-deep: #8A3A22;
+    --gold: #C8985C;
+    --gold-light: #E8C895;
+    --cream: #FAF7F1;
+    --cream-warm: #F2E9D5;
+    --ink: #1F1F1F;
+    --grey: #5C5C5C;
+    --grey-light: #C8C0B5;
+    --line: rgba(27, 58, 95, 0.15);
+    --flag: #C95B3F;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--cream);
+    color: var(--ink);
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* Grain overlay */
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='240' height='240'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85'/%3E%3C/filter%3E%3Crect width='240' height='240' filter='url(%23n)' opacity='0.25'/%3E%3C/svg%3E");
+    mix-blend-mode: multiply;
+    opacity: 0.12;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .container {
+    max-width: 880px;
+    margin: 0 auto;
+    padding: 48px 24px 80px;
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ===== Header ===== */
+  header.hero {
+    text-align: center;
+    padding: 40px 0 32px;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 40px;
+  }
+  .kicker {
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 16px;
+  }
+  h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 400;
+    font-size: clamp(36px, 8vw, 56px);
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    color: var(--navy);
+    margin-bottom: 12px;
+  }
+  h1 .it { font-style: italic; color: var(--terracotta); font-weight: 400; }
+
+  .hero p {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(15px, 2.2vw, 18px);
+    color: var(--grey);
+    max-width: 540px;
+    margin: 0 auto;
+    line-height: 1.5;
+  }
+
+  .meander {
+    width: 180px;
+    height: 20px;
+    margin: 28px auto 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='80' height='20' viewBox='0 0 80 20'%3E%3Cpath d='M0 10 H10 V3 H30 V17 H50 V3 H70 V10 H80' fill='none' stroke='%23C8985C' stroke-width='1.5'/%3E%3C/svg%3E");
+    background-repeat: repeat-x;
+    opacity: 0.6;
+  }
+
+  /* ===== Timeline strip ===== */
+  .timeline {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 48px;
+    padding: 16px;
+    background: white;
+    border-radius: 4px;
+    box-shadow: 0 1px 3px rgba(27, 58, 95, 0.06);
+    overflow-x: auto;
+  }
+  .tl-leg {
+    flex: 1;
+    min-width: 110px;
+    padding: 12px 14px;
+    border-left: 3px solid var(--navy);
+    background: var(--cream-warm);
+  }
+  .tl-leg.is-chios { border-left-color: var(--gold); }
+  .tl-leg.is-crete { border-left-color: var(--terracotta); }
+  .tl-leg.is-flagged { border-left-color: var(--flag); background: rgba(201, 91, 63, 0.08); }
+  .tl-leg__city {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .tl-leg__dates {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-top: 4px;
+  }
+  .tl-leg__nights {
+    font-size: 9px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-top: 2px;
+    font-weight: 600;
+  }
+
+  /* ===== Section heading ===== */
+  .section-head {
+    margin: 56px 0 24px;
+    padding-bottom: 14px;
+    border-bottom: 2px solid var(--terracotta);
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  .section-head__num {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    font-size: 56px;
+    color: var(--gold);
+    line-height: 0.8;
+  }
+  .section-head__city {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(28px, 5vw, 36px);
+    font-weight: 500;
+    color: var(--navy);
+    letter-spacing: -0.01em;
+  }
+  .section-head__city .it { font-style: italic; }
+  .section-head__dates {
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--grey);
+    margin-left: auto;
+  }
+
+  /* ===== Stay card ===== */
+  .stay {
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 1px 3px rgba(27, 58, 95, 0.06);
+    margin-bottom: 24px;
+    overflow: hidden;
+  }
+  .stay__band {
+    height: 4px;
+    background: var(--navy);
+  }
+  .stay.is-chios .stay__band { background: var(--gold); }
+  .stay.is-crete .stay__band { background: var(--terracotta); }
+  .stay.is-flagged .stay__band { background: var(--flag); }
+
+  .stay__body { padding: 24px 28px 28px; }
+
+  .stay__title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(20px, 3.5vw, 26px);
+    font-weight: 500;
+    color: var(--navy);
+    line-height: 1.2;
+    margin-bottom: 6px;
+  }
+  .stay__sub {
+    font-size: 13px;
+    color: var(--grey);
+    margin-bottom: 18px;
+    font-weight: 500;
+  }
+  .stay__addr {
+    font-size: 14px;
+    color: var(--navy);
+    margin-bottom: 20px;
+    padding-bottom: 16px;
+    border-bottom: 1px dashed var(--line);
+    line-height: 1.5;
+  }
+  .stay__addr a {
+    color: var(--terracotta);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border 0.2s;
+  }
+  .stay__addr a:hover { border-bottom-color: var(--terracotta); }
+
+  .stay__grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px 24px;
+    margin-bottom: 20px;
+  }
+  .stay__field {
+    font-size: 13px;
+  }
+  .stay__label {
+    display: block;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 4px;
+  }
+  .stay__value { color: var(--ink); }
+  .stay__value strong { font-weight: 600; color: var(--navy); }
+
+  .stay__nearby {
+    background: var(--cream-warm);
+    padding: 14px 16px;
+    border-radius: 4px;
+    margin-bottom: 16px;
+  }
+  .stay__nearby-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--terracotta);
+    margin-bottom: 8px;
+  }
+  .stay__nearby-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+    font-size: 13px;
+    color: var(--ink);
+  }
+  .stay__nearby-list span {
+    display: inline-flex;
+    align-items: baseline;
+    gap: 4px;
+  }
+  .stay__nearby-list em {
+    font-style: normal;
+    color: var(--grey);
+    font-size: 12px;
+  }
+
+  .stay__cta {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+  .btn {
+    display: inline-block;
+    padding: 9px 16px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    text-decoration: none;
+    transition: all 0.2s;
+  }
+  .btn--primary {
+    background: var(--navy);
+    color: var(--cream);
+  }
+  .btn--primary:hover { background: var(--terracotta); }
+  .btn--secondary {
+    background: white;
+    color: var(--navy);
+    border: 1px solid var(--navy);
+  }
+  .btn--secondary:hover { background: var(--navy); color: var(--cream); }
+
+  /* Flagged stay */
+  .flag-note {
+    background: rgba(201, 91, 63, 0.08);
+    border-left: 3px solid var(--flag);
+    padding: 16px 20px;
+    border-radius: 0 4px 4px 0;
+    margin: 16px 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--ink);
+  }
+  .flag-note strong { color: var(--flag); }
+
+  /* Group split panel */
+  .split {
+    background: white;
+    padding: 20px 24px;
+    border-radius: 4px;
+    margin: 20px 0 32px;
+    box-shadow: 0 1px 3px rgba(27, 58, 95, 0.06);
+  }
+  .split__label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 10px;
+  }
+  .split__text {
+    font-family: 'Fraunces', serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--ink);
+  }
+
+  /* Footer */
+  footer {
+    text-align: center;
+    margin-top: 60px;
+    padding-top: 32px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+    color: var(--grey);
+    letter-spacing: 0.06em;
+  }
+  footer em {
+    font-family: 'Fraunces', serif;
+    font-style: italic;
+    color: var(--terracotta);
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    .container { padding: 32px 16px 60px; }
+    .stay__body { padding: 20px 18px 22px; }
+    .stay__grid { grid-template-columns: 1fr; gap: 12px; }
+    .section-head { flex-direction: column; align-items: flex-start; gap: 8px; }
+    .section-head__num { font-size: 44px; }
+    .section-head__dates { margin-left: 0; }
+    .timeline { padding: 12px; gap: 3px; }
+    .tl-leg { padding: 10px 10px; min-width: 95px; }
+  }
+
+  /* Print */
+  @media print {
+    body { background: white; }
+    body::before { display: none; }
+    .stay, .timeline, .split { box-shadow: none; border: 1px solid var(--line); }
+    .btn { display: none; }
+    .container { padding: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="container">
+
+  <header class="hero">
+    <div class="kicker">Hellas 2026 · June 6 to 21</div>
+    <h1>Where We're <span class="it">Staying</span></h1>
+    <p>All five accommodations across Athens, Chios, and Crete. Booking details, addresses, and maps for the group.</p>
+    <div class="meander"></div>
+  </header>
+
+  <!-- Timeline strip -->
+  <div class="timeline" aria-label="Trip timeline">
+    <div class="tl-leg">
+      <div class="tl-leg__city">Athens</div>
+      <div class="tl-leg__dates">Jun 6 to 9</div>
+      <div class="tl-leg__nights">3 Nights</div>
+    </div>
+    <div class="tl-leg is-chios">
+      <div class="tl-leg__city">Chios</div>
+      <div class="tl-leg__dates">Jun 9 to 14</div>
+      <div class="tl-leg__nights">5 Nights</div>
+    </div>
+    <div class="tl-leg is-crete">
+      <div class="tl-leg__city">Chania</div>
+      <div class="tl-leg__dates">Jun 14 to 19</div>
+      <div class="tl-leg__nights">5 Nights</div>
+    </div>
+    <div class="tl-leg is-flagged">
+      <div class="tl-leg__city">Athens</div>
+      <div class="tl-leg__dates">Jun 19 to 21</div>
+      <div class="tl-leg__nights">2 Nights · TBD</div>
+    </div>
+  </div>
+
+  <!-- ============ ATHENS ============ -->
+  <div class="section-head">
+    <div class="section-head__num">I</div>
+    <div class="section-head__city"><span class="it">Athens</span>, Arrival</div>
+    <div class="section-head__dates">Sat Jun 6 → Tue Jun 9</div>
+  </div>
+
+  <div class="split">
+    <div class="split__label">Group split</div>
+    <div class="split__text">Two apartments side by side in Makrygianni, both a few minutes from the Acropolis Museum. The group splits across the two for the first three nights.</div>
+  </div>
+
+  <!-- Athens Stay 1 -->
+  <div class="stay">
+    <div class="stay__band"></div>
+    <div class="stay__body">
+      <div class="stay__title">Alke Homme, Elegant Apartment, Acropolis</div>
+      <div class="stay__sub">Vrbo · 3 nights · 5 adults · Booked by James</div>
+      <div class="stay__addr">
+        Λεωφ. Ανδρέα Συγγρού 29 (Leoforos Andrea Syngrou 29), Athens, Attica, 11743<br>
+        <a href="https://www.google.com/maps/search/?api=1&query=Leoforos+Andrea+Syngrou+29+Athens+11743+Greece" target="_blank" rel="noopener">Open in Google Maps →</a>
+      </div>
+      <div class="stay__grid">
+        <div class="stay__field">
+          <span class="stay__label">Check-In</span>
+          <span class="stay__value"><strong>Sat, Jun 6</strong> · 2:00 PM</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Check-Out</span>
+          <span class="stay__value"><strong>Tue, Jun 9</strong> · 10:00 AM</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Total</span>
+          <span class="stay__value"><strong>€959.65</strong></span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Property ID</span>
+          <span class="stay__value">Vrbo 8381678</span>
+        </div>
+      </div>
+      <div class="stay__nearby">
+        <div class="stay__nearby-label">Walking distance</div>
+        <div class="stay__nearby-list">
+          <span>Acropolis Museum <em>· 2 min</em></span>
+          <span>Temple of Olympian Zeus <em>· 5 min</em></span>
+          <span>Acropolis <em>· 14 min</em></span>
+          <span>ATH Airport <em>· 36 min drive</em></span>
+        </div>
+      </div>
+      <div class="stay__cta">
+        <a class="btn btn--primary" href="https://www.vrbo.com/8381678ha?dateless=true" target="_blank" rel="noopener">View on Vrbo</a>
+        <a class="btn btn--secondary" href="https://www.google.com/maps/search/?api=1&query=Leoforos+Andrea+Syngrou+29+Athens+11743+Greece" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Athens Stay 2 -->
+  <div class="stay">
+    <div class="stay__band"></div>
+    <div class="stay__body">
+      <div class="stay__title">Walk to Iconic Athenian Locations from a Chic Home</div>
+      <div class="stay__sub">Vrbo · 3 nights · 5 adults · Booked by James</div>
+      <div class="stay__addr">
+        Lempesi 6, Athens, Attica, 11742<br>
+        <a href="https://www.google.com/maps/search/?api=1&query=Lempesi+6+Makrygianni+Athens+11742+Greece" target="_blank" rel="noopener">Open in Google Maps →</a>
+      </div>
+      <div class="stay__grid">
+        <div class="stay__field">
+          <span class="stay__label">Check-In</span>
+          <span class="stay__value"><strong>Sat, Jun 6</strong> · 2:00 PM</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Check-Out</span>
+          <span class="stay__value"><strong>Tue, Jun 9</strong> · 11:00 AM</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Total</span>
+          <span class="stay__value"><strong>€904.00</strong></span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Property ID</span>
+          <span class="stay__value">Vrbo 8643658</span>
+        </div>
+      </div>
+      <div class="stay__nearby">
+        <div class="stay__nearby-label">Walking distance</div>
+        <div class="stay__nearby-list">
+          <span>Acropolis Museum <em>· 1 min</em></span>
+          <span>Temple of Olympian Zeus <em>· 3 min</em></span>
+          <span>Acropolis <em>· 12 min</em></span>
+          <span>ATH Airport <em>· 36 min drive</em></span>
+        </div>
+      </div>
+      <div class="stay__cta">
+        <a class="btn btn--primary" href="https://www.vrbo.com/8643658ha?dateless=true" target="_blank" rel="noopener">View on Vrbo</a>
+        <a class="btn btn--secondary" href="https://www.google.com/maps/search/?api=1&query=Lempesi+6+Makrygianni+Athens+11742+Greece" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CHIOS ============ -->
+  <div class="section-head">
+    <div class="section-head__num">II</div>
+    <div class="section-head__city"><span class="it">Chios</span> Island</div>
+    <div class="section-head__dates">Tue Jun 9 → Sun Jun 14</div>
+  </div>
+
+  <div class="split">
+    <div class="split__label">Skedros side only</div>
+    <div class="split__text">All seven Skedros-side travelers at the Grecian Castle Hotel, 2 rooms suite. The Lohse family books separately for Chios. Hotels.com booking, paid in full by Maria.</div>
+  </div>
+
+  <div class="stay is-chios">
+    <div class="stay__band"></div>
+    <div class="stay__body">
+      <div class="stay__title">Grecian Castle Hotel</div>
+      <div class="stay__sub">Hotels.com · 5 nights · 7 adults · 2 rooms suite · Booked by Maria</div>
+      <div class="stay__addr">
+        Enoseos Avenue, Chios, Chios Island, 82100 Greece<br>
+        <a href="https://www.google.com/maps/search/?api=1&query=Grecian+Castle+Hotel+Chios+Greece" target="_blank" rel="noopener">Open in Google Maps →</a>
+      </div>
+      <div class="stay__grid">
+        <div class="stay__field">
+          <span class="stay__label">Check-In</span>
+          <span class="stay__value"><strong>Tue, Jun 9</strong> · 2:00 PM</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Check-Out</span>
+          <span class="stay__value"><strong>Sun, Jun 14</strong> · 11:00 AM</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Total Paid</span>
+          <span class="stay__value"><strong>$2,602.68</strong> (Stay Protection included)</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Itinerary</span>
+          <span class="stay__value">Hotels.com #73329640415083</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Phone</span>
+          <span class="stay__value">+30 22710 44740</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Due at Property</span>
+          <span class="stay__value">Resort fee $58.71/nt + city tax €10/nt</span>
+        </div>
+      </div>
+      <div class="stay__cta">
+        <a class="btn btn--primary" href="https://www.greciancastle.gr" target="_blank" rel="noopener">Hotel Website</a>
+        <a class="btn btn--secondary" href="https://www.google.com/maps/search/?api=1&query=Grecian+Castle+Hotel+Chios+Greece" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ CHANIA ============ -->
+  <div class="section-head">
+    <div class="section-head__num">III</div>
+    <div class="section-head__city"><span class="it">Chania</span>, Crete</div>
+    <div class="section-head__dates">Sun Jun 14 → Fri Jun 19</div>
+  </div>
+
+  <div class="split">
+    <div class="split__label">Group split</div>
+    <div class="split__text">Two villas with pools, split across the group for five nights on Crete's northwest coast. Both within a short drive of Chania old town and the beaches.</div>
+  </div>
+
+  <!-- Crete Villa 1 -->
+  <div class="stay is-crete">
+    <div class="stay__band"></div>
+    <div class="stay__body">
+      <div class="stay__title">Park-view Lux Pool Villa, steps to the Beach</div>
+      <div class="stay__sub">Vrbo · 5 nights · 7 adults · Booked by James</div>
+      <div class="stay__addr">
+        Drakonianou 6, Agioi Apostoloi, Chania 73100<br>
+        <a href="https://www.google.com/maps/search/?api=1&query=Drakonianou+6+Agioi+Apostoloi+Chania+73100+Greece" target="_blank" rel="noopener">Open in Google Maps →</a>
+      </div>
+      <div class="stay__grid">
+        <div class="stay__field">
+          <span class="stay__label">Check-In</span>
+          <span class="stay__value"><strong>Sun, Jun 14</strong> · 3:00 PM</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Check-Out</span>
+          <span class="stay__value"><strong>Fri, Jun 19</strong> · 10:00 AM</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Total</span>
+          <span class="stay__value"><strong>€3,107.38</strong></span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Property ID</span>
+          <span class="stay__value">Vrbo 11473645</span>
+        </div>
+      </div>
+      <div class="stay__cta">
+        <a class="btn btn--primary" href="https://www.vrbo.com/11473645ha?dateless=true" target="_blank" rel="noopener">View on Vrbo</a>
+        <a class="btn btn--secondary" href="https://www.google.com/maps/search/?api=1&query=Drakonianou+6+Agioi+Apostoloi+Chania+73100+Greece" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Crete Villa 2 -->
+  <div class="stay is-crete">
+    <div class="stay__band"></div>
+    <div class="stay__body">
+      <div class="stay__title">Modern villa w/ pool, near beach & city centre</div>
+      <div class="stay__sub">Vrbo · 5 nights · 7 adults · Booked by Maria</div>
+      <div class="stay__addr">
+        Makedonomachon, Glaros, Kato Daratso, Chania 73100<br>
+        <a href="https://www.google.com/maps/search/?api=1&query=Makedonomachon+Glaros+Kato+Daratso+Chania+73100+Greece" target="_blank" rel="noopener">Open in Google Maps →</a>
+      </div>
+      <div class="stay__grid">
+        <div class="stay__field">
+          <span class="stay__label">Check-In</span>
+          <span class="stay__value"><strong>Sun, Jun 14</strong> · 4:00 PM</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Check-Out</span>
+          <span class="stay__value"><strong>Fri, Jun 19</strong> · 10:00 AM</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Total</span>
+          <span class="stay__value"><strong>€3,050.00</strong></span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Property ID</span>
+          <span class="stay__value">Vrbo 11694637 · Villa Dioni</span>
+        </div>
+      </div>
+      <div class="stay__cta">
+        <a class="btn btn--primary" href="https://www.vrbo.com/11694637ha?dateless=true" target="_blank" rel="noopener">View on Vrbo</a>
+        <a class="btn btn--secondary" href="https://www.google.com/maps/search/?api=1&query=Makedonomachon+Glaros+Kato+Daratso+Chania+73100+Greece" target="_blank" rel="noopener">Map</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============ ATHENS RETURN ============ -->
+  <div class="section-head">
+    <div class="section-head__num">IV</div>
+    <div class="section-head__city"><span class="it">Athens</span>, Return</div>
+    <div class="section-head__dates">Fri Jun 19 → Sun Jun 21</div>
+  </div>
+
+  <div class="stay is-flagged">
+    <div class="stay__band"></div>
+    <div class="stay__body">
+      <div class="stay__title">Athens Return Stay (2 Nights)</div>
+      <div class="stay__sub">Status: To be confirmed</div>
+
+      <div class="flag-note">
+        <strong>For the group to discuss:</strong> we need to confirm where everyone is staying these final two nights before the Jun 21 departure flight. The two Athens Vrbo bookings (Alke Homme and Chic Home) are both for the Jun 6 to 9 arrival leg only, not the return. If a return-leg booking exists on another platform or under a different name, please share so it can be added here.
+      </div>
+
+      <div class="stay__grid">
+        <div class="stay__field">
+          <span class="stay__label">Check-In</span>
+          <span class="stay__value"><strong>Fri, Jun 19</strong> · evening</span>
+        </div>
+        <div class="stay__field">
+          <span class="stay__label">Check-Out</span>
+          <span class="stay__value"><strong>Sun, Jun 21</strong> · departure morning</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <em>Skedros and Lohse families · Greece 2026</em><br>
+    Last updated June 2, 2026
+  </footer>
+
+</div>
+</body>
+</html>
