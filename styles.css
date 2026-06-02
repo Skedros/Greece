@@ -895,10 +895,10 @@ button {
 
 .entry-card {
   background: var(--paper-card);
-  border-radius: 10px;
-  margin-bottom: 12px;
+  border-radius: 12px;
+  margin-bottom: 16px;
   box-shadow: var(--shadow);
-  border-left: 3px solid var(--terracotta);
+  border-top: 4px solid var(--terracotta);
   scroll-margin-top: 120px;
   overflow: hidden;
 }
@@ -906,7 +906,7 @@ button {
 .entry-card__summary {
   list-style: none;
   cursor: pointer;
-  padding: 18px 24px;
+  padding: 22px 28px;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -921,7 +921,7 @@ button {
 .entry-card__chevron {
   flex-shrink: 0;
   font-family: var(--font-display), serif;
-  font-size: 22px;
+  font-size: 28px;
   font-weight: 300;
   color: var(--terracotta);
   line-height: 1;
@@ -931,21 +931,22 @@ button {
 .entry-card[open] .entry-card__chevron { transform: rotate(45deg); }
 
 .entry-card__body {
-  padding: 4px 24px 22px 24px;
+  padding: 4px 28px 28px 28px;
   border-top: 1px solid rgba(0,0,0,0.06);
 }
-.entry-card[open] .entry-card__body { padding-top: 18px; }
+.entry-card[open] .entry-card__body { padding-top: 20px; }
 
 .entry-card__head {
   margin-bottom: 12px;
 }
 
 .entry-card__name {
-  font-size: 19px;
+  font-family: var(--font-display), serif;
+  font-size: 24px;
   font-weight: 600;
   color: var(--aegean-deep);
-  margin: 0 0 8px 0;
-  line-height: 1.25;
+  margin: 0 0 10px 0;
+  line-height: 1.2;
 }
 
 .entry-card__tags {
