@@ -1278,7 +1278,11 @@
     const sec = $('#' + id);
     if (sec) sec.classList.add('is-active');
     const btn = $('.nav__btn[data-target="' + id + '"]');
-    if (btn) btn.classList.add('is-active');
+    if (btn) {
+      btn.classList.add('is-active');
+      /* Scroll active button into view (helpful for mobile horizontal nav) */
+      try { btn.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' }); } catch (e) {}
+    }
     window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 

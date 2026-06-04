@@ -1264,6 +1264,132 @@ button {
   line-height: 1.5;
 }
 
+/* =================================================================
+   MOBILE / PHONE-FRIENDLY OVERRIDES
+   ================================================================= */
+
+/* Tablet and below */
+@media (max-width: 720px) {
+  body { font-size: 16px; line-height: 1.55; }
+  .layout { padding: 0 16px; }
+
+  /* === Compact sticky header so users always have nav access === */
+  .header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(250, 247, 241, 0.97);
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(27, 58, 95, 0.12);
+    box-shadow: 0 1px 0 rgba(27, 58, 95, 0.04);
+  }
+  .brand {
+    padding: 10px 0 4px 0;
+  }
+  .brand__title { font-size: 22px; line-height: 1.1; margin-bottom: 2px; }
+  .brand__sub { font-size: 10px; letter-spacing: 0.2em; }
+
+  /* === Horizontal-scroll nav (no wrap, swipeable) === */
+  .nav {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x proximity;
+    justify-content: flex-start;
+    padding: 6px 16px 12px 16px;
+    margin: 0 -16px;
+    gap: 6px;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    /* Soft fade on the right edge to hint at more content */
+    mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+    -webkit-mask-image: linear-gradient(to right, black calc(100% - 24px), transparent);
+  }
+  .nav::-webkit-scrollbar { display: none; }
+  .nav__btn {
+    padding: 10px 16px;
+    font-size: 13px;
+    font-weight: 600;
+    flex: 0 0 auto;
+    scroll-snap-align: start;
+    min-height: 36px;
+    background: rgba(27, 58, 95, 0.05);
+    color: var(--ink);
+  }
+  .nav__btn.is-active {
+    box-shadow: 0 2px 8px rgba(27, 58, 95, 0.25);
+  }
+
+  /* === Section spacing === */
+  .section__title { font-size: 26px; line-height: 1.15; }
+  .section__lede { font-size: 16px; line-height: 1.55; }
+  .subsection__title { font-size: 19px; }
+  .section { padding: 16px 0 24px 0; }
+
+  /* === Day cards (tighter, more scannable) === */
+  .day { padding: 0; }
+  .day__summary-bar { padding: 16px 18px; min-height: 56px; }
+  .day__body { padding: 4px 18px 22px 18px; }
+  .day[open] .day__body { padding-top: 16px; }
+  .day__title { font-size: 18px; line-height: 1.25; }
+  .day__date { font-size: 12px; }
+  .slot__headline { font-size: 17px; line-height: 1.3; }
+  .slot__time { font-size: 12px; }
+  .slot { padding: 14px 0; }
+
+  /* === Generic cards === */
+  .stay-card, .logistics-card, .packing-card, .phrases-card, .form { padding: 20px; }
+  .entry-card { padding: 0; }
+  .entry-card__summary { padding: 16px 18px; min-height: 56px; }
+  .entry-card__body { padding: 4px 18px 18px 18px; }
+  .entry-card[open] .entry-card__body { padding-top: 14px; }
+  .entry-card__name { font-size: 17px; line-height: 1.25; }
+
+  /* === Touch-friendly link rows === */
+  .meal-pill { padding: 10px 14px; min-height: 40px; font-size: 13px; }
+  a.btn, button.btn { min-height: 44px; padding: 10px 18px; font-size: 14px; }
+
+  /* === Forms === */
+  .form__check-group, .form__radio-group { grid-template-columns: 1fr; }
+  .form__input, .form__textarea, .form__select { font-size: 16px; /* Prevents iOS zoom on focus */ }
+
+  /* === Tables wrap better === */
+  .phrases-table { font-size: 14px; }
+}
+
+/* Phones in portrait */
+@media (max-width: 480px) {
+  body { font-size: 15px; }
+  .brand { padding: 8px 0 4px 0; }
+  .brand__title { font-size: 20px; }
+  .layout { padding: 0 14px; }
+  .section { padding: 12px 0 22px 0; }
+  .section__title { font-size: 23px; }
+
+  /* Stack all grids on phones */
+  .stay-card__grid,
+  .day__meta-grid,
+  .meta-grid,
+  .emer-grid {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  
+  .day__summary-bar { padding: 14px 16px; }
+  .day__body { padding: 4px 16px 18px 16px; }
+  .entry-card__summary { padding: 14px 16px; }
+  .entry-card__body { padding: 4px 16px 18px 16px; }
+
+  /* Larger map on small screens */
+  .map-frame-wrap { height: 65vh; min-height: 450px; }
+
+  /* Today block more compact */
+  .today-block { padding: 18px 20px; margin: 12px 0 20px 0; border-radius: 12px; }
+  .today-block__title { font-size: 24px; }
+  .today-block__summary { font-size: 14px; }
+}
+
 @media (max-width: 640px) {
   .phrases-table__gr { font-size: 15px; }
   .phrases-table td { padding: 8px 8px; font-size: 13px; }
@@ -1394,33 +1520,12 @@ button {
 
 /* -------------------- responsive -------------------- */
 
-@media (max-width: 720px) {
-  body { font-size: 16px; }
-  .layout { padding: 0 16px; }
-  .brand__title { font-size: 28px; }
-  .nav { gap: 2px; }
-  .nav__btn { padding: 6px 10px; font-size: 12px; }
-  .section__title { font-size: 28px; }
-  .section__lede { font-size: 16px; }
-  .subsection__title { font-size: 20px; }
-  .day { padding: 0; }
-  .day__summary-bar { padding: 18px 20px; }
-  .day__body { padding: 4px 20px 22px 20px; }
-  .day[open] .day__body { padding-top: 16px; }
-  .day__title { font-size: 20px; }
-  .slot__headline { font-size: 18px; }
-  .stay-card, .logistics-card, .packing-card, .phrases-card, .form { padding: 20px; }
-  .entry-card { padding: 0; }
-  .entry-card__summary { padding: 16px 18px; }
-  .entry-card__body { padding: 4px 18px 18px 18px; }
-  .entry-card[open] .entry-card__body { padding-top: 14px; }
-  .entry-card__name { font-size: 17px; }
-  .form__check-group, .form__radio-group { grid-template-columns: 1fr; }
-}
-
 @media (max-width: 480px) {
   .stay-card__grid, .day__meta-grid, .meta-grid, .emer-grid { grid-template-columns: 1fr; }
 }
+
+/* This file's modern mobile improvements live below at the
+   "MOBILE / PHONE-FRIENDLY OVERRIDES" section. */
 
 /* -------------------- map iframe -------------------- */
 
